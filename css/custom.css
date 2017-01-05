@@ -10,7 +10,6 @@ html,body {
     cursor: default;
 }
 
-
 #toast{
     display:none;
     max-width:250px;
@@ -112,5 +111,13 @@ th {
 
 .stEmpty {
     background-color: white;
+    cursor: pointer;
+}
+
+.chNotAllowed {
+    cursor: not-allowed;
+}
+
+.chPointer {
     cursor: pointer;
 }

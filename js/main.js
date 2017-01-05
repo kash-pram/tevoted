@@ -89,20 +89,21 @@
         // to validate both the input boxes
         $scope.inputChanged = function () {
             $scope.checkInputCount();
-
+            $scope.chConfirm();
+            
             if($('#inpt_name').val() === "" || $('#inpt_count').val() === "" ) {
                 $scope.enStart = false;
+                $scope.enSeats = false;
+                $scope.enConfirm = false;
                 showToast("Kindly fill all the details.", "warning");
-            }
-            else  if($scope.enSeats != true)
+            } else if($scope.enSeats != true){
                 $scope.enStart = true;
-            else if($scope.enSeats === true ) {
+            } else if($scope.enSeats === true ) {
                 $scope.enSeats = false;
                 $scope.enStart = true;
                 // optional: reset the seats selection
-            }
-
-            $scope.chConfirm();
+            } else
+                ;   // do nothing
         };
         
         // to enable or disable the Confirm Selection button
@@ -120,20 +121,16 @@
 
             // substring of the span id will give the seat number
             tmpStr = tmpStr.substr(2);
-            
-            // assumption: the last value will be the dynamic class value set by the ng class
-            var tmpArr = $event.currentTarget.className.split(" ");
-            var tmpClass = tmpArr[tmpArr.length-1];
 
             // toggle class, on each seat selection till the mentioned seats are selected
-            if(tmpClass === "stEmpty") {
+            if(this.dynClass === "stEmpty") {
                 if($scope.selectedSeats < $scope.resCount){
                     this.dynClass = "stSelected";
                     $scope.selectedSeats +=1;
                     $scope.selSeatNos.push(tmpStr);
                 } else
                     showToast("Please Confirm Selection.", "warning"); // if selection exceeds the mentioned value
-            } else if (tmpClass === "stSelected") {
+            } else if (this.dynClass === 'stSelected') {
                 this.dynClass = "stEmpty";
                 $scope.selectedSeats -=1;
                 
