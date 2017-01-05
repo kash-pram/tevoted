@@ -82,7 +82,7 @@
             if($('#inpt_count').val() > $scope.availableSeats) {
                 $('#inpt_count').val($scope.availableSeats);
                 $scope.resCount = $('#inpt_count').val();
-                showToast("No. of Seats reset to maximum available.");
+                showToast("No. of Seats reset to maximum available.", "message");
             }
         };
         
@@ -92,7 +92,7 @@
 
             if($('#inpt_name').val() === "" || $('#inpt_count').val() === "" ) {
                 $scope.enStart = false;
-                showToast("Kindly fill all the details.");
+                showToast("Kindly fill all the details.", "warning");
             }
             else  if($scope.enSeats != true)
                 $scope.enStart = true;
@@ -132,7 +132,7 @@
                     $scope.selectedSeats +=1;
                     $scope.selSeatNos.push(tmpStr);
                 } else
-                    showToast('Please Confirm Selection.'); // if selection exceeds the mentioned value
+                    showToast("Please Confirm Selection.", "warning"); // if selection exceeds the mentioned value
             } else if (tmpClass === "stSelected") {
                 this.dynClass = "stEmpty";
                 $scope.selectedSeats -=1;
@@ -149,7 +149,7 @@
         
         $scope.confirmSeats = function () {        
             if($scope.selectedSeats < $scope.resCount){
-                showToast("Please Select Seats");
+                showToast("Please Select Seats.", "warning");
             }
             else {
                 // transform the selected seats to reserved seats and update the booked history
@@ -162,7 +162,7 @@
                 tmpObj['nos'] = $scope.resCount;
                 tmpObj['seats'] = $scope.selSeatNos;
                 $scope.booked.push(tmpObj);
-                showToast("Seats Booked!");
+                showToast("Seats Booked!", "success");
                 
                 // reset
                 $scope.init();
@@ -174,6 +174,21 @@
     
 })();
 
-function showToast(msg) {
+function showToast(msg,msgStatus) {
+    if(msgStatus === "success") {
+        $('#toast').css('background-color', '#DFF2BF');
+        $('#toast').css('color', '#4F8A10');
+    }
+    else if(msgStatus === "message") {
+        $('#toast').css('background-color', '#BDE5F8');
+        $('#toast').css('color', '#00529B');
+    }
+    else if (msgStatus === "warning"){
+        $('#toast').css('background-color', '#FEEFB3');
+        $('#toast').css('color', '#9F6000');
+    }
+    else
+        ;
+    
     $('#toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
 }
