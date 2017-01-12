@@ -147,6 +147,14 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 
 
 // BUTTON CLICKS
+function disableInput(){
+    $('#inp_dispName').attr('readonly', true);
+    $('#btn_select').attr('disabled',true);
+}
+function enableInput(){
+    $('#inp_dispName').attr('readonly', false);
+    $('#btn_select').attr('disabled',false);
+}
 function closeOverlay(){
     $('#divOverlay').hide();
     $('#inp_timerName').val("");

@@ -15,10 +15,9 @@
         }
     })
     .controller('MainCtrl', ['$scope', function($scope) {
-
         // INITIALIZATION AKA RESET CODE
         $scope.timerData = [{
-                timerName: "dataOne",
+                timerName: "testData",
                 startTime: "",
                 pastData: {
                     "12-Jan-2017": "22,23,58",
@@ -62,10 +61,9 @@
         
         // UTILITY
         $scope.findTimer = function (tmpName) {
-            var i, tmpFlag=false;
+            var i;
             for(i=0; i < $scope.timerData.length; i++){
                 if(tmpName === $scope.timerData[i].timerName){
-                    tmpFlag = true;
                     $scope.currentIndex = i;
                     break;
                 }
@@ -87,10 +85,17 @@
         
         // EVENTS
         $scope.btnTimerClick = function() {
-            
             if($scope.timerAction === "START"){
                 $scope.dynClass = "stopTimer";
                 $scope.timerAction = "STOP";
+                if($scope.currentIndex === -1){
+                    $scope.currentIndex = $scope.timerData.length;
+                    var tmpData = {};
+                    tmpData['timerName'] = $scope.currentTimer;
+                    tmpData['startTime'] = "";
+                    tmpData['pastData'] = {};
+                    $scope.timerData.push(tmpData);
+                }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
                 showToast("Timer started successfully", "success");
             } else {
@@ -153,31 +158,30 @@
         };
         $scope.btnResetClick = function () {                
             $scope.init();
+            enableInput();
         };
         $scope.btnSelectClick = function () {
+            if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
+                $scope.enTimer = true;
+                disableInput();
 
-            // only if currentTimer is set
-            $scope.enTimer = true;
-            
-            $scope.findTimer($scope.currentTimer);
-            if($scope.currentIndex === -1){
-                $scope.currentIndex = $scope.timerData.length;
-                var tmpData = {};
-                tmpData['timerName'] = $scope.currentTimer;
-                tmpData['startTime'] = "";
-                tmpData['pastData'] = {};
-                $scope.timerData.push(tmpData);
-            } else {
-                if($scope.timerData[$scope.currentIndex].startTime !== ""){
-                    $scope.timerAction = "STOP";
-                    $scope.dynClass = "stopTimer";
-                    showToast("Timer already running", "warning");
-                }
-                else {
-                    $scope.timerAction = "START";
-                    $scope.dynClass = "startTimer";
+                $scope.findTimer($scope.currentTimer);
+                if($scope.currentIndex === -1){
+
+                } else {
+                    if($scope.timerData[$scope.currentIndex].startTime !== ""){
+                        $scope.timerAction = "STOP";
+                        $scope.dynClass = "stopTimer";
+                        showToast("Timer already running", "warning");
+                    }
+                    else {
+                        $scope.timerAction = "START";
+                        $scope.dynClass = "startTimer";
+                    }
                 }
             }
+            /*else
+                return false;*/
         };
         // END EVENTS
         

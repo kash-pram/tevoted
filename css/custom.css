@@ -8,8 +8,15 @@ html,body {
     min-width: 400px;
     min-height: 500px;
     cursor: default;
-    
+    overflow: auto;
 }
+a:hover, a:active, a:focus {
+    outline: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
 
 #sp_toast{
     display:none;
@@ -98,6 +105,28 @@ html,body {
     font-size:1.2em;
     font-weight:bold;
     text-decoration:none;
+}
+
+/* ID BASED */
+#inp_dispName {
+    width: 270px;
+}
+option {
+    cursor: default;
+}
+#inp_dispName:hover {
+    
+}
+#btn_select {
+    position:relative;
+    left: 30px;
+}
+#div_reset {
+    right:45px;
+    position:relative;
+    display:inline-block;
+    font-variant-caps: all-petite-caps;
+    font-size:1.2em;
 }
 
 /*
