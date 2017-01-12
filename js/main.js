@@ -1,191 +1,146 @@
 (function(){
-    var app = angular.module("seatsApp", []);
+    
+    angular.module('timerApp', [])
+    .controller('MainCtrl', ['$scope', function($scope) {
 
-    app.directive("limitTo", [function() {
-    return {
-        restrict: "A",
-        link: function(scope, elem, attrs) {
-            var limit = parseInt(attrs.limitTo);
-            angular.element(elem).on("keypress", function(e) {
-                if (this.value >= limit) e.preventDefault();
-            });
-        }
-    }
-    }]);
-    
-    app.filter('iif', function () {
-        return function(input, trueValue, falseValue) {
-            return input ? trueValue : falseValue;
-        };
-    });
-    
-    app.controller("SeatSelectionCtrl", function($scope){
+        // INITIALIZATION AKA RESET CODE
+        $scope.timerData = [{
+                timerName: "dataOne",
+                startTime: "",
+                pastData: {
+                    "22-10-2017": "22-hrs/23-mins",
+                    "30-11-2016": "2-mins/32-secs"
+                }
+            }];  // TO BE STORED IN DB
+        $scope.cacheData = {};  // TO BE STORED IN DB
         $scope.init = function(){
-            $scope.resName = "";
-            $scope.resCount = 2;
-            $scope.dynClass= "stEmpty";
-            $scope.selectedSeats = 0;
-            $scope.selSeatNos = [];
-            
-            // hooks to toggle button and seats accessibility
-            $scope.enConfirm = false;
-            $scope.enStart = false;
-            $scope.enSeats = false;
+            $scope.tab = 1;
+            $scope.timerAction = "START";
+            $scope.dynClass = "startTimer";
+            $scope.enTimer = false;
+            $scope.currentTimer = "";
+            $scope.currentIndex = -1;
         };
-
-        $scope.calculateSeats = function () {
-            // to calculate number of seats available
-            var tmpElemsArr = document.querySelectorAll('.stEmpty');
-            $scope.availableSeats = tmpElemsArr.length -1;
-        };
-        
-        // hard-coded value for seats already booked
-        $scope.booked = [
-                {name: 'Prakaash', nos: 2, seats: ['E7','E8']},
-                {name: 'Valavan', nos: 3, seats: ['J3','J4','J5']}
-        ];
-        
-        angular.element(document).ready(function () {
-            
-            // to mark the hard-coded booked seats as Reserved
-            var tmpStr;
-            for(i in $scope.booked){
-                for(j in $scope.booked[i]['seats']){
-                    tmpStr = '#sp'+$scope.booked[i]['seats'][j];
-                    angular.element(document.querySelector(tmpStr)).removeClass('stEmpty').addClass('stReserved');
-                }
-            }
-            
-            $scope.calculateSeats();
-        });
-        
         $scope.init();
+        // END INITIALIZATION AKA RESET CODE
         
-        // used for ng repeat on seats table
-        $scope.range = function(count){
-            var ratings = [];
-            for (var i = 0; i < count; i++) { 
-                ratings.push(i) 
+        // TAB CONTROLS
+        $scope.setTab = function(newTab){
+          $scope.tab = newTab;
+        };
+        $scope.isSet = function(tabNum){
+          return $scope.tab === tabNum;
+        };
+        $scope.ifData = function(){
+            if($scope.timerData.length === 0) {
+                return false;
             }
-            return ratings;
+            return true;
         };
-
-        // on click function for Start Selecting button
-        $scope.startSelecting = function () {
-            $scope.enStart = false;
-            $scope.enSeats = true;
-            $scope.checkInputCount();
-        };
+        // END TAB CONTROLS
         
-        // to validate the Number of Seats input box
-        $scope.checkInputCount = function () {
-            if($('#inpt_count').val() > $scope.availableSeats) {
-                $('#inpt_count').val($scope.availableSeats);
-                $scope.resCount = $('#inpt_count').val();
-                showToast("No. of Seats reset to maximum available.", "message");
-            }
-        };
-        
-        // to validate both the input boxes
-        $scope.inputChanged = function () {
-            $scope.checkInputCount();
-            $scope.chConfirm();
-            
-            if($('#inpt_name').val() === "" || $('#inpt_count').val() === "" ) {
-                $scope.enStart = false;
-                $scope.enSeats = false;
-                $scope.enConfirm = false;
-                showToast("Kindly fill all the details.", "warning");
-            } else if($scope.enSeats != true){
-                $scope.enStart = true;
-            } else if($scope.enSeats === true ) {
-                $scope.enSeats = false;
-                $scope.enStart = true;
-                // optional: reset the seats selection
-            } else
-                ;   // do nothing
-        };
-        
-        // to enable or disable the Confirm Selection button
-        $scope.chConfirm = function () {
-            if($scope.selectedSeats === $scope.resCount) {
-                $scope.enConfirm = true;
-            }
-            else
-                $scope.enConfirm = false;
-        };
-        
-        // ng click of the seats (within td of the table)
-        $scope.selectSeat = function($event){
-            var tmpStr = $event.currentTarget.id;
-
-            // substring of the span id will give the seat number
-            tmpStr = tmpStr.substr(2);
-
-            // toggle class, on each seat selection till the mentioned seats are selected
-            if(this.dynClass === "stEmpty") {
-                if($scope.selectedSeats < $scope.resCount){
-                    this.dynClass = "stSelected";
-                    $scope.selectedSeats +=1;
-                    $scope.selSeatNos.push(tmpStr);
-                } else
-                    showToast("Please Confirm Selection.", "warning"); // if selection exceeds the mentioned value
-            } else if (this.dynClass === 'stSelected') {
-                this.dynClass = "stEmpty";
-                $scope.selectedSeats -=1;
-                
-                // to remove the deselected seat number from the temporary selection array
-                var tmpIndex = $scope.selSeatNos.indexOf(tmpStr);
-                $scope.selSeatNos.splice(tmpIndex,1);
-            }
-            else
-                ; // do nothing
-
-            $scope.chConfirm();
-        };
-        
-        $scope.confirmSeats = function () {        
-            if($scope.selectedSeats < $scope.resCount){
-                showToast("Please Select Seats.", "warning");
-            }
-            else {
-                // transform the selected seats to reserved seats and update the booked history
-                var tmpObj = {};
-                var tmpElem;
-                for(i in $scope.selSeatNos){
-                    angular.element('#sp'+$scope.selSeatNos[i]).removeClass('stSelected').addClass('stReserved');
+        // UTILITY
+        $scope.findTimer = function (tmpName) {
+            var i, tmpFlag=false;
+            for(i=0; i < $scope.timerData.length; i++){
+                if(tmpName === $scope.timerData[i].timerName){
+                    tmpFlag = true;
+                    $scope.currentIndex = i;
+                    break;
                 }
-                tmpObj['name'] = $scope.resName;
-                tmpObj['nos'] = $scope.resCount;
-                tmpObj['seats'] = $scope.selSeatNos;
-                $scope.booked.push(tmpObj);
-                showToast("Seats Booked!", "success");
-                
-                // reset
-                $scope.init();
-                $scope.calculateSeats();
-            } 
+            }
         };
+        $scope.isDatePresent = function (tmpDate) {
+            var innerIndex = -1;
+            var tmpObj = $scope.timerData[$scope.currentIndex].pastData;
+            for(var dateKey in tmpObj){
+                if(tmpObj.hasOwnProperty(dateKey)){
+                    if(tmpObj[dateKey] === tmpDate){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        };
+        // END UTILITY
         
-    });
-    
-})();
+        // EVENTS
+        $scope.btnTimerClick = function() {
+            
+            if($scope.timerAction === "START"){
+                $scope.dynClass = "stopTimer";
+                $scope.timerAction = "STOP";
+                $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
+                showToast("Timer started successfully", "success");
+            } else {
+                $scope.dynClass = "startTimer";
+                $scope.timerAction = "START";
+                
+                var tmpCurrentTime = getTimeStamp();
+                var tmpDate = getDateVal($scope.timerData[$scope.currentIndex].startTime);
+                
+                var tmpHours = getHourDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime);
+                var tmpMinutes = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "min");
+                var tmpSeconds = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "sec");
+                /*var tmpHours = getHourDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT");
+                var tmpMinutes = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT", "min");
+                var tmpSeconds = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT", "sec");*/
 
-function showToast(msg,msgStatus) {
-    if(msgStatus === "success") {
-        $('#toast').css('background-color', '#DFF2BF');
-        $('#toast').css('color', '#4F8A10');
-    }
-    else if(msgStatus === "message") {
-        $('#toast').css('background-color', '#BDE5F8');
-        $('#toast').css('color', '#00529B');
-    }
-    else if (msgStatus === "warning"){
-        $('#toast').css('background-color', '#FEEFB3');
-        $('#toast').css('color', '#9F6000');
-    }
-    else
-        ;
-    
-    $('#toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
-}
+                console.log("data date: "+tmpDate);
+                console.log("Total Duration is: ");
+                console.log((tmpHours-1)+" Hours");
+                console.log((tmpMinutes-1)+" Minutes");
+                console.log(tmpSeconds + " Seconds");
+
+                // IF THE VALUE IS NON-ZERO
+                // DO A  - MINUS ONE - TO THE HOURS AND MINUTES
+                
+                /*if($scope.isDatePresent(tmpDate)){
+                    // CUMULATIVE
+                    
+                } else {
+                    ADD DATE ENTRY
+                }*/
+                
+                // DO THE MINUTES TO HOURS, SECONDS TO MINUTES
+                
+                // ADD THE NEW VALUE TO DATA ENTRY
+                
+                $scope.timerData[$scope.currentIndex].startTime = "";
+                showToast("Timer stopped", "message");
+            }
+        };
+        $scope.btnResetClick = function () {                
+            $scope.init();
+        };
+        $scope.btnSelectClick = function () {
+
+            // only if currentTimer is set
+            $scope.enTimer = true;
+            
+            $scope.findTimer($scope.currentTimer);
+            if($scope.currentIndex === -1){
+                $scope.currentIndex = $scope.timerData.length;
+                var tmpData = {};
+                tmpData['timerName'] = $scope.currentTimer;
+                tmpData['startTime'] = "";
+                tmpData['pastData'] = {};
+                $scope.timerData.push(tmpData);
+            } else {
+                if($scope.timerData[$scope.currentIndex].startTime !== ""){
+                    $scope.timerAction = "STOP";
+                    $scope.dynClass = "stopTimer";
+                    showToast("Timer already running", "warning");
+                }
+                else {
+                    $scope.timerAction = "START";
+                    $scope.dynClass = "startTimer";
+                }
+            }
+        };
+        // END EVENTS
+        
+        
+    }]); // MAINCTRL END
+
+})();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" ng-app="seatsApp">
+<html lang="en-US" ng-app="timerApp">
 <head>
 
     <meta charset="utf-8">
@@ -7,9 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<meta name="author" content="pragaas" />
-	<title>Primaseller - Coding Assignment</title>
-
-    <base target="_blank"/>
+	<title>Tevoted - Online Time Management Tool</title>
     
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" media="all" href="css/custom.css">
@@ -20,184 +18,74 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
+<!--<body>-->
 <body class="ng-cloak">
-    <span id='toast'></span>
-    <div class="container text-center my-custom-container" ng-controller="SeatSelectionCtrl">
+    <span id="sp_toast"></span>
+    <!--<div class="loader"></div>-->
+
+    <!--<div id="divOverlay">
+        <div class="divClose text-center"><u>Close</u></div>
+        <div id="divModal">
+            <label for="inp_timerName">Name</label><br/>
+            <input id="inp_timerName" name="inp_timerName" type="text" placeholder="" onkeydown="addTimer()" maxlength="15"/><br/><br/>
+            <input id="inp_timerName" name="inp_timerName" type="text" placeholder="" onkeydown="addTimer()" maxlength="15"/><br/><br/>
+            <button id="btn_cfmNew" type="submit" class="btn btn-submit">Confirm</button>
+        </div>
+    </div>-->
+    
+    <div class="container text-center" ng-controller="MainCtrl">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
-                <h2>MOVIE SEAT RESERVATION</h2>
-            </div>
-        </div>
-        <br />
-        <div class="row ">
-            <div class="col-lg-2">
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xs-6">
-                Name:
-                <input id="inpt_name" type="text" ng-model="resName" name="resName" class="text-left-padding underlined" ng-change="inputChanged()" maxlength="20"/>
-            </div>
-            <div class="col-lg-4 col-sm-6 col-xs-6">
-                Number of Seats:
-                <input id="inpt_count" type="number" limit-to="{{availableSeats}}" ng-model="resCount" name="resCount" class="text-left-padding" ng-change="inputChanged()" ng-maxlength="2" max="{{availableSeats}}" min="1"/>
-            </div>
-            <div class="col-lg-2">
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-                <input id="btn_strt" class="btn btn-primary" ng-disabled="!enStart" type="button" ng-click="startSelecting()" value="Start Selecting"/>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-              <div class="fullspan"><h4>SCREEN</h4></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12 col-sm-12 col-xs-12">
-                <table id="tbl_seats" class="tableSeats">
-                    <thead>
-                        <tr>
-                            <th ng-repeat="n in range('15')" ng-switch="$index"> 
-                                <span ng-switch-when="0"></span>
-                                <span ng-switch-when="6"></span>
-                                <span ng-switch-when="7"></span>
-                                <span ng-switch-default class="center-block">
-                                    {{$index > "6" | iif : $index-2 : $index}}
-                                </span>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">A</span>
-                                <span ng-switch-when="6"></span>
-                                <span ng-switch-when="7"></span>
-                                <span id="spA{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">B</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spB{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">C</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spC{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">D</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spD{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">E</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spE{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')">
-                                <span class="center-block" style="height:20px;"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">F</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spF{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">G</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spG{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">H</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spH{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">I</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spI{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="" ng-repeat="n in range('15')" ng-switch="$index">
-                                <span class="rowBold" ng-switch-when="0">J</span>
-                                <span ng-switch-when="6"></span><span ng-switch-when="7"></span>
-                                <span id="spJ{{$index>5 ? $index-2 : $index}}" ng-switch-default class="center-block seatBox {{dynClass}}" ng-class="{'chNotAllowed': !enSeats, 'chPointer': enSeats}" ng-click="!enSeats || selectSeat($event)"></span>
-                            </td>
-                        </tr>
-                </tbody>
-                </table>
-            </div>
-        </div>
-        <br />
-        <div class="row">
-            <div class="col-lg-8 col-sm-8 col-xs-8 text-right my-custom-right">
-                <input id="btn_cfm" class="btn btn-success" ng-disabled="(!enConfirm || enStart) ? true : false" type="button" ng-click="confirmSeats()" value="Confirm Selection"/>
-            </div>
-            <div class="col-lg-4 col-sm-4 col-xs-4">
-                <div class="div_ref">
-                    <table class="tableSeats">
-                        <tbody>
-                            <tr>
-                                <td class="stSelected seatBox"></td>
-                                <td class="text-left">Selected Seat</td>
-                            </tr>
-                            <tr>
-                                <td class="stReserved seatBox"></td>
-                                <td class="text-left">Reserved Seat</td>
-                            </tr>
-                            <tr>
-                                <td class="stEmpty seatBox"></td>
-                                <td class="text-left">Empty Seat</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="">
+                    <h1>TEVOTED</h1>
+                    <p>Time Management Tool</p>
                 </div>
             </div>
         </div>
-        <table id="tbl_reserved" border="1">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>No. Of Seats</th>
-                    <th>Seats</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="data in booked">
-                    <td>{{data.name}}</td>
-                    <td>{{data.nos}}</td>
-                    <td><span ng-repeat="seat in data.seats">{{seat}}<span ng-show="!$last">, </span></span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                <ul class="nav nav-tabs">
+                    <li ng-class="{ active: isSet(1) }" ng-click="setTab(1)" class="tabList">
+                        <a href class="tabAnchor">Register</a>
+                    </li>
+                    <li ng-class="{ active: isSet(2) }" ng-click="setTab(2)" class="tabList">
+                        <a href  class="tabAnchor">Data</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 col-xs-12">
+                    <div ng-show="isSet(1)">
+                        <div>
+                            <br/><br/>
+                            <div style="float:right;position:absolute;top50px;right:20px;"><button type="button" ng-click="btnResetClick()">RESET</button></div>
+                            <label for="inp_dispName">Give timer a name: </label>
+                            <input id="inp_dispName" name="inp_dispName" ng-model="currentTimer" type="text" placeholder="" maxlength="15"/>
+
+                            <button id="btn_select" class="btn btn-info" type="button" ng-click="btnSelectClick()">Select</button>
+                            <br/><br/>
+                            <div class="round-button" ng-class="dynClass" ng-click="btnTimerClick()" ng-show="enTimer">
+                                <div class="round-button-circle">
+                                <a href="" class="round-button">{{timerAction}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="isSet(2)">
+                        <div ng-show="ifData()">
+                        </div>
+                        <span ng-show="!ifData()">No data yet. Kindly register a new timer.</span>
+                    </div>
+            </div>
+        </div> <!-- row tabs-->
+    </div> <!-- container -->
 
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

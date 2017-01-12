@@ -5,12 +5,12 @@
 html,body {
     height: 100%;
     width: 100%;
-    min-width: 800px;
-    min-height: 600px;
+    min-width: 400px;
+    min-height: 500px;
     cursor: default;
 }
 
-#toast{
+#sp_toast{
     display:none;
     max-width:250px;
     height:auto;
@@ -28,96 +28,78 @@ html,body {
     box-shadow:0 0 24px -1px rgba(56,56,56,1)
 }
 
-.my-custom-container {
-    width:800px;
+/*
+.loader{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:9999;
+    background:url(images/page-loader.gif) 50% 50% no-repeat #f9f9f9;
+}
+*/
+
+.showTimer {
+    display: block;
 }
 
-.fullspan {
-    width: 100%;
-    height: 23px;
-    background-color: cadetblue;
+.hideTimer {
+    display: none;
 }
 
-.fullspan > h4 {
-    padding-top: 3px;
-    color: white;
+.startTimer {
+    opacity: 1;
 }
 
-.div_ref {
-    float: right;
+.stopTimer {
+    opacity: 0.5;
 }
 
-.text-left-padding {
-    padding-left: 10px;
+.round-button {
+	width:25%;
 }
-
-.my-custom-right {
-    padding-right: 50px;
-}
-
-input.underlined
-{
-   border:0;
-   border-bottom:solid 1px #000;
-   outline:none;
-}
-
-.tableSeats {
-    border-collapse: separate;
-    border-spacing: 1em;
-}
-
-th {
-    align-content: center;
-    text-align: center;
-}
-
-#tbl_seats {
-    width: 100%;
-}
-
-#tbl_reserved {
-    width: 73%;
-    float: left;
-    clear: both;
-    position: relative;
-    bottom: 50px;
-}
-
-#inpt_count {
-    width: 64px;
-}
-
-.rowBold {
-    font-weight: bold;
-}
-
-.seatBox {
-    height: 20px;
-    width: 20px;
-    border: 1px solid black;
-    
-}
-
-.stSelected {
-    background-color: chartreuse;
-    cursor: default;
-}
-
-.stReserved {
+.round-button-circle {
+	width: 100%;
+	height:0;
+	padding-bottom: 100%;
+    border-radius: 50%;
+    overflow:hidden;
     background-color: firebrick;
-    cursor: not-allowed;
+    box-shadow: 0 0 3px gray;
 }
 
-.stEmpty {
-    background-color: white;
-    cursor: pointer;
+.round-button-circle:hover {
+	background:#8B0000;
+    box-shadow: 0 0 10px gray;
 }
 
-.chNotAllowed {
-    cursor: not-allowed;
+.round-button a {
+    display:block;
+	float:left;
+	width:100%;
+	padding-top:50%;
+    padding-bottom:50%;
+	line-height:1em;
+	margin-top:-0.5em;
+    
+	text-align:center;
+	color:#e2eaf3;
+    font-family:Verdana;
+    font-size:1.2em;
+    font-weight:bold;
+    text-decoration:none;
 }
 
-.chPointer {
-    cursor: pointer;
+
+
+.tabList {
+    width: 50%;
+}
+
+.tabAnchor {
+    width: 100%;
+    height: inherit;
+    padding: 0;
+    margin: 0;
 }
