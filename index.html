@@ -74,7 +74,22 @@
                         </div>
                     </div>
                     <div ng-show="isSet(2)">
-                        <div ng-show="ifData()">
+                        <div id="div_timerData" ng-show="ifData()">
+                            <br/><br/>
+                            <div ng-repeat="timers in timerData">
+                                <span class="timerName">{{ timers.timerName | uppercase }}</span>
+                                <span ng-repeat="(key,value) in timers.pastData" >
+                                    <span class="timerContainer">
+                                        <span class="timerTitle">{{ key }}</span>
+                                        <br/>
+                                        <span class="timerValues">
+                                            <span ng-if="value | splitTime:',':0 | nonZero">{{value | splitTime:',':0 }} H, </span>
+                                            <span ng-if="value | splitTime:',':1 | nonZero">{{value | splitTime:',':1 }} M, </span>
+                                            <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </div>
                         </div>
                         <span ng-show="!ifData()">No data yet. Kindly register a new timer.</span>
                     </div>

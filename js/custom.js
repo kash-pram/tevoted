@@ -32,6 +32,13 @@ function getCalendar(year){
     }
     return daysIndex;
 }
+function makeDateAdjust(tmpValOne, tmpValTwo){
+    if((tmpValTwo/60) > 1){
+        tmpValOne = tmpValOne + parseInt(tmpValTwo / 60);
+        tmpValTwo = (tmpValTwo % 60);
+    }
+    return [tmpValOne,tmpValTwo];
+}
 function getDayDiff(tmpStartTime, tmpCurrentTime){
     // 11:Jan:2017
     var dayDiff = 0;

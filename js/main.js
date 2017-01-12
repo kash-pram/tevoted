@@ -1,6 +1,19 @@
 (function(){
     
     angular.module('timerApp', [])
+    .filter('splitTime', function() {
+        return function(input, splitChar, splitIndex) {
+            return input.split(splitChar)[splitIndex];
+        }
+    })
+    .filter('nonZero', function() {
+        return function(inputVal) {
+            if(parseInt(inputVal) !== 0)
+                return true;
+            else
+                return false;
+        }
+    })
     .controller('MainCtrl', ['$scope', function($scope) {
 
         // INITIALIZATION AKA RESET CODE
@@ -8,8 +21,16 @@
                 timerName: "dataOne",
                 startTime: "",
                 pastData: {
-                    "22-10-2017": "22-hrs/23-mins",
-                    "30-11-2016": "2-mins/32-secs"
+                    "12-Jan-2017": "22,23,58",
+                    "3-Dec-2015": "0,2,32",
+                    "4-Dec-2015": "0,2,32",
+                    "5-Dec-2015": "0,2,32",
+                    "6-Dec-2015": "0,2,32",
+                    "10-Dec-2015": "0,2,32",
+                    "12-Dec-2015": "0,2,32",
+                    "24-Dec-2015": "0,0,32",
+                    "16-Dec-2015": "0,2,32",
+                    "30-Nov-2016": "4,30,32"
                 }
             }];  // TO BE STORED IN DB
         $scope.cacheData = {};  // TO BE STORED IN DB
@@ -55,7 +76,7 @@
             var tmpObj = $scope.timerData[$scope.currentIndex].pastData;
             for(var dateKey in tmpObj){
                 if(tmpObj.hasOwnProperty(dateKey)){
-                    if(tmpObj[dateKey] === tmpDate){
+                    if(dateKey === tmpDate){
                         return true;
                     }
                 }
@@ -82,30 +103,50 @@
                 var tmpHours = getHourDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime);
                 var tmpMinutes = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "min");
                 var tmpSeconds = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "sec");
-                /*var tmpHours = getHourDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT");
-                var tmpMinutes = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT", "min");
-                var tmpSeconds = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 17:15:58 GMT", "sec");*/
-
-                console.log("data date: "+tmpDate);
-                console.log("Total Duration is: ");
-                console.log((tmpHours-1)+" Hours");
-                console.log((tmpMinutes-1)+" Minutes");
-                console.log(tmpSeconds + " Seconds");
-
-                // IF THE VALUE IS NON-ZERO
-                // DO A  - MINUS ONE - TO THE HOURS AND MINUTES
                 
-                /*if($scope.isDatePresent(tmpDate)){
-                    // CUMULATIVE
-                    
+                // TEST VALUES
+                /*var tmpHours = getHourDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT");
+                var tmpMinutes = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT", "min");
+                var tmpSeconds = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT", "sec");*/
+
+                tmpHours = parseInt(tmpHours);
+                tmpMinutes = parseInt(tmpMinutes);
+                tmpSeconds = parseInt(tmpSeconds);
+
+                // ADJUSTMENTS
+                if(tmpMinutes !== 0){
+                    tmpMinutes--;
+                }
+
+                if(tmpHours !== 0){
+                    tmpHours--;
+                }
+                
+                if($scope.isDatePresent(tmpDate)){
+                    // CUMULATE
+                    var tmpCumulate = $scope.timerData[$scope.currentIndex].pastData[tmpDate];
+                    var tmpCumArr = tmpCumulate.split(",");
+                    tmpHours = parseInt(tmpCumArr[0]) + tmpHours;
+                    tmpMinutes = parseInt(tmpCumArr[1]) + tmpMinutes;
+                    tmpSeconds = parseInt(tmpCumArr[2]) + tmpSeconds;
                 } else {
-                    ADD DATE ENTRY
-                }*/
+                    // NEW ENTRY
+                    $scope.timerData[$scope.currentIndex].pastData[tmpDate] = "";
+                }
                 
-                // DO THE MINUTES TO HOURS, SECONDS TO MINUTES
+                // ADJUSTMENTS
+                if((tmpSeconds/60) > 1){
+                        tmpMinutes = tmpMinutes + parseInt(tmpSeconds / 60);
+                        tmpSeconds = (tmpSeconds % 60);
+                }
+
+                if((tmpMinutes/60) > 1){
+                        tmpHours = tmpHours + parseInt(tmpMinutes / 60);
+                        tmpMinutes = (tmpMinutes % 60);
+                }
                 
-                // ADD THE NEW VALUE TO DATA ENTRY
-                
+                var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
+                $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
                 showToast("Timer stopped", "message");
             }

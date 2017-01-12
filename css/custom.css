@@ -8,6 +8,7 @@ html,body {
     min-width: 400px;
     min-height: 500px;
     cursor: default;
+    
 }
 
 #sp_toast{
@@ -28,17 +29,27 @@ html,body {
     box-shadow:0 0 24px -1px rgba(56,56,56,1)
 }
 
-/*
-.loader{
-    position:fixed;
-    left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    z-index:9999;
-    background:url(images/page-loader.gif) 50% 50% no-repeat #f9f9f9;
+#div_timerData {
+    
 }
-*/
+.timerContainer {
+    display: inline-block;
+    width: 150px;
+    border: 1px solid black;
+    margin: 10px;
+}
+.timerName {
+    display: block;
+    font-weight: bolder;
+}
+.timerTitle {
+    font-size: 1.2em;
+    font-style: oblique;
+    font-variant-caps: all-petite-caps;
+}
+.timerValues {
+    
+}
 
 .showTimer {
     display: block;
@@ -68,12 +79,10 @@ html,body {
     background-color: firebrick;
     box-shadow: 0 0 3px gray;
 }
-
 .round-button-circle:hover {
 	background:#8B0000;
     box-shadow: 0 0 10px gray;
 }
-
 .round-button a {
     display:block;
 	float:left;
@@ -91,12 +100,21 @@ html,body {
     text-decoration:none;
 }
 
-
+/*
+.loader{
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:9999;
+    background:url(images/page-loader.gif) 50% 50% no-repeat #f9f9f9;
+}
+*/
 
 .tabList {
     width: 50%;
 }
-
 .tabAnchor {
     width: 100%;
     height: inherit;
