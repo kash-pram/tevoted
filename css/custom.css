@@ -6,16 +6,20 @@ html,body {
     height: 100%;
     width: 100%;
     min-width: 500px;
-    min-height: 630px;
+    min-height: 650px;
     cursor: default;
-
+    /*overflow: hidden;*/
 }
 a:hover, a:active, a:focus {
     outline: 0;
     cursor: pointer;
     text-decoration: none;
 }
-
+input[readonly] {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #E0FFFF;
+}
 
 
 #sp_toast{
@@ -116,6 +120,14 @@ a:hover, a:active, a:focus {
 }
 
 /* ID BASED */
+/*#div_outerData{
+    overflow: hidden;
+    margin-bottom: 100px;
+}
+#div_innerData{
+    overflow-y: auto;
+    padding-right: 20px;
+}*/
 #inp_dispName {
     width: 230px;
 }
@@ -148,6 +160,7 @@ option {
     background:url(images/page-loader.gif) 50% 50% no-repeat #f9f9f9;
 }
 */
+
 
 .tabList {
     width: 50%;

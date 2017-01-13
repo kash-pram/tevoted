@@ -63,7 +63,7 @@
                             <div id="div_reset">
                                 <a ng-click="btnResetClick()">RESET</a>
                             </div>
-                            <input id="inp_dispName" class="input-lg" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" placeholder="Give timer a name"/>
+                            <input id="inp_dispName" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" placeholder="Give timer a name"/>
                             <datalist id="timerNames">
                                 <select ng-repeat="data in timerData">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
@@ -78,10 +78,11 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-show="isSet(2)">
-                        <div ng-show="ifData()">
+                    <div id="div_outerData" ng-show="isSet(2)">
+                        <div id="div_innerData" ng-show="ifData()">
                             <br/><br/>
                             <div ng-repeat="timers in timerData">
+                                <div ng-show="timers.pastData | nonEmpty">
                                 <span class="timerName">{{ timers.timerName | uppercase }}</span>
                                 <span ng-repeat="(key,value) in timers.pastData" >
                                     <span class="timerContainer">
@@ -94,6 +95,7 @@
                                         </span>
                                     </span>
                                 </span>
+                                </div>
                             </div>
                         </div>
                         <span ng-show="!ifData()">No data yet. Kindly register a new timer.</span>

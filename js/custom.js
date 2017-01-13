@@ -5,6 +5,14 @@ function getTimeStamp(){
     return utcDate;
 }
 /*
+    $('#inp_dispName').on('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+           event.preventDefault();
+           return false;
+        }
+    });
 function getCalendar(year){
     var monthsIndex = [Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec];
     var daysIndexStart = [];
@@ -150,68 +158,34 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 function disableInput(){
     $('#inp_dispName').attr('readonly', true);
     $('#btn_select').attr('disabled',true);
+    $('#div_reset').css("outline","1px solid #4682B4");
+    $('#div_reset').css("padding", "3px");
 }
 function enableInput(){
     $('#inp_dispName').attr('readonly', false);
     $('#btn_select').attr('disabled',false);
-}
-function closeOverlay(){
-    $('#divOverlay').hide();
-    $('#inp_timerName').val("");
+    $('#div_reset').css("outline","0");
+    $('#div_reset').css("padding", "0px");
 }
 
-function showOverlay(divName){
-    //var tmpStr = $('#'+divName).html();
-    //$('#divModal').html(tmpStr);
-    $('#divOverlay').show();
-    $('#inp_timerName').focus();
-}
 
-function addTimer() {
-    if(event.keyCode == 13) {
-        event.preventDefault();
-        addNewTimer();
-        closeOverlay();
-    }
-}
 
-function getScope(ctrlName) {
-    var sel = 'div[ng-controller="' + ctrlName + '"]';
-    return angular.element(sel).scope();
-}
-
-function addNewTimer(){
-    var $scope = getScope('MainCtrl');
-    $scope.curTimer = $('#inp_timerName').val();
-    $scope.$apply();
-    var tmpVal = $('#inp_timerName').val();
-    $('#inp_dispName').val(tmpVal);
-}
 
 $('document').ready(function() {
-    
-    // new timer click
-    $('#lnk_new').on('click', function(evnt){
-        evnt.stopPropagation();
-        showOverlay("test");
-    });
-    
-    // close overlay click
-    $('.divClose').on('click', function(evnt){
-        evnt.stopPropagation();
-        closeOverlay();
-    });
-    
-    // confirm new timer click
-    $('#btn_cfmNew').on('click', function(evnt){
-        evnt.stopPropagation();
-        evnt.preventDefault();
-        addNewTimer();
-        closeOverlay();
-    });
-    
-});
+    /*$("body").css("overflow", "hidden");*/
 
+    $('#inp_dispName').on('input', function() {
+        var c = this.selectionStart,
+            r = /[^A-Za-z0-9_\s]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+
+});
 
 // DECORATIONS
 function showToast(msg,msgStatus) {
@@ -235,3 +209,18 @@ function showToast(msg,msgStatus) {
 
 // loader image when the webpage loads for the first time
 /*$(window).on("load",function(){$(".loader").fadeOut("slow");});*/
+
+
+
+function getScope(ctrlName) {
+    var sel = 'div[ng-controller="' + ctrlName + '"]';
+    return angular.element(sel).scope();
+}
+function addNewTimer(){
+    var $scope = getScope('MainCtrl');
+    $scope.curTimer = $('#inp_timerName').val();
+    $scope.$apply();
+    var tmpVal = $('#inp_timerName').val();
+    $('#inp_dispName').val(tmpVal);
+}
+

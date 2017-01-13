@@ -14,6 +14,14 @@
                 return false;
         }
     })
+    .filter('nonEmpty', function() {
+        return function(inputObj) {
+            if(angular.equals(inputObj, {}))
+                return false;
+            else
+                return true;
+        }
+    })
     .controller('MainCtrl', ['$scope', function($scope) {
         // INITIALIZATION AKA RESET CODE
         $scope.timerData = [{
@@ -46,6 +54,11 @@
         
         // TAB CONTROLS
         $scope.setTab = function(newTab){
+            /*if(newTab === 1){
+              $("body").css("overflow", "hidden");
+            } else {
+              $("body").css("overflow", "auto");
+            }*/
           $scope.tab = newTab;
         };
         $scope.isSet = function(tabNum){
@@ -154,6 +167,13 @@
         $scope.btnResetClick = function () {                
             $scope.init();
             enableInput();
+        };
+        $scope.inpKeyPress = function ($event) {
+            var tmpKeyCode = $event.which || $event.keyCode;
+            if(tmpKeyCode === 13) {
+                $event.preventDefault();
+                $scope.btnSelectClick();
+            } 
         };
         $scope.btnSelectClick = function () {
             if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
