@@ -108,11 +108,6 @@
                 var tmpHours = getHourDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime);
                 var tmpMinutes = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "min");
                 var tmpSeconds = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "sec");
-                
-                // TEST VALUES
-                /*var tmpHours = getHourDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT");
-                var tmpMinutes = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT", "min");
-                var tmpSeconds = getMinSecDiff("Wed, 11 Jan 2017 17:15:10 GMT", "Wed, 11 Jan 2017 18:16:58 GMT", "sec");*/
 
                 tmpHours = parseInt(tmpHours);
                 tmpMinutes = parseInt(tmpMinutes);
@@ -180,8 +175,8 @@
                     }
                 }
             }
-            /*else
-                return false;*/
+            else
+                showToast("Kindly enter the timer name","warning");
         };
         // END EVENTS
         

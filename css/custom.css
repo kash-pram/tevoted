@@ -23,8 +23,9 @@ a:hover, a:active, a:focus {
     max-width:250px;
     height:auto;
     position:fixed;
-    left:46%;
-    top:50%;
+    left:39%;
+    right:39%;
+    bottom: 30px;
     background-color:rgba(192,192,192,1.0);
     z-index: 999;
     color:white;
@@ -76,6 +77,9 @@ a:hover, a:active, a:focus {
 
 .round-button {
 	width:25%;
+    position:absolute;
+    left:35%;
+    right:35%;
 }
 .round-button-circle {
 	width: 100%;
@@ -98,6 +102,7 @@ a:hover, a:active, a:focus {
     padding-bottom:50%;
 	line-height:1em;
 	margin-top:-0.5em;
+    left:0;
     
 	text-align:center;
 	color:#e2eaf3;
@@ -109,7 +114,7 @@ a:hover, a:active, a:focus {
 
 /* ID BASED */
 #inp_dispName {
-    width: 270px;
+    width: 230px;
 }
 option {
     cursor: default;
