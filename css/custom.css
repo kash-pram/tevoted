@@ -6,7 +6,7 @@ html,body {
     height: 100%;
     width: 100%;
     min-width: 500px;
-    min-height: 630px;
+    min-height: 600px;
     cursor: default;
 
 }
@@ -20,12 +20,12 @@ a:hover, a:active, a:focus {
 
 #sp_toast{
     display:none;
-    max-width:250px;
+    width:250px;
     height:auto;
     position:fixed;
-    left:39%;
-    right:39%;
-    bottom: 20%;
+    bottom: 10%;
+    left: 50%;
+    margin-left: -130px;
     background-color:rgba(192,192,192,1.0);
     z-index: 999;
     color:white;
@@ -37,9 +37,7 @@ a:hover, a:active, a:focus {
     box-shadow:0 0 24px -1px rgba(56,56,56,1)
 }
 
-#div_timerData {
-    
-}
+
 .timerContainer {
     display: inline-block;
     width: 150px;
@@ -59,6 +57,8 @@ a:hover, a:active, a:focus {
     
 }
 
+
+
 .showTimer {
     display: block;
 }
@@ -75,11 +75,14 @@ a:hover, a:active, a:focus {
     opacity: 0.5;
 }
 
+
+
 .round-button {
 	width:25%;
     position:absolute;
-    left:35%;
-    right:35%;
+    left:50%;
+    margin-left:-13%;
+    padding-top: 30px;
 }
 .round-button-circle {
 	width: 100%;
@@ -103,7 +106,7 @@ a:hover, a:active, a:focus {
 	line-height:1em;
 	margin-top:-0.5em;
     left:0;
-    
+    margin-left:0;
 	text-align:center;
 	color:#e2eaf3;
     font-family:Verdana;
