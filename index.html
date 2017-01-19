@@ -21,18 +21,6 @@
 <!--<body>-->
 <body class="ng-cloak">
     <span id="sp_toast"></span>
-    <!--<div class="loader"></div>-->
-
-    <!--<div id="divOverlay">
-        <div class="divClose text-center"><u>Close</u></div>
-        <div id="divModal">
-            <label for="inp_timerName">Name</label><br/>
-            <input id="inp_timerName" name="inp_timerName" type="text" placeholder="" onkeydown="addTimer()" maxlength="15"/><br/><br/>
-            <input id="inp_timerName" name="inp_timerName" type="text" placeholder="" onkeydown="addTimer()" maxlength="15"/><br/><br/>
-            <button id="btn_cfmNew" type="submit" class="btn btn-submit">Confirm</button>
-        </div>
-    </div>-->
-    
     <div class="container text-center" ng-controller="MainCtrl">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
@@ -65,7 +53,7 @@
                             </div>
                             <input id="inp_dispName" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" placeholder="Give timer a name"/>
                             <datalist id="timerNames">
-                                <select ng-repeat="data in timerData">
+                                <select ng-repeat="data in timerData | orderBy: 'timerName'">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
                                 </select>
                             </datalist>
@@ -81,7 +69,7 @@
                     <div id="div_outerData" ng-show="isSet(2)">
                         <div id="div_innerData" ng-show="ifData()">
                             <br/><br/>
-                            <div ng-repeat="timers in timerData">
+                            <div ng-repeat="timers in timerData | orderBy: 'timerName'">
                                 <div ng-show="timers.pastData | nonEmpty">
                                 <span class="timerName">{{ timers.timerName | uppercase }}</span>
                                 <span ng-repeat="(key,value) in timers.pastData" >
@@ -106,6 +94,7 @@
     <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>-->
     <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>

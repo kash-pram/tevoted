@@ -156,6 +156,12 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 
 // BUTTON CLICKS
 function disableInput(){
+    $('#inp_dispName').attr("data-toggle","hover"); 
+    $('#inp_dispName').attr("title","Input disabled");
+    $('#inp_dispName').attr("data-content","Use the reset option");
+    $('#inp_dispName').attr("data-trigger","hover");
+    /*$('[data-toggle="hover"]').popover({trigger: "hover"});*/
+    $('#inp_dispName').popover({trigger: "hover"});
     $('#inp_dispName').attr('readonly', true);
     $('#btn_select').attr('disabled',true);
     $('#div_reset').css("outline","1px solid #4682B4");
@@ -166,6 +172,7 @@ function enableInput(){
     $('#btn_select').attr('disabled',false);
     $('#div_reset').css("outline","0");
     $('#div_reset').css("padding", "0px");
+    // add class remove class for the reset
 }
 
 
@@ -207,8 +214,7 @@ function showToast(msg,msgStatus) {
     $('#sp_toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
 }
 
-// loader image when the webpage loads for the first time
-/*$(window).on("load",function(){$(".loader").fadeOut("slow");});*/
+
 
 
 
@@ -223,4 +229,3 @@ function addNewTimer(){
     var tmpVal = $('#inp_timerName').val();
     $('#inp_dispName').val(tmpVal);
 }
-

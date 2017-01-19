@@ -1,5 +1,4 @@
 (function(){
-    
     angular.module('timerApp', [])
     .filter('splitTime', function() {
         return function(input, splitChar, splitIndex) {
@@ -22,25 +21,35 @@
                 return true;
         }
     })
-    .controller('MainCtrl', ['$scope', function($scope) {
+    .factory('tevotedFactory', ['$http', '$q', function($http, $q){
+        var uriBuilder = 'data/data.json';
+        var deferred = $q.defer();
+        var getData = function (){
+            $http({
+              method: 'GET',
+              url: uriBuilder
+                }).then(function successCallback(response) {
+                    deferred.resolve(response.data);
+                }, function errorCallback(response) {
+                    console.log('Error', response.data);
+            });
+            return deferred.promise;
+        };
+        return {getData:getData};
+    }])
+    .controller('MainCtrl', ['$scope','tevotedFactory', function($scope, tevotedFactory) {
+        /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
+
+        $scope.timerData = [];
+        var uriBuilder = 'data/data.json';
+        $scope.getUsersFromLocal = function() {
+            tevotedFactory.getData().then(function(result) {
+                $scope.timerData = result;
+            });
+        };
+        $scope.getUsersFromLocal();
+
         // INITIALIZATION AKA RESET CODE
-        $scope.timerData = [{
-                timerName: "testData",
-                startTime: "",
-                pastData: {
-                    "12-Jan-2017": "22,23,58",
-                    "3-Dec-2015": "0,2,32",
-                    "4-Dec-2015": "0,2,32",
-                    "5-Dec-2015": "0,2,32",
-                    "6-Dec-2015": "0,2,32",
-                    "10-Dec-2015": "0,2,32",
-                    "12-Dec-2015": "0,2,32",
-                    "24-Dec-2015": "0,0,32",
-                    "16-Dec-2015": "0,2,32",
-                    "30-Nov-2016": "4,30,32"
-                }
-            }];  // TO BE STORED IN DB
-        $scope.cacheData = {};  // TO BE STORED IN DB
         $scope.init = function(){
             $scope.tab = 1;
             $scope.timerAction = "START";
@@ -51,11 +60,11 @@
         };
         $scope.init();
         // END INITIALIZATION AKA RESET CODE
-        
+
         // TAB CONTROLS
         $scope.setTab = function(newTab){
             /*if(newTab === 1){
-              $("body").css("overflow", "hidden");
+              $("#div_innerData").css("background-color", "#E0FFFF");
             } else {
               $("body").css("overflow", "auto");
             }*/
@@ -73,6 +82,11 @@
         // END TAB CONTROLS
         
         // UTILITY
+        $scope.saveToFile = function(){
+            /*$http.post($scope.uriBuilder, $scope.timerData).then(function(data) {
+                console.log(data);
+            });*/
+        };
         $scope.findTimer = function (tmpName) {
             var i;
             for(i=0; i < $scope.timerData.length; i++){
@@ -162,6 +176,7 @@
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
                 showToast("Timer stopped", "message");
+                $scope.saveToFile();
             }
         };
         $scope.btnResetClick = function () {                
@@ -196,11 +211,10 @@
                 }
             }
             else
-                showToast("Kindly enter the timer name","warning");
+                showToast("Kindly enter a timer name","warning");
         };
         // END EVENTS
-        
-        
+
     }]); // MAINCTRL END
 
 })();
