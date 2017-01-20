@@ -21,13 +21,27 @@
                 return true;
         }
     })
-    .factory('tevotedFactory', ['$http', '$q', function($http, $q){
-        var uriBuilder = 'data/data.json';
+    /*.factory('tevotedFactory', ['$http', '$q', function($http, $q){
         var deferred = $q.defer();
-        var getData = function (){
+        var getData = function (uriName){
             $http({
               method: 'GET',
-              url: uriBuilder
+              url: uriName
+                }).then(function successCallback(response) {
+                    deferred.resolve(response.data);
+                }, function errorCallback(response) {
+                    console.log('Error', response.data);
+            });
+            return deferred.promise;
+        };
+        return {getData:getData};
+    }])*/
+    .factory('tevotedService', ['$http', '$q', function($http, $q){
+        var deferred = $q.defer();
+        var getData = function (uriName){
+            $http({
+              method: 'GET',
+              url: uriName
                 }).then(function successCallback(response) {
                     deferred.resolve(response.data);
                 }, function errorCallback(response) {
@@ -37,13 +51,14 @@
         };
         return {getData:getData};
     }])
-    .controller('MainCtrl', ['$scope','tevotedFactory', function($scope, tevotedFactory) {
+    .controller('MainCtrl', ['$scope','tevotedService', function($scope, tevotedService) {
         /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
 
         $scope.timerData = [];
-        var uriBuilder = 'data/data.json';
+        var uriName = 'data/data.json';
+
         $scope.getUsersFromLocal = function() {
-            tevotedFactory.getData().then(function(result) {
+            tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
             });
         };
