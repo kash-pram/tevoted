@@ -4,11 +4,14 @@ var Promise = require('bluebird');
 //var MongoClient = Promise.promisifyAll(require('mongodb')).MongoClient;
 var port = 80 ;
 
-var Server = require("mongo-sync").Server;
-var uri = "mongodb://localhost/";
-var server = new Server(uri);
+//var Server = require("mongo-sync").Server;
+//var uri = "mongodb://localhost/";
+//var server = new Server(uri);
+var mongojs = require('mongojs');
 
-//var url = 'mongodb://localhost/tevotedDB';
+var url = 'mongodb://localhost/tevotedDB';
+var db = mongojs(url);
+var mycollection = db.collection('timerData');
 var timerData = [];
 
 app.use(function(req, res, next) {
@@ -20,9 +23,15 @@ app.use(function(req, res, next) {
 });
 
 app.get("/",function(req,res){
-    var result = server.db("tevotedDB").getCollection("timerData").find().toArray();
-    timerData.push(result);
-    res.send(timerData);
+    //var result = server.db("tevotedDB").getCollection("timerData").find().toArray();
+    db.mycollection.find(function (err, docs) {
+    // docs is an array of all the documents in mycollection
+        res.send(docs);
+    });
+
+    //timerData.push(result);
+
+    //res.send(timerData);
     //res.send(result);
     //res.send(JSON.stringify(result));
     //res.send(JSON.stringify(timerData));
