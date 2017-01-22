@@ -1,10 +1,14 @@
 var express = require('express');
 var app = express();
 var Promise = require('bluebird');
-var MongoClient = Promise.promisifyAll(require('mongodb')).MongoClient;
+//var MongoClient = Promise.promisifyAll(require('mongodb')).MongoClient;
 var port = 80 ;
 
-var url = 'mongodb://localhost/tevotedDB';
+var Server = require("mongo-sync").Server;
+var uri = "mongodb://localhost/";
+var server = new Server(uri);
+
+//var url = 'mongodb://localhost/tevotedDB';
 var timerData = [];
 
 app.use(function(req, res, next) {
@@ -16,7 +20,18 @@ app.use(function(req, res, next) {
 });
 
 app.get("/",function(req,res){
-    MongoClient.connectAsync(url)
+    var result = server.db("tevotedDB").getCollection("timerData").find().toArray();
+    timerData.push(result);
+    res.send(timerData);
+    //res.send(result);
+    //res.send(JSON.stringify(result));
+    //res.send(JSON.stringify(timerData));
+
+
+    // server.close(); TO CLOSE IS MUST
+
+
+    /*MongoClient.connectAsync(url)
         .then(function(db){
             return db.collection('timerData').findAsync({})
         })
@@ -31,8 +46,8 @@ app.get("/",function(req,res){
         })
         .finally(){
             db.close();
-        }
-    //});
+        }*/
+
 });
 
 app.listen(port);
