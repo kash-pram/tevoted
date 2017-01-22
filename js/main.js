@@ -56,7 +56,7 @@
 
         $scope.timerData = [];
         //var uriName = 'data/data.json';
-        var uriName = "http://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
+        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
 
         $scope.getUsersFromLocal = function() {
             tevotedService.getData(uriName).then(function(result) {
