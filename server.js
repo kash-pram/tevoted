@@ -35,15 +35,28 @@ app.get("/",function(req,res){
 
 app.put("/", function(req,res){
     var mongoDoc = req.body;
+    var docID = mongoDoc['_id'];
     var docName = mongoDoc.timerName;
-var docID = mongoDoc['_id'];
-    //var oneDoc = mycollection.findOne({timerName:docName});
-//    if(docID === "")
-console.log(docID);
-         mycollection.save(mongoDoc);
-//    mycollection.save(document,function(){
-//       console.log('successfully updated DB') ;
-  //  });
+    var docTime = mongoDoc.startTime;
+    var docData = mongoDoc.pastData;
+    var tmpObj = {};
+
+    if(docID.length === 0){
+        tmpObj = {
+            timerName: docName,
+            startTime: docTime,
+            pastData: docData
+        };
+    } else {
+        tmpObj = {
+            _id: ObjectId(docID),
+            timerName: docName,
+            startTime: docTime,
+            pastData: docData
+        };
+    }
+    mycollection.save(tmpObj);
+    
     mycollection.find(function (err, docs) {
        res.send(docs);
     });
