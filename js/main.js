@@ -36,6 +36,24 @@
         };
         return {getData:getData};
     }])*/
+    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
+        var deferred = $q.defer();
+        var updateData = function(uriName, dataObj){
+            console.log(uriName);
+            console.log(dataObj);
+            $http({
+              method: 'PUT',
+              data: dataObj,
+              url: uriName
+                }).then(function successCallback(response) {
+                    deferred.resolve(response.data);
+                }, function errorCallback(response) {
+                    console.log('Error', response.data);
+            });
+            return deferred.promise;
+        }
+        return {updateData:updateData};
+    }])
     .factory('tevotedService', ['$http', '$q', function($http, $q){
         var deferred = $q.defer();
         var getData = function (uriName){
@@ -51,19 +69,19 @@
         };
         return {getData:getData};
     }])
-    .controller('MainCtrl', ['$scope','tevotedService', function($scope, tevotedService) {
+    .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', function($scope, tevotedService, tevotedUpdateService) {
         /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
 
         $scope.timerData = [];
         //var uriName = 'data/data.json';
         var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
 
-        $scope.getUsersFromLocal = function() {
+        $scope.getTimerData = function() {
             tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
             });
         };
-        $scope.getUsersFromLocal();
+        $scope.getTimerData();
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
@@ -98,10 +116,15 @@
         // END TAB CONTROLS
         
         // UTILITY
-        $scope.saveToFile = function(){
-            /*$http.post($scope.uriBuilder, $scope.timerData).then(function(data) {
-                console.log(data);
-            });*/
+        $scope.saveToServer = function(){
+            var tmpObj = {
+                "timerName" : $scope.timerData[$scope.currentIndex].timerName,
+                "startTime" : $scope.timerData[$scope.currentIndex].startTime,
+                "pastData" : $scope.timerData[$scope.currentIndex].pastData
+            };
+            tevotedUpdateService.updateData(uriName, tmpObj).then(function(response){
+                // hide loading spinner
+            });
         };
         $scope.findTimer = function (tmpName) {
             var i;
@@ -192,7 +215,7 @@
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
                 showToast("Timer stopped", "message");
-                $scope.saveToFile();
+                $scope.saveToServer();
             }
         };
         $scope.btnResetClick = function () {                
