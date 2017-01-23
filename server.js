@@ -1,7 +1,13 @@
 var express = require('express');
 var app = express();
-var port = 80 ;
-
+var port = 443 ;
+var https = require('https');
+var http = require('http');
+var fs = require('fs');
+var options = {
+  key: fs.readFileSync('./privatekey.pem'),
+  cert: fs.readFileSync('./server.crt')
+};
 var mongojs = require('mongojs');
 
 var url = 'mongodb://localhost/tevotedDB';
@@ -24,5 +30,8 @@ app.get("/",function(req,res){
 
 });
 
-app.listen(port);
+var server = https.createServer(options,app);
+var httpserver = http.createServer(app);
+httpserver.listen(80);
+server.listen(port);
 
