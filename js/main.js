@@ -121,7 +121,7 @@
                 "startTime" : $scope.timerData[$scope.currentIndex].startTime,
                 "pastData" : $scope.timerData[$scope.currentIndex].pastData
             };
-            tevotedUpdateService.updateData(uriName, tmpObj).then(function(response){
+            tevotedUpdateService.updateData(uriName, tmpObj).then(function(result){
                 $scope.timerData = result;
                 showToast("Server update success", "success");
             });
