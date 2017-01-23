@@ -5,7 +5,7 @@ var http = require('http');
 var fs = require('fs');
 var options = {
   key: fs.readFileSync('./privatekey.pem'),
-  cert: fs.readFileSync('./server.crt')
+  cert: fs.readFileSync('./crtserver.crt')
 };
 var mongojs = require('mongojs');
 
@@ -27,6 +27,11 @@ app.get("/",function(req,res){
         res.send(docs);
     });
 
+});
+
+app.put("/", function(req,res){
+    console.log(req.params);
+res.send('success');
 });
 
 var server = https.createServer(options,app);
