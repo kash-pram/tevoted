@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var port = 443 ;
 var https = require('https');
 var http = require('http');
 var fs = require('fs');
@@ -33,5 +32,5 @@ app.get("/",function(req,res){
 var server = https.createServer(options,app);
 var httpserver = http.createServer(app);
 httpserver.listen(80);
-server.listen(port);
+server.listen(443);
 
