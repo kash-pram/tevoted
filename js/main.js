@@ -39,8 +39,6 @@
     .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
         var deferred = $q.defer();
         var updateData = function(uriName, dataObj){
-            console.log(uriName);
-            console.log(dataObj);
             $http({
               method: 'PUT',
               data: dataObj,
@@ -71,17 +69,6 @@
     }])
     .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', function($scope, tevotedService, tevotedUpdateService) {
         /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
-
-        $scope.timerData = [];
-        //var uriName = 'data/data.json';
-        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
-
-        $scope.getTimerData = function() {
-            tevotedService.getData(uriName).then(function(result) {
-                $scope.timerData = result;
-            });
-        };
-        $scope.getTimerData();
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
@@ -116,14 +103,27 @@
         // END TAB CONTROLS
         
         // UTILITY
+        $scope.timerData = [];
+        //var uriName = 'data/data.json';
+        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
+
+        $scope.getTimerData = function() {
+            tevotedService.getData(uriName).then(function(result) {
+                $scope.timerData = result;
+            });
+        };
+        $scope.getTimerData();
+        
         $scope.saveToServer = function(){
             var tmpObj = {
+                "_id" : $scope.timerData[$scope.currentIndex]._id,
                 "timerName" : $scope.timerData[$scope.currentIndex].timerName,
                 "startTime" : $scope.timerData[$scope.currentIndex].startTime,
                 "pastData" : $scope.timerData[$scope.currentIndex].pastData
             };
             tevotedUpdateService.updateData(uriName, tmpObj).then(function(response){
-                // hide loading spinner
+                $scope.timerData = result;
+                showToast("Server update success", "success");
             });
         };
         $scope.findTimer = function (tmpName) {
@@ -157,6 +157,7 @@
                 if($scope.currentIndex === -1){
                     $scope.currentIndex = $scope.timerData.length;
                     var tmpData = {};
+                    tmpData['_id'] = "";
                     tmpData['timerName'] = $scope.currentTimer;
                     tmpData['startTime'] = "";
                     tmpData['pastData'] = {};

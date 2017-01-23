@@ -13,6 +13,10 @@ var url = 'mongodb://localhost/tevotedDB';
 var db = mongojs(url);
 var mycollection = db.collection('timerData');
 var timerData = [];
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
@@ -30,8 +34,19 @@ app.get("/",function(req,res){
 });
 
 app.put("/", function(req,res){
-    console.log(req.params);
-res.send('success');
+    var mongoDoc = req.body;
+    var docName = mongoDoc.timerName;
+var docID = mongoDoc['_id'];
+    //var oneDoc = mycollection.findOne({timerName:docName});
+//    if(docID === "")
+console.log(docID);
+         mycollection.save(mongoDoc);
+//    mycollection.save(document,function(){
+//       console.log('successfully updated DB') ;
+  //  });
+    mycollection.find(function (err, docs) {
+       res.send(docs);
+    });
 });
 
 var server = https.createServer(options,app);
