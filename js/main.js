@@ -55,7 +55,8 @@
         /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
 
         $scope.timerData = [];
-        var uriName = 'data/data.json';
+        //var uriName = 'data/data.json';
+        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
 
         $scope.getUsersFromLocal = function() {
             tevotedService.getData(uriName).then(function(result) {
