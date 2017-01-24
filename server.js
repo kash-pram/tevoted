@@ -33,6 +33,18 @@ app.get("/",function(req,res){
 
 });
 
+app.put("/delete", function(req,res){
+    var mongoDoc = req.body;
+    console.log('START ',mongoDoc);
+    mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){
+        //mycollection.update({timerName: mongoDoc.timerName}, mongoDoc)
+        console.log('FOUND ',docs,' END');
+        mycollection.find(function (err, docs) {
+            res.send(docs);
+        });
+    };
+});
+
 app.put("/", function(req,res){
     var mongoDoc = req.body;
     var docID = mongoDoc['_id'];

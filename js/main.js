@@ -52,8 +52,24 @@
         };
         return {updateData:updateData};
     }])*/
-    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
+    .factory('tevotedUpdateService', ['$http', function($http){
         var updateData = function(uriName, dataObj){
+            return $http({
+              method: 'PUT',
+              data: dataObj,
+              url: uriName
+            })
+            .then(function successCallback(response) {
+                return response.data;
+            })
+            .catch(function errorCallback(err) {
+                throw err;
+            });
+        };
+        return {updateData:updateData};
+    }])
+    .factory('tevotedDeleteService', ['$http', function($http){
+        var deleteData = function(uriName, dataObj){
             return $http({
               method: 'PUT',
               data: dataObj,
@@ -83,7 +99,7 @@
         };
         return {getData:getData};
     }])
-    .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', function($scope, tevotedService, tevotedUpdateService) {
+    .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', 'tevotedDeleteService', function($scope, tevotedService, tevotedUpdateService, tevotedDeleteService) {
 
         $scope.timerData = [];
         var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
@@ -144,7 +160,8 @@
             .catch(function(errorData) {
                 console.log('PUT ERROR');
             });
-            /*tevotedUpdateService.updateData(uriName, tmpObj).then(function(resolved) {
+            /*tevotedUpdateService.updateData(uriName, tmpObj)
+            .then(function(resolved) {
                 $scope.timerData = resolved;
             }, function(rejected){
                 console.log('PUT rejected');
@@ -253,6 +270,14 @@
                 $event.preventDefault();
                 $scope.btnSelectClick();
             } 
+        };
+        $scope.btnDeleteClick = function (thosID, thosDate) {
+            tevotedDeleteService.deleteData(uriName+'/delete',{timerName:thosID,pastDataDate:thosDate}).then(function(result){
+                $scope.timerData = result;
+            }).catch(function(errorData) {
+                console.log('DELETE ERROR');
+            });
+            //console.log(thosID,' ',thosDate);
         };
         $scope.btnSelectClick = function () {
             if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
