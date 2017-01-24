@@ -206,6 +206,20 @@
                     $scope.timerData.push(tmpData);
                 }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
+    var tmpObj = {
+        "_id" : $scope.timerData[$scope.currentIndex]._id,
+        "timerName" : $scope.timerData[$scope.currentIndex].timerName,
+        "startTime" : $scope.timerData[$scope.currentIndex].startTime,
+        "pastData" : $scope.timerData[$scope.currentIndex].pastData,
+        "method" : "update"
+    };
+    tevotedUpdateService.updateData(uriName, tmpObj)
+    .then(function(resolved) {
+        // $scope.timerData = resolved;
+    })
+    .catch(function(errorData) {
+        console.log('START ERROR');
+    });
                 showToast("Timer started successfully", "success");
             } else {
                 $scope.dynClass = "startTimer";

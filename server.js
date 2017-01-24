@@ -63,11 +63,15 @@ app.put("/", function(req,res){
         var mongoName = mongoDoc.timerName;
         var _unset = {};
         _unset[mongoDate] = "";
+        console.log('before update');
         mycollection.update( { timerName: mongoName }, { $unset: _unset } ).then(function(){
+            console.log('inside update');
             mycollection.find(function (err, docs) {
+                console.log('inside send');
                 res.send(docs);
             });
-        };
+        });
+        console.log('after update');
     }
 
     if(tmpObj != undefined){ // change condition to check object is empty
