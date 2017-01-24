@@ -35,14 +35,12 @@ app.get("/",function(req,res){
 
 app.put("/", function(req,res){
     var mongoDoc = req.body;
-
-
     if(mongoDoc.method === "update"){
-        var tmpObj = {};
         var docID = mongoDoc['_id'];
         var docName = mongoDoc.timerName;
         var docTime = mongoDoc.startTime;
         var docData = mongoDoc.pastData;
+        var tmpObj = {};
 
         if(docID.length === 0){
             tmpObj = {
@@ -60,23 +58,22 @@ app.put("/", function(req,res){
         }
     } else {
         var mongoDate = "pastData."+ mongoDoc.timerDate;
-        var mongoName = mongoDoc.timerName;
-        var _unset = {};
-        _unset[mongoDate] = "";
-        mycollection.update( { timerName: mongoName }, { $unset: _unset } ).then(function(){
+        var mongoVal = mongoDoc.timerValue;
+        mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){ // NOT NEEDED
+             mycollection.update({timerName: mongoDoc.timerName}, {$unset: {mongoDate : mongoVal}});
+            
+            console.log('FOUND ',docs,' END');
             mycollection.find(function (err, docs) {
                 res.send(docs);
             });
-        };
+        });
     }
-
-    if(tmpObj != undefined){ // change condition to check object is empty
+    
+    if(tmpObj != undefined){                  
         mycollection.save(tmpObj, function(){
-            if(tmpObj['startTime'] === ""){
-                mycollection.find(function (err, docs) {
-                    res.send(docs);
-                });
-            }
+            mycollection.find(function (err, docs) {
+                res.send(docs);
+            });
         });
     }
 });
