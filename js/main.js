@@ -215,7 +215,7 @@
     };
     tevotedUpdateService.updateData(uriName, tmpObj)
     .then(function(resolved) {
-        // $scope.timerData = resolved;
+         $scope.timerData = resolved;
     })
     .catch(function(errorData) {
         console.log('START ERROR');

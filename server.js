@@ -43,14 +43,16 @@ app.put("/", function(req,res){
         var docName = mongoDoc.timerName;
         var docTime = mongoDoc.startTime;
         var docData = mongoDoc.pastData;
-
+console.log('inside update');
         if(docID.length === 0){
             tmpObj = {
                 timerName: docName,
                 startTime: docTime,
                 pastData: docData
             };
+console.log('inside no ID');
         } else {
+console.log('inside with ID');
             tmpObj = {
                 _id: ObjectId(docID),
                 timerName: docName,
@@ -59,12 +61,13 @@ app.put("/", function(req,res){
             };
         }
     } else {
+console.log('inside delte');
         var mongoDate = "pastData."+ mongoDoc.timerDate;
         var mongoName = mongoDoc.timerName;
         var _unset = {};
         _unset[mongoDate] = "";
         console.log('before update');
-        mycollection.update( { timerName: mongoName }, { $unset: _unset } ).then(function(){
+        mycollection.update( { timerName: mongoName }, { $unset: _unset }, function(){
             console.log('inside update');
             mycollection.find(function (err, docs) {
                 console.log('inside send');
@@ -75,15 +78,15 @@ app.put("/", function(req,res){
     }
 
     if(tmpObj != undefined){ // change condition to check object is empty
+console.log('inside not undefined');
         mycollection.save(tmpObj, function(){
-            if(tmpObj['startTime'] === ""){
                 mycollection.find(function (err, docs) {
                     res.send(docs);
                 });
-            }
         });
     }
 });
+
 
 var server = https.createServer(options,app);
 var httpserver = http.createServer(app);
