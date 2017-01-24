@@ -272,13 +272,17 @@
                 $scope.btnSelectClick();
             } 
         };
-        $scope.btnDeleteClick = function (thosID, thosDate) {
-            tevotedDeleteService.deleteData(uriName,{timerName:thosID,pastDataDate:thosDate,method:"delete"}).then(function(result){
+        $scope.btnDeleteClick = function (timerName, timerDate, timerVal) {
+            tevotedDeleteService.deleteData(uriName, {
+                timerName:timerName,
+                timerDate:timerDate,
+                timerValue:timerVal,
+                method:"delete"
+            }).then(function(result){
                 $scope.timerData = result;
             }).catch(function(errorData) {
                 console.log('DELETE ERROR');
             });
-            //console.log(thosID,' ',thosDate);
         };
         $scope.btnSelectClick = function () {
             if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){

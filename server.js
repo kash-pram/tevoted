@@ -57,9 +57,8 @@ app.put("/", function(req,res){
             };
         }
     } else {
-        console.log('START ',mongoDoc);
-        mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){
-            //mycollection.update({timerName: mongoDoc.timerName}, mongoDoc)
+        mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){ // NOT NEEDED
+            mycollection.update({timerName: mongoDoc.timerName}, {$unset: {mongoDoc.timerDate : mongoDoc.timerValue}});
             
             console.log('FOUND ',docs,' END');
             mycollection.find(function (err, docs) {
@@ -68,7 +67,7 @@ app.put("/", function(req,res){
         });
     }
     
-    if(tmpObj.timerName != undefined){                  
+    if(tmpObj != undefined){                  
         mycollection.save(tmpObj, function(){
             mycollection.find(function (err, docs) {
                 res.send(docs);
