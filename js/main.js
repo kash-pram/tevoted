@@ -36,9 +36,9 @@
         };
         return {getData:getData};
     }])*/
-    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
-        var df = $q.defer();
+/*    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
         var updateData = function(uriName, dataObj){
+            var df = $q.defer();
             $http({
               method: 'PUT',
               data: dataObj,
@@ -46,29 +46,47 @@
                 }).then(function successCallback(response) {
                     df.resolve(response.data);
                 }, function errorCallback(response) {
-                    console.log('Error', response.data);
+                    df.reject(response.data);
             });
             return df.promise;
-        }
+        };
+        return {updateData:updateData};
+    }])*/
+    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
+        var updateData = function(uriName, dataObj){
+            return $http({
+              method: 'PUT',
+              data: dataObj,
+              url: uriName
+            })
+            .then(function successCallback(response) {
+                return response.data;
+            })
+            .catch(function errorCallback(err) {
+                throw err;
+            });
+        };
         return {updateData:updateData};
     }])
     .factory('tevotedService', ['$http', '$q', function($http, $q){
-        var deferred = $q.defer();
         var getData = function (uriName){
+            var deferred = $q.defer();
             $http({
               method: 'GET',
               url: uriName
                 }).then(function successCallback(response) {
                     deferred.resolve(response.data);
                 }, function errorCallback(response) {
-                    console.log('Error', response.data);
+                    deferred.reject(response.data);
             });
             return deferred.promise;
         };
         return {getData:getData};
     }])
     .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', function($scope, tevotedService, tevotedUpdateService) {
-        /*$http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";*/
+
+        $scope.timerData = [];
+        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
@@ -103,12 +121,11 @@
         // END TAB CONTROLS
         
         // UTILITY
-        $scope.timerData = [];
-        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
-
         $scope.getTimerData = function() {
             tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
+            }, function(reject){
+                console.log('GET rejected');
             });
         };
         $scope.getTimerData();
@@ -120,14 +137,18 @@
                 "startTime" : $scope.timerData[$scope.currentIndex].startTime,
                 "pastData" : $scope.timerData[$scope.currentIndex].pastData
             };
-            tevotedUpdateService.updateData(uriName, tmpObj).then(function(result) {
-            var tmpArr = $scope.timerData;
-            console.log(tmpArr);
-                $scope.timerData = result;
-            console.log($scope.timerData);
-            console.log(result);
-            console.log('end');
+            tevotedUpdateService.updateData(uriName, tmpObj)
+            .then(function(resolved) {
+                $scope.timerData = resolved;
+            })
+            .catch(function(errorData) {
+                console.log('PUT ERROR');
             });
+            /*tevotedUpdateService.updateData(uriName, tmpObj).then(function(resolved) {
+                $scope.timerData = resolved;
+            }, function(rejected){
+                console.log('PUT rejected');
+            });*/
         };
         $scope.findTimer = function (tmpName) {
             var i;
