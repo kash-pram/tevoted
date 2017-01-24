@@ -104,7 +104,6 @@
         
         // UTILITY
         $scope.timerData = [];
-        //var uriName = 'data/data.json';
         var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
 
         $scope.getTimerData = function() {
@@ -122,13 +121,12 @@
                 "pastData" : $scope.timerData[$scope.currentIndex].pastData
             };
             tevotedUpdateService.updateData(uriName, tmpObj).then(function(result) {
-                //$scope.timerData = result;
-                //$scope.$apply(function(){
-                    //return function(){}
-                console.log($scope.timerData);
-                    $scope.timerData = result;
-                console.log($scope.timerData);
-                //});
+            var tmpArr = $scope.timerData;
+            console.log(tmpArr);
+                $scope.timerData = result;
+            console.log($scope.timerData);
+            console.log(result);
+            console.log('end');
             });
         };
         $scope.findTimer = function (tmpName) {

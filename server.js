@@ -33,10 +33,6 @@ app.get("/",function(req,res){
 
 });
 
-function saveWithPromise(){
-    
-}
-
 app.put("/", function(req,res){
     var mongoDoc = req.body;
     var docID = mongoDoc['_id'];
@@ -59,13 +55,11 @@ app.put("/", function(req,res){
             pastData: docData
         };
     }
+
     mycollection.save(tmpObj, function(){
-        console.log('done save');
-    });
-    
-    mycollection.find(function (err, docs) {
-        console.log('done find');
-       res.send(docs);
+        mycollection.find(function (err, docs) {
+            res.send(docs);
+        });
     });
 });
 
@@ -73,4 +67,3 @@ var server = https.createServer(options,app);
 var httpserver = http.createServer(app);
 httpserver.listen(80);
 server.listen(443);
-
