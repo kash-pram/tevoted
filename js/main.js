@@ -82,7 +82,7 @@
                 throw err;
             });
         };
-        return {updateData:updateData};
+        return {deleteData:deleteData};
     }])
     .factory('tevotedService', ['$http', '$q', function($http, $q){
         var getData = function (uriName){
