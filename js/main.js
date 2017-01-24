@@ -37,18 +37,18 @@
         return {getData:getData};
     }])*/
     .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
-        var deferred = $q.defer();
+        var df = $q.defer();
         var updateData = function(uriName, dataObj){
             $http({
               method: 'PUT',
               data: dataObj,
               url: uriName
                 }).then(function successCallback(response) {
-                    deferred.resolve(response.data);
+                    df.resolve(response.data);
                 }, function errorCallback(response) {
                     console.log('Error', response.data);
             });
-            return deferred.promise;
+            return df.promise;
         }
         return {updateData:updateData};
     }])
@@ -121,9 +121,14 @@
                 "startTime" : $scope.timerData[$scope.currentIndex].startTime,
                 "pastData" : $scope.timerData[$scope.currentIndex].pastData
             };
-            tevotedUpdateService.updateData(uriName, tmpObj).then(function(result){
-                $scope.timerData = result;
-                showToast("Server update success", "success");
+            tevotedUpdateService.updateData(uriName, tmpObj).then(function(result) {
+                //$scope.timerData = result;
+                //$scope.$apply(function(){
+                    //return function(){}
+                console.log($scope.timerData);
+                    $scope.timerData = result;
+                console.log($scope.timerData);
+                //});
             });
         };
         $scope.findTimer = function (tmpName) {
