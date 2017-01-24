@@ -33,11 +33,6 @@ app.get("/",function(req,res){
 
 });
 
-app.put("/delete", function(req,res){
-    var mongoDoc = req.body;
-    
-});
-
 app.put("/", function(req,res){
     var mongoDoc = req.body;
     if(mongoDoc.method === "update"){

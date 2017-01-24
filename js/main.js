@@ -151,7 +151,8 @@
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
                 "timerName" : $scope.timerData[$scope.currentIndex].timerName,
                 "startTime" : $scope.timerData[$scope.currentIndex].startTime,
-                "pastData" : $scope.timerData[$scope.currentIndex].pastData
+                "pastData" : $scope.timerData[$scope.currentIndex].pastData,
+                "method" : "update"
             };
             tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
@@ -272,7 +273,7 @@
             } 
         };
         $scope.btnDeleteClick = function (thosID, thosDate) {
-            tevotedDeleteService.deleteData(uriName+'/delete',{timerName:thosID,pastDataDate:thosDate}).then(function(result){
+            tevotedDeleteService.deleteData(uriName,{timerName:thosID,pastDataDate:thosDate,method:"delete"}).then(function(result){
                 $scope.timerData = result;
             }).catch(function(errorData) {
                 console.log('DELETE ERROR');
