@@ -20,8 +20,8 @@ app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
+    res.header('Access-Control-Allow-Origin', "https://tevoted.github.io");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT');
     res.header('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
     next();
 });
@@ -35,44 +35,51 @@ app.get("/",function(req,res){
 
 app.put("/delete", function(req,res){
     var mongoDoc = req.body;
-    console.log('START ',mongoDoc);
-    mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){
-        //mycollection.update({timerName: mongoDoc.timerName}, mongoDoc)
-        console.log('FOUND ',docs,' END');
-        mycollection.find(function (err, docs) {
-            res.send(docs);
-        });
-    };
+    
 });
 
 app.put("/", function(req,res){
     var mongoDoc = req.body;
-    var docID = mongoDoc['_id'];
-    var docName = mongoDoc.timerName;
-    var docTime = mongoDoc.startTime;
-    var docData = mongoDoc.pastData;
-    var tmpObj = {};
+    if(mongoDoc.method === "update"){
+        var docID = mongoDoc['_id'];
+        var docName = mongoDoc.timerName;
+        var docTime = mongoDoc.startTime;
+        var docData = mongoDoc.pastData;
+        var tmpObj = {};
 
-    if(docID.length === 0){
-        tmpObj = {
-            timerName: docName,
-            startTime: docTime,
-            pastData: docData
-        };
+        if(docID.length === 0){
+            tmpObj = {
+                timerName: docName,
+                startTime: docTime,
+                pastData: docData
+            };
+        } else {
+            tmpObj = {
+                _id: ObjectId(docID),
+                timerName: docName,
+                startTime: docTime,
+                pastData: docData
+            };
+        }
     } else {
-        tmpObj = {
-            _id: ObjectId(docID),
-            timerName: docName,
-            startTime: docTime,
-            pastData: docData
-        };
-    }
-
-    mycollection.save(tmpObj, function(){
-        mycollection.find(function (err, docs) {
-            res.send(docs);
+        console.log('START ',mongoDoc);
+        mycollection.find({timerName: mongoDoc.timerName}, function(err, docs){
+            //mycollection.update({timerName: mongoDoc.timerName}, mongoDoc)
+            
+            console.log('FOUND ',docs,' END');
+            mycollection.find(function (err, docs) {
+                res.send(docs);
+            });
         });
-    });
+    }
+    
+    if(tmpObj.timerName != undefined){                  
+        mycollection.save(tmpObj, function(){
+            mycollection.find(function (err, docs) {
+                res.send(docs);
+            });
+        });
+    }
 });
 
 var server = https.createServer(options,app);
