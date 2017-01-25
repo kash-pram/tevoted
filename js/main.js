@@ -109,7 +109,7 @@
         $scope.getTimerData = function() {
             tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
-                $(".loader").fadeOut("slow");
+                $("#div_loader").fadeOut("slow");
             }, function(reject){
                 console.log('GET rejected');
             });
@@ -127,7 +127,7 @@
             tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
                 $scope.timerData = resolved;
-                $(".loader").fadeOut("slow");
+                $("#div_loader").fadeOut("slow");
             })
             .catch(function(errorData) {
                 console.log(msg,' ERROR');
@@ -172,7 +172,7 @@
                     $scope.timerData.push(tmpData);
                 }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
-                $(".loader").fadeIn("slow");
+                $("#div_loader").fadeIn("slow");
                 $scope.saveToServer("START");
                 showToast("Timer started successfully", "success");
             } else {
@@ -223,7 +223,7 @@
                 var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
-                $(".loader").fadeIn("slow");
+                $("#div_loader").fadeIn("slow");
                 $scope.saveToServer("PUT");
                 showToast("Timer stopped", "message");
             }
@@ -243,7 +243,7 @@
             if(timerName === $scope.currentTimer){
                 showToast("Kindly reset the timer.","warning");
             } else {
-                $(".loader").fadeIn("slow");
+                $("#div_loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
                   {
                     timerName:timerName,
@@ -253,7 +253,7 @@
                   }
                 ).then(function(result){
                     $scope.timerData = result;
-                    $(".loader").fadeOut("slow");
+                    $("#div_loader").fadeOut("slow");
                 }).catch(function(errorData) {
                     console.log('DELETE ERROR');
                 });
