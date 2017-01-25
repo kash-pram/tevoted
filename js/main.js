@@ -21,37 +21,6 @@
                 return true;
         }
     })
-    /*.factory('tevotedFactory', ['$http', '$q', function($http, $q){
-        var deferred = $q.defer();
-        var getData = function (uriName){
-            $http({
-              method: 'GET',
-              url: uriName
-                }).then(function successCallback(response) {
-                    deferred.resolve(response.data);
-                }, function errorCallback(response) {
-                    console.log('Error', response.data);
-            });
-            return deferred.promise;
-        };
-        return {getData:getData};
-    }])*/
-/*    .factory('tevotedUpdateService', ['$http', '$q', function($http, $q){
-        var updateData = function(uriName, dataObj){
-            var df = $q.defer();
-            $http({
-              method: 'PUT',
-              data: dataObj,
-              url: uriName
-                }).then(function successCallback(response) {
-                    df.resolve(response.data);
-                }, function errorCallback(response) {
-                    df.reject(response.data);
-            });
-            return df.promise;
-        };
-        return {updateData:updateData};
-    }])*/
     .factory('tevotedUpdateService', ['$http', function($http){
         var updateData = function(uriName, dataObj){
             return $http({
@@ -164,12 +133,6 @@
                 console.log(msg,' ERROR');
                 showToast("There seems to be a problem. Kindly reload the page.", "warning");
             });
-            /*tevotedUpdateService.updateData(uriName, tmpObj)
-            .then(function(resolved) {
-                $scope.timerData = resolved;
-            }, function(rejected){
-                console.log('PUT rejected');
-            });*/
         };
         $scope.findTimer = function (tmpName) {
             var i;
