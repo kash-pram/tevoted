@@ -157,23 +157,27 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 
 // BUTTON CLICKS
 function disableInput(){
+    $('#inp_dispName').attr('readonly', true);
+
     $('#inp_dispName').attr("data-toggle","hover"); 
     $('#inp_dispName').attr("title","Input disabled");
     $('#inp_dispName').attr("data-content","Use the reset option");
     $('#inp_dispName').attr("data-trigger","hover");
-    /*$('[data-toggle="hover"]').popover({trigger: "hover"});*/
     $('#inp_dispName').popover({trigger: "hover"});
-    $('#inp_dispName').attr('readonly', true);
+
     $('#btn_select').attr('disabled',true);
+
     $('#div_reset').css("outline","1px solid #4682B4");
     $('#div_reset').css("padding", "3px");
 }
 function enableInput(){
     $('#inp_dispName').attr('readonly', false);
+    $('#inp_dispName').popover('disable');
+    
     $('#btn_select').attr('disabled',false);
     $('#div_reset').css("outline","0");
     $('#div_reset').css("padding", "0px");
-    // add class remove class for the reset
+
 }
 
 

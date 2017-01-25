@@ -111,7 +111,7 @@
                 $scope.timerData = result;
                 $("#div_loader").fadeOut("slow");
             }, function(reject){
-                showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
+                showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                 console.log('GET rejected');
             });
         };
@@ -131,7 +131,7 @@
                 $("#div_loader").fadeOut("slow");
             })
             .catch(function(errorData) {
-                showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
+                showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                 console.log(msg,' ERROR');
             });
         };
@@ -242,7 +242,7 @@
         };
         $scope.btnDeleteClick = function (timerName, timerDate, timerVal) {
             if(timerName === $scope.currentTimer){
-                showToast("Kindly reset the timer.","warning","hide");
+                showToast("Kindly reset the timer","warning","hide");
             } else {
                 $("#div_loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
@@ -256,7 +256,7 @@
                     $scope.timerData = result;
                     $("#div_loader").fadeOut("slow");
                 }).catch(function(errorData) {
-                    showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
+                    showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                     console.log('DELETE ERROR');
                 });
             }
