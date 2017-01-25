@@ -36,23 +36,21 @@ app.get("/",function(req,res){
 app.put("/", function(req,res){
     var mongoDoc = req.body;
 
-
     if(mongoDoc.method === "update"){
+        // TO UPDATE UPON STOP CLICK
         var tmpObj = {};
         var docID = mongoDoc['_id'];
         var docName = mongoDoc.timerName;
         var docTime = mongoDoc.startTime;
         var docData = mongoDoc.pastData;
-console.log('inside update');
+
         if(docID.length === 0){
             tmpObj = {
                 timerName: docName,
                 startTime: docTime,
                 pastData: docData
             };
-console.log('inside no ID');
         } else {
-console.log('inside with ID');
             tmpObj = {
                 _id: ObjectId(docID),
                 timerName: docName,
@@ -60,31 +58,34 @@ console.log('inside with ID');
                 pastData: docData
             };
         }
+
+        mycollection.save(tmpObj, function(){
+            mycollection.find(function (err, docs) {
+                res.send(docs);
+            });
+        });
     } else {
-console.log('inside delte');
+        // TO DELETE A TIMER PASTDATA ENTRY
         var mongoDate = "pastData."+ mongoDoc.timerDate;
         var mongoName = mongoDoc.timerName;
         var _unset = {};
         _unset[mongoDate] = "";
-        console.log('before update');
         mycollection.update( { timerName: mongoName }, { $unset: _unset }, function(){
-            console.log('inside update');
+            mycollection.remove( { pastData: {} } );
             mycollection.find(function (err, docs) {
-                console.log('inside send');
                 res.send(docs);
             });
         });
-        console.log('after update');
     }
 
-    if(tmpObj != undefined){ // change condition to check object is empty
-console.log('inside not undefined');
+    /*if(tmpObj != undefined){ // HOISTED VARIABLE
+        // TO UPDATE UPON STOP CLICK
         mycollection.save(tmpObj, function(){
                 mycollection.find(function (err, docs) {
                     res.send(docs);
                 });
         });
-    }
+    }*/
 });
 
 

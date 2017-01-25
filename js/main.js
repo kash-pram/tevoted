@@ -146,7 +146,7 @@
         };
         $scope.getTimerData();
         
-        $scope.saveToServer = function(){
+        $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
                 "timerName" : $scope.timerData[$scope.currentIndex].timerName,
@@ -159,7 +159,7 @@
                 $scope.timerData = resolved;
             })
             .catch(function(errorData) {
-                console.log('PUT ERROR');
+                console.log(msg,' ERROR');
             });
             /*tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
@@ -206,20 +206,7 @@
                     $scope.timerData.push(tmpData);
                 }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
-    var tmpObj = {
-        "_id" : $scope.timerData[$scope.currentIndex]._id,
-        "timerName" : $scope.timerData[$scope.currentIndex].timerName,
-        "startTime" : $scope.timerData[$scope.currentIndex].startTime,
-        "pastData" : $scope.timerData[$scope.currentIndex].pastData,
-        "method" : "update"
-    };
-    tevotedUpdateService.updateData(uriName, tmpObj)
-    .then(function(resolved) {
-         $scope.timerData = resolved;
-    })
-    .catch(function(errorData) {
-        console.log('START ERROR');
-    });
+                $scope.saveToServer("START");
                 showToast("Timer started successfully", "success");
             } else {
                 $scope.dynClass = "startTimer";
@@ -271,8 +258,8 @@
                 var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
+                $scope.saveToServer("PUT");
                 showToast("Timer stopped", "message");
-                $scope.saveToServer();
             }
         };
         $scope.btnResetClick = function () {                
