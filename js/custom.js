@@ -177,7 +177,6 @@ function enableInput(){
 
     $('#div_reset').css("outline","0");
     $('#div_reset').css("padding", "0px");
-
 }
 
 
@@ -186,6 +185,8 @@ function enableInput(){
 $('document').ready(function() {
     /*$("body").css("overflow", "hidden");*/
     enableInput();
+    $('#inp_dispName').popover({trigger: "hover"});
+
     $('#inp_dispName').on('click', function(){
         $('#inp_dispName').popover('hide');
     });
