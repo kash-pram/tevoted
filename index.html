@@ -52,7 +52,7 @@
                             <div id="div_reset">
                                 <a ng-click="btnResetClick()">RESET</a>
                             </div>
-                            <input id="inp_dispName" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" placeholder="Give timer a name"/>
+                            <input id="inp_dispName" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Give timer a name"/>
                             <datalist id="timerNames">
                                 <select ng-repeat="data in timerData | orderBy: 'timerName'">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
