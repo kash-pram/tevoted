@@ -158,9 +158,11 @@
             tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
                 $scope.timerData = resolved;
+                $(".loader").fadeOut("slow");
             })
             .catch(function(errorData) {
                 console.log(msg,' ERROR');
+                showToast("There seems to be a problem. Kindly reload the page.", "warning");
             });
             /*tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
@@ -207,6 +209,7 @@
                     $scope.timerData.push(tmpData);
                 }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
+                $(".loader").fadeIn("slow");
                 $scope.saveToServer("START");
                 showToast("Timer started successfully", "success");
             } else {
@@ -257,6 +260,7 @@
                 var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
+                $(".loader").fadeIn("slow");
                 $scope.saveToServer("PUT");
                 showToast("Timer stopped", "message");
             }
@@ -276,6 +280,7 @@
             if(timerName === $scope.currentTimer){
                 showToast("Kindly reset the timer.","warning");
             } else {
+                $(".loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
                   {
                     timerName:timerName,
@@ -285,6 +290,7 @@
                   }
                 ).then(function(result){
                     $scope.timerData = result;
+                    $(".loader").fadeOut("slow");
                 }).catch(function(errorData) {
                     console.log('DELETE ERROR');
                 });
