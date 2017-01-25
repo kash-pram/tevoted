@@ -196,7 +196,7 @@ $('document').ready(function() {
 });
 
 // DECORATIONS
-function showToast(msg,msgStatus) {
+function showToast(msg,msgStatus,toastStatus) {
     if(msgStatus === "success") {
         $('#sp_toast').css('background-color', '#DFF2BF');
         $('#sp_toast').css('color', '#4F8A10');
@@ -212,7 +212,11 @@ function showToast(msg,msgStatus) {
     else
         ;
     
-    $('#sp_toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
+    if(toastStatus === "hide") {
+        $('#sp_toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
+    } else {
+        $('#sp_toast').html(msg).clearQueue().fadeIn(400);
+    }
 }
 
 

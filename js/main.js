@@ -111,6 +111,7 @@
                 $scope.timerData = result;
                 $("#div_loader").fadeOut("slow");
             }, function(reject){
+                showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
                 console.log('GET rejected');
             });
         };
@@ -130,8 +131,8 @@
                 $("#div_loader").fadeOut("slow");
             })
             .catch(function(errorData) {
+                showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
                 console.log(msg,' ERROR');
-                showToast("There seems to be a problem. Kindly reload the page.", "warning");
             });
         };
         $scope.findTimer = function (tmpName) {
@@ -174,7 +175,7 @@
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
                 $("#div_loader").fadeIn("slow");
                 $scope.saveToServer("START");
-                showToast("Timer started successfully", "success");
+                showToast("Timer started successfully", "success","hide");
             } else {
                 $scope.dynClass = "startTimer";
                 $scope.timerAction = "START";
@@ -225,7 +226,7 @@
                 $scope.timerData[$scope.currentIndex].startTime = "";
                 $("#div_loader").fadeIn("slow");
                 $scope.saveToServer("PUT");
-                showToast("Timer stopped", "message");
+                showToast("Timer stopped", "message","hide");
             }
         };
         $scope.btnResetClick = function () {                
@@ -241,7 +242,7 @@
         };
         $scope.btnDeleteClick = function (timerName, timerDate, timerVal) {
             if(timerName === $scope.currentTimer){
-                showToast("Kindly reset the timer.","warning");
+                showToast("Kindly reset the timer.","warning","hide");
             } else {
                 $("#div_loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
@@ -255,6 +256,7 @@
                     $scope.timerData = result;
                     $("#div_loader").fadeOut("slow");
                 }).catch(function(errorData) {
+                    showToast("There seems to be a problem. Kindly reload the page.", "warning", "show");
                     console.log('DELETE ERROR');
                 });
             }
@@ -271,7 +273,7 @@
                     if($scope.timerData[$scope.currentIndex].startTime !== ""){
                         $scope.timerAction = "STOP";
                         $scope.dynClass = "stopTimer";
-                        showToast("Timer already running", "warning");
+                        showToast("Timer already running", "warning","hide");
                     }
                     else {
                         $scope.timerAction = "START";
@@ -280,7 +282,7 @@
                 }
             }
             else
-                showToast("Kindly enter a timer name","warning");
+                showToast("Kindly enter a timer name","warning","hide");
         };
         // END EVENTS
 
