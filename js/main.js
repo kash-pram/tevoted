@@ -140,6 +140,7 @@
         $scope.getTimerData = function() {
             tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
+                $(".loader").fadeOut("slow");
             }, function(reject){
                 console.log('GET rejected');
             });
