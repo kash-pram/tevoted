@@ -160,7 +160,7 @@ function disableInput(){
     $('#inp_dispName').attr('readonly', true);
 
     //$('#inp_dispName').attr("data-content","Use the RESET option");
-    $('#inp_dispName').popover({trigger: "hover", placement: "top", title:"Input disabled", content:"Use the RESET option"});
+    $('#inp_dispName').popover({placement: "top", title:"Input disabled", content:"Use the RESET option"});
 
     $('#btn_select').attr('disabled',true);
 
@@ -171,7 +171,7 @@ function enableInput(){
     $('#inp_dispName').attr('readonly', false);
 
     //$('#inp_dispName').attr("data-content","Timer Name");
-    $('#inp_dispName').popover({trigger: "hover", placement: "top", title:"Timer name", content:"Limit to 25 alpha-numeric characters"});
+    $('#inp_dispName').popover({placement: "top", title:"Timer name", content:"Limit to 25 alpha-numeric characters"});
     
     $('#btn_select').attr('disabled',false);
 
@@ -185,7 +185,7 @@ function enableInput(){
 $('document').ready(function() {
     /*$("body").css("overflow", "hidden");*/
     enableInput();
-    
+    $('#inp_dispName').popover({trigger: "hover"});
 //
     $('#inp_dispName').on('click', function(){
         $('#inp_dispName').popover('hide');
