@@ -213,9 +213,9 @@ function showToast(msg,msgStatus) {
     
     $('#sp_toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
 }
-$(window).on("load",function() {
+/*$(window).on("load",function() {
     $(".loader").fadeOut("slow");
-});
+});*/
 
 
 
