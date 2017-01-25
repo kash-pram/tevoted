@@ -145,7 +145,7 @@
             });
         };
         $scope.getTimerData();
-        
+
         $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
@@ -190,7 +190,7 @@
             return false;
         };
         // END UTILITY
-        
+
         // EVENTS
         $scope.btnTimerClick = function() {
             if($scope.timerAction === "START"){
@@ -227,7 +227,6 @@
                 if(tmpMinutes !== 0){
                     tmpMinutes--;
                 }
-
                 if(tmpHours !== 0){
                     tmpHours--;
                 }
@@ -249,7 +248,6 @@
                         tmpMinutes = tmpMinutes + parseInt(tmpSeconds / 60);
                         tmpSeconds = (tmpSeconds % 60);
                 }
-
                 if((tmpMinutes/60) > 1){
                         tmpHours = tmpHours + parseInt(tmpMinutes / 60);
                         tmpMinutes = (tmpMinutes % 60);
@@ -274,16 +272,22 @@
             } 
         };
         $scope.btnDeleteClick = function (timerName, timerDate, timerVal) {
-            tevotedDeleteService.deleteData(uriName, {
-                timerName:timerName,
-                timerDate:timerDate,
-                timerValue:timerVal,
-                method:"delete"
-            }).then(function(result){
-                $scope.timerData = result;
-            }).catch(function(errorData) {
-                console.log('DELETE ERROR');
-            });
+            if(timerName === $scope.currentTimer){
+                showToast("Kindly reset the timer.","warning");
+            } else {
+                tevotedDeleteService.deleteData(uriName,
+                  {
+                    timerName:timerName,
+                    timerDate:timerDate,
+                    timerValue:timerVal,
+                    method:"delete"
+                  }
+                ).then(function(result){
+                    $scope.timerData = result;
+                }).catch(function(errorData) {
+                    console.log('DELETE ERROR');
+                });
+            }
         };
         $scope.btnSelectClick = function () {
             if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
