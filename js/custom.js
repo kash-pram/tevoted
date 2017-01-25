@@ -159,8 +159,8 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 function disableInput(){
     $('#inp_dispName').attr('readonly', true);
 
-    $('#inp_dispName').attr("data-content","Use the reset option");
-    $('#inp_dispName').popover({trigger: "hover"});
+    $('#inp_dispName').attr("data-content","Use the RESET option");
+    /*$('#inp_dispName').popover({trigger: "hover"});*/
 
     $('#btn_select').attr('disabled',true);
 
@@ -170,10 +170,11 @@ function disableInput(){
 function enableInput(){
     $('#inp_dispName').attr('readonly', false);
 
-    $('#inp_dispName').attr("data-content","Give timer a name");
-    $('#inp_dispName').popover({trigger: "hover"});
+    $('#inp_dispName').attr("data-content","Timer Name");
+    /*$('#inp_dispName').popover({trigger: "hover"});*/
     
     $('#btn_select').attr('disabled',false);
+
     $('#div_reset').css("outline","0");
     $('#div_reset').css("padding", "0px");
 
@@ -185,6 +186,10 @@ function enableInput(){
 $('document').ready(function() {
     /*$("body").css("overflow", "hidden");*/
     enableInput();
+    $('#inp_dispName').on('click', function(){
+        $('#inp_dispName').popover('hide');
+    });
+
     $('#inp_dispName').on('input', function() {
         var c = this.selectionStart,
             r = /[^A-Za-z0-9_\s]/gi,
