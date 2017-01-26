@@ -88,7 +88,7 @@
         // TAB CONTROLS
         $scope.setTab = function(newTab){
             /*if(newTab === 1){
-              $("#div_innerData").css("background-color", "#E0FFFF");
+              $(".onePanel").css("background-color", "#E0FFFF");
             } else {
               $("body").css("overflow", "auto");
             }*/

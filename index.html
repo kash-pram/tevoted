@@ -50,8 +50,7 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                     <div ng-show="isSet(1)">
-                        <div>
-                            <br/><br/>
+                        <div class="onePanel">
                             <button class="btn btn-reset" ng-click="btnResetClick()">RESET</button>
                             <input maxlength="25" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Give timer a name"/>
                             <datalist id="timerNames">
@@ -61,6 +60,15 @@
                             </datalist>
                             <button class="btn btn-warning" type="button" ng-click="btnSelectClick()">SELECT</button>
                             <br/><br/>
+                            <div class="instructions text-center center-block">
+                                <ul class="list-instructions text-left">
+                                    <li> Number One</li>
+                                    <li>Number Two</li>
+                                    <li>Number Three</li>
+                                    <li>Number Four</li>
+                                
+                                </ul>
+                            </div>
                             <div class="round-button" ng-class="dynClass" ng-click="btnTimerClick()" ng-show="enTimer">
                                 <div class="round-button-circle">
                                 <a href="" class="round-button">{{timerAction}}</a>
@@ -68,9 +76,8 @@
                             </div>
                         </div>
                     </div>
-                    <div id="div_outerData" ng-show="isSet(2)">
-                        <div id="div_innerData" ng-show="ifData()">
-                            <br/><br/>
+                    <div id="div_outerData" class="onePanel" ng-show="isSet(2)">
+                        <div  ng-show="ifData()">
                             <div ng-repeat="timers in timerData | orderBy: 'timerName'">
                                 <div ng-show="timers.pastData | nonEmpty">
                                 <span class="timerName">{{ timers.timerName | uppercase }}</span>

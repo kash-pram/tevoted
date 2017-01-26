@@ -30,7 +30,7 @@ a:hover {
     color: #66CDAA;
 }
 h1 {
-    color: #66CDAA;
+    /*color: #66CDAA;*/
 }
 
 
@@ -180,28 +180,10 @@ h1 {
 }
 
 /* ID BASED */
-/*#div_outerData{
-    overflow: hidden;
-    margin-bottom: 100px;
-}
-#div_innerData{
-    overflow-y: auto;
-    padding-right: 20px;
-}*/
-
-#div_innerData {
-    
-}
-
 
 
 .btn:focus,.btn:active {
    outline: none !important;
-}
-
-.btn {
-
-    
 }
 .btn-reset {
     right:46px;
@@ -245,6 +227,17 @@ h1 {
     outline: none !important;
 }
 
+.instructions {
+    padding-top: 30px;
+}
+.list-instructions {
+    display: inline-block;
+}
+
+ul li {
+    padding: 0 20px 20px 0;
+}
+
 
 .tabList {
     width: 50%;
@@ -262,4 +255,9 @@ h1 {
     height: inherit;
     padding: 0;
     margin: 0;
+}
+.onePanel {
+    border: 1px solid black;
+    margin-top: 100px;
+    min-height: 350px;
 }
