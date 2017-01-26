@@ -160,11 +160,6 @@ function disableInput(){
     $('#inp_dispName').attr('readonly', true);
 
     $('#inp_dispName').attr("data-content","Use the RESET option");
-    $('#inp_dispName').attr('title', 'Input disabled');
-    $('#inp_dispName').popover('show');
-    //$('#inp_dispName').popover({trigger: "hover", placement: "top", content:"Use the RESET option"});
-    //$('#inp_dispName').popover('show');
-    //$('#inp_dispName').popover({});
 
     $('#btn_select').attr('disabled',true);
 
@@ -175,11 +170,7 @@ function enableInput(){
     $('#inp_dispName').attr('readonly', false);
 
     $('#inp_dispName').attr("data-content","Limit to 25 alpha-numeric characters");
-    $('#inp_dispName').attr('title', 'Timer name');
-    $('#inp_dispName').popover('show');
-    //$('#inp_dispName').popover('disable');
-    //$('#inp_dispName').popover('show');
-    //$('#inp_dispName').popover({});
+
     $('#btn_select').attr('disabled',false);
 
     $('#div_reset').css("outline","0");
@@ -190,8 +181,6 @@ $('document').ready(function() {
     /*$("body").css("overflow", "hidden");*/
     enableInput();
     $('#inp_dispName').popover({trigger: "hover", placement: "top"});
-//    $('#inp_dispName').popover({trigger: "hover"});
-//
     $('#inp_dispName').on('click', function(){
         $('#inp_dispName').popover('hide');
     });
