@@ -6,7 +6,7 @@ html,body {
     height: 100%;
     width: 100%;
     min-width: 500px;
-    min-height: 700px;
+    min-height: 720px;
     cursor: default;
     /*overflow: hidden;*/
 }
@@ -42,7 +42,7 @@ fonts
     width:250px;
     height:auto;
     position:fixed;
-    bottom: 10%;
+    top: 90%;
     left: 50%;
     margin-left: -130px;
     background-color:rgba(192,192,192,1.0);
