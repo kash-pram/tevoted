@@ -21,13 +21,12 @@ input[readonly] {
     background-color: #E0FFFF;
 }
 
-
-/*
-oswald
-raleway 
-fonts
-*/
-
+.font-oswald {
+    font-family: 'Oswald', sans-serif;
+}
+.font-raleway{
+    font-family: 'Raleway', sans-serif;
+}
 #div_loader {
     position:fixed;
     left:0;
