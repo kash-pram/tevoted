@@ -8,6 +8,7 @@ html,body {
     min-width: 500px;
     min-height: 720px;
     cursor: default;
+    font-family: 'Raleway', sans-serif;
     /*overflow: hidden;*/
 }
 a:hover, a:active, a:focus {
