@@ -229,7 +229,7 @@
                 showToast("Timer stopped", "message","hide");
             }
         };
-        $scope.btnResetClick = function () {                
+        $scope.btnResetClick = function () {
             $scope.init();
             enableInput();
         };
@@ -273,11 +273,13 @@
                     if($scope.timerData[$scope.currentIndex].startTime !== ""){
                         $scope.timerAction = "STOP";
                         $scope.dynClass = "stopTimer";
+                        toggleClass("stop");
                         showToast("Timer already running", "warning","hide");
                     }
                     else {
                         $scope.timerAction = "START";
                         $scope.dynClass = "startTimer";
+                        toggleClass("start");
                     }
                 }
             }

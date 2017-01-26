@@ -158,27 +158,26 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 // BUTTON CLICKS
 function disableInput(){
     $('.input-lg').attr('readonly', true);
-
-    $('.input-lg').attr("data-content","Use the RESET option");
+    $('.input-lg').attr("data-content","Use the RESET to start over");
 
     $('.btn-warning').attr('disabled',true);
+    $('.btn-warning').removeClass("btn-warning").addClass("btn-warning-disabled");
 
-    $('.btn-reset').css("outline","1px solid #4682B4");
-    $('.btn-reset').css("padding", "3px");
+    $('.btn-reset-disabled').attr('disabled',false);
+    $('.btn-reset-disabled').removeClass("btn-reset-disabled").addClass("btn-reset");
 }
 function enableInput(){
     $('.input-lg').attr('readonly', false);
-
     $('.input-lg').attr("data-content","Limit to 25 alpha-numeric characters");
 
-    $('.btn-warning').attr('disabled',false);
+    $('.btn-warning-disabled').attr('disabled',false);
+    $('.btn-warning-disabled').removeClass("btn-warning-disabled").addClass("btn-warning");
 
-    $('.btn-reset').css("outline","0");
-    $('.btn-reset').css("padding", "0px");
+    $('.btn-reset').attr('disabled',true);
+    $('.btn-reset').removeClass("btn-reset").addClass("btn-reset-disabled");
 }
 
 $('document').ready(function() {
-    /*$("body").css("overflow", "hidden");*/
     enableInput();
     $('.input-lg').popover({trigger: "hover", placement: "top"});
     $('.input-lg').on('click', function(){
@@ -199,6 +198,15 @@ $('document').ready(function() {
 });
 
 // DECORATIONS
+function toggleClass(toggleMsg){
+    if(toggleMsg === "stop"){
+        $('.round-button').removeClass("round-button").addClass("round-button-stop");
+        $('.round-button-circle').removeClass("round-button-circle").addClass("round-button-circle-stop");
+    } else {
+        $('.round-button-stop').removeClass("round-button-stop").addClass("round-button");
+        $('.round-button-circle-stop').removeClass("round-button-circle-stop").addClass("round-button-circle");
+    }
+}
 function showToast(msg,msgStatus,toastStatus) {
     if(msgStatus === "success") {
         $('.toast').css('background-color', '#DFF2BF');
