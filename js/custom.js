@@ -160,9 +160,9 @@ function disableInput(){
     $('#inp_dispName').attr('readonly', true);
 
     //$('#inp_dispName').attr("data-content","Use the RESET option");
-    $('#inp_dispName').popover('disable');
-    $('#inp_dispName').popover({trigger: "hover", placement: "top", title:"Input disabled", content:"Use the RESET option"});
-    $('#inp_dispName').popover('show');
+    //$('#inp_dispName').popover('disable');
+    $('#inp_dispName').popover({trigger: "hover", placement: "top", content:"Use the RESET option"});
+    //$('#inp_dispName').popover('show');
     //$('#inp_dispName').popover({});
 
     $('#btn_select').attr('disabled',true);
@@ -174,9 +174,9 @@ function enableInput(){
     $('#inp_dispName').attr('readonly', false);
 
     //$('#inp_dispName').attr("data-content","Timer Name");
-    $('#inp_dispName').popover('disable');
-    $('#inp_dispName').popover({trigger: "hover", placement: "top", title:"Timer name", content:"Limit to 25 alpha-numeric characters"});
-    $('#inp_dispName').popover('show');
+    //$('#inp_dispName').popover('disable');
+    $('#inp_dispName').popover({trigger: "hover", placement: "top", content:"Limit to 25 alpha-numeric characters"});
+    //$('#inp_dispName').popover('show');
     //$('#inp_dispName').popover({});
     $('#btn_select').attr('disabled',false);
 
