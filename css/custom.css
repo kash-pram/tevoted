@@ -31,7 +31,8 @@ input[readonly] {
 .font-mont{
     font-family: 'Montserrat', sans-serif;
 }
-#div_loader {
+
+.loader {
     position:fixed;
     left:0;
     top:0;
@@ -40,7 +41,7 @@ input[readonly] {
     z-index:993;
     background:url(../data/loader.gif) 50% 50% no-repeat #f9f9f9;
 }
-#sp_toast{
+.toast{
     display:none;
     width:250px;
     height:auto;
@@ -132,26 +133,6 @@ input[readonly] {
 }
 
 /* ID BASED */
-#inp_dispName {
-    width: 230px;
-}
-option {
-    cursor: default;
-}
-#inp_dispName:hover {
-    
-}
-#btn_select {
-    position:relative;
-    left: 30px;
-}
-#div_reset {
-    right:45px;
-    position:relative;
-    display:inline-block;
-    font-variant-caps: all-petite-caps;
-    font-size:1.2em;
-}
 /*#div_outerData{
     overflow: hidden;
     margin-bottom: 100px;
@@ -166,8 +147,61 @@ option {
 }
 
 
+
+option {
+    cursor: default;
+}
+a {
+    color: #A9A9A9;
+}
+a:hover {
+    color: #66CDAA;
+}
+h1 {
+    color: #66CDAA;
+}
+
+
+.btn:focus,.btn:active {
+   outline: none !important;
+}
+.btn {
+    background-color: white;
+    color: #EC971F;
+    border: 1px solid #EC971F;
+    vertical-align: middle;
+}
+.btn-reset {
+    right:45px;
+    position:relative;
+    font-size:small;
+    border: 0;
+    color: #A9A9A9;
+}
+.btn-warning {
+    position:relative;
+    left: 30px;
+}
+
+
+.input-lg {
+    width: 230px;
+}
+.input-lg:focus, .input-lg:active {
+    outline: none !important;
+}
+
+
 .tabList {
     width: 50%;
+    font-family: 'Montserrat', sans-serif;
+}
+/*.nav-tabs > li.active > a{
+}*/
+.active{
+    color: #66CDAA !important;
+    text-decoration: overline;
+    text-shadow: 1px 1px #FFF8DC;
 }
 .tabAnchor {
     width: 100%;

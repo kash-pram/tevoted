@@ -6,7 +6,7 @@ function getTimeStamp(){
     return utcDate;
 }
 /*
-    $('#inp_dispName').on('keypress', function (event) {
+    $('.input-lg').on('keypress', function (event) {
         var regex = new RegExp("^[a-zA-Z0-9]+$");
         var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
         if (!regex.test(key)) {
@@ -157,35 +157,35 @@ function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
 
 // BUTTON CLICKS
 function disableInput(){
-    $('#inp_dispName').attr('readonly', true);
+    $('.input-lg').attr('readonly', true);
 
-    $('#inp_dispName').attr("data-content","Use the RESET option");
+    $('.input-lg').attr("data-content","Use the RESET option");
 
-    $('#btn_select').attr('disabled',true);
+    $('.btn-warning').attr('disabled',true);
 
-    $('#div_reset').css("outline","1px solid #4682B4");
-    $('#div_reset').css("padding", "3px");
+    $('.btn-reset').css("outline","1px solid #4682B4");
+    $('.btn-reset').css("padding", "3px");
 }
 function enableInput(){
-    $('#inp_dispName').attr('readonly', false);
+    $('.input-lg').attr('readonly', false);
 
-    $('#inp_dispName').attr("data-content","Limit to 25 alpha-numeric characters");
+    $('.input-lg').attr("data-content","Limit to 25 alpha-numeric characters");
 
-    $('#btn_select').attr('disabled',false);
+    $('.btn-warning').attr('disabled',false);
 
-    $('#div_reset').css("outline","0");
-    $('#div_reset').css("padding", "0px");
+    $('.btn-reset').css("outline","0");
+    $('.btn-reset').css("padding", "0px");
 }
 
 $('document').ready(function() {
     /*$("body").css("overflow", "hidden");*/
     enableInput();
-    $('#inp_dispName').popover({trigger: "hover", placement: "top"});
-    $('#inp_dispName').on('click', function(){
-        $('#inp_dispName').popover('hide');
+    $('.input-lg').popover({trigger: "hover", placement: "top"});
+    $('.input-lg').on('click', function(){
+        $('.input-lg').popover('hide');
     });
 
-    $('#inp_dispName').on('input', function() {
+    $('.input-lg').on('input', function() {
         var c = this.selectionStart,
             r = /[^A-Za-z0-9_\s]/gi,
             v = $(this).val();
@@ -201,24 +201,24 @@ $('document').ready(function() {
 // DECORATIONS
 function showToast(msg,msgStatus,toastStatus) {
     if(msgStatus === "success") {
-        $('#sp_toast').css('background-color', '#DFF2BF');
-        $('#sp_toast').css('color', '#4F8A10');
+        $('.toast').css('background-color', '#DFF2BF');
+        $('.toast').css('color', '#4F8A10');
     }
     else if(msgStatus === "message") {
-        $('#sp_toast').css('background-color', '#BDE5F8');
-        $('#sp_toast').css('color', '#00529B');
+        $('.toast').css('background-color', '#BDE5F8');
+        $('.toast').css('color', '#00529B');
     }
     else if (msgStatus === "warning"){
-        $('#sp_toast').css('background-color', '#FEEFB3');
-        $('#sp_toast').css('color', '#9F6000');
+        $('.toast').css('background-color', '#FEEFB3');
+        $('.toast').css('color', '#9F6000');
     }
     else
         ;
     
     if(toastStatus === "hide") {
-        $('#sp_toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
+        $('.toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
     } else {
-        $('#sp_toast').html(msg).clearQueue().fadeIn(400);
+        $('.toast').html(msg).clearQueue().fadeIn(400);
     }
 }
 
@@ -234,5 +234,5 @@ function addNewTimer(){
     $scope.curTimer = $('#inp_timerName').val();
     $scope.$apply();
     var tmpVal = $('#inp_timerName').val();
-    $('#inp_dispName').val(tmpVal);
+    $('.input-lg').val(tmpVal);
 }

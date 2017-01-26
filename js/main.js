@@ -109,14 +109,14 @@
         $scope.getTimerData = function() {
             tevotedService.getData(uriName).then(function(result) {
                 $scope.timerData = result;
-                $("#div_loader").fadeOut("slow");
+                $(".loader").fadeOut("slow");
             }, function(reject){
                 showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                 console.log('GET rejected');
             });
         };
         $scope.getTimerData();
-
+//$(".loader").fadeOut("slow");
         $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
@@ -128,7 +128,7 @@
             tevotedUpdateService.updateData(uriName, tmpObj)
             .then(function(resolved) {
                 $scope.timerData = resolved;
-                $("#div_loader").fadeOut("slow");
+                $(".loader").fadeOut("slow");
             })
             .catch(function(errorData) {
                 showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
@@ -173,7 +173,7 @@
                     $scope.timerData.push(tmpData);
                 }
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
-                $("#div_loader").fadeIn("slow");
+                $(".loader").fadeIn("slow");
                 $scope.saveToServer("START");
                 showToast("Timer started successfully", "success","hide");
             } else {
@@ -224,7 +224,7 @@
                 var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
                 $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
                 $scope.timerData[$scope.currentIndex].startTime = "";
-                $("#div_loader").fadeIn("slow");
+                $(".loader").fadeIn("slow");
                 $scope.saveToServer("PUT");
                 showToast("Timer stopped", "message","hide");
             }
@@ -244,7 +244,7 @@
             if(timerName === $scope.currentTimer){
                 showToast("Kindly reset the timer","warning","hide");
             } else {
-                $("#div_loader").fadeIn("slow");
+                $(".loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
                   {
                     timerName:timerName,
@@ -254,7 +254,7 @@
                   }
                 ).then(function(result){
                     $scope.timerData = result;
-                    $("#div_loader").fadeOut("slow");
+                    $(".loader").fadeOut("slow");
                 }).catch(function(errorData) {
                     showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                     console.log('DELETE ERROR');
