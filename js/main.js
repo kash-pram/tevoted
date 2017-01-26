@@ -162,7 +162,9 @@
         $scope.btnTimerClick = function() {
             if($scope.timerAction === "START"){
                 $scope.dynClass = "stopTimer";
+                toggleClass("stop");
                 $scope.timerAction = "STOP";
+
                 if($scope.currentIndex === -1){
                     $scope.currentIndex = $scope.timerData.length;
                     var tmpData = {};
@@ -179,6 +181,7 @@
             } else {
                 $scope.dynClass = "startTimer";
                 $scope.timerAction = "START";
+                toggleClass("start");
                 
                 var tmpCurrentTime = getTimeStamp();
                 var tmpDate = getDateVal($scope.timerData[$scope.currentIndex].startTime);

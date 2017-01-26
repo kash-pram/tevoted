@@ -91,6 +91,8 @@ h1 {
 .timerValues {
     
 }
+
+
 .startTimer {
     opacity: 1;
 /*    transition: visibility 0s, opacity 0.5s linear;*/
@@ -100,9 +102,6 @@ h1 {
     opacity: 0.9;
 /*    transition: visibility 0s, opacity 0.5s linear;*/
 }
-
-
-
 .round-button {
 	width:25%;
     position:absolute;
