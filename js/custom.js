@@ -161,7 +161,7 @@ function disableInput(){
 
     $('#inp_dispName').attr("data-content","Use the RESET option");
     $('#inp_dispName').attr('title', 'Input disabled');
-    //$('#inp_dispName').popover('disable');
+    $('#inp_dispName').popover('show');
     //$('#inp_dispName').popover({trigger: "hover", placement: "top", content:"Use the RESET option"});
     //$('#inp_dispName').popover('show');
     //$('#inp_dispName').popover({});
@@ -176,6 +176,7 @@ function enableInput(){
 
     $('#inp_dispName').attr("data-content","Limit to 25 alpha-numeric characters");
     $('#inp_dispName').attr('title', 'Timer name');
+    $('#inp_dispName').popover('show');
     //$('#inp_dispName').popover('disable');
     //$('#inp_dispName').popover('show');
     //$('#inp_dispName').popover({});
