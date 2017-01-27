@@ -23,13 +23,13 @@
 </head>
 <!--<body>-->
 <body class="ng-cloak">
-    <span class="toast"></span>
+    <span class="toast font-mont"></span>
     <div class="loader"></div>
     <div class="container text-center" ng-controller="MainCtrl">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="font-mont"><h1>TEVOTED</h1></div>
-                <p>Online Time Management Tool</p>
+                <h5 class="sub-heading font-mont">Online Time Management Tool</h5>
             </div>
         </div>
         <br/>
@@ -59,19 +59,19 @@
                             <button class="btn btn-warning" type="button" ng-click="btnSelectClick()">SELECT</button>
                             <br/><br/>
                             <section class="instructions text-center center-block" ng-show="!enTimer">
-                                <h4>INSTRUCTIONS</h4>
+                                <h5 class="instructions-header font-mont">INSTRUCTIONS</h5>
                                 <ul class="list-instructions text-left">
-                                    <li>This app helps yout to keep record of your daily routine's time consumption</li>
-                                    <li>Enter a NAME of your routine task and click SELECT to register</li>
-                                    <li>Alternatively, you can type-in and SELECT a routine name from the already registered DATA</li>
-                                    <li>To punch-in / punch-out a routine timer, click the START / STOP button which would appear after the SELECT click</li>
-                                    <li>You can have any number of routine timer to run at the same time</li>
-                                    <li>Use the RESET button to shift between routines</li>
-                                    <li>You can analyse the recorded routines from the DATA tab</li>
-                                    <li>You need to be connected to the internet only during the START / STOP / DELETE operations. Meanwhile, the records will be preserved in the database</li>
+                                    <li>This app helps you to track the amount of time spent for your daily routines</li>
+                                    <li>Enter a <code>NAME</code> for your routine task and click <code>SELECT</code> to register</li>
+                                    <li>Alternatively, you can type-in and <code>SELECT</code> a routine name from the list of already registered routines (if exists)</li>
+                                    <li>To punch-in / punch-out, click the <code>START</code> / <code>STOP</code> button (which would appear after you click the <code>SELECT</code> button)</li>
+                                    <li>You can have any number of routine timer, to run at the same time (parallely)</li>
+                                    <li>Use the <code>RESET</code> button to shift between routines</li>
+                                    <li>You can analyse the recorded routines from the <code>DATA</code> tab</li>
                                 </ul>
+                                <span class="font-mont">Note:</span> <span>You need to be connected to the internet "only" during the <code>START</code> / <code>STOP</code> / <code>DELETE</code> operations</span>
                             </section>
-                            <div class="round-button" ng-class="dynClass" ng-click="btnTimerClick()" ng-show="enTimer">
+                            <div class="round-button timer-button" ng-class="dynClass" ng-click="btnTimerClick()" ng-show="enTimer">
                                 <div class="round-button-circle">
                                 <a href="" class="round-button">{{timerAction}}</a>
                                 </div>
@@ -93,12 +93,12 @@
                                             <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>
                                         </span>
                                     </span>
-                                    <span ng-click="btnDeleteClick(timers.timerName,key,value)"><a href="" class="delete-timer">del</a></span>
+                                    <span ng-click="btnDeleteClick(timers.timerName,key,value)"><a href="" class="delete-timer">DELETE</a></span>
                                 </span>
                                 </div>
                             </div>
                         </div>
-                        <span ng-show="!ifData()"> NO DATA </span>
+                        <span class="font-mont" ng-show="!ifData()"> No DATA </span>
                     </div>
             </div>
         </div> <!-- row tabs-->

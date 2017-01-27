@@ -116,7 +116,11 @@
             });
         };
         $scope.getTimerData();
+
+//$scope.timerData = [{"timerName": "testData", "startTime": "", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},
+//{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];
 //$(".loader").fadeOut("slow");
+        
         $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
@@ -237,6 +241,7 @@
         $scope.btnResetClick = function () {
             $scope.init();
             enableInput();
+            toggleClass("start");
         };
         $scope.inpKeyPress = function ($event) {
             var tmpKeyCode = $event.which || $event.keyCode;
@@ -274,7 +279,7 @@
 
                 $scope.findTimer($scope.currentTimer);
                 if($scope.currentIndex === -1){
-
+                    // WHEN A NEW ROUTINE IS ADDED
                 } else {
                     if($scope.timerData[$scope.currentIndex].startTime !== ""){
                         $scope.timerAction = "STOP";
@@ -285,7 +290,6 @@
                     else {
                         $scope.timerAction = "START";
                         $scope.dynClass = "startTimer";
-                        toggleClass("start");
                     }
                 }
             }
