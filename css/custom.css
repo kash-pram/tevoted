@@ -43,6 +43,9 @@ h1 {
     font-family: 'Oswald', sans-serif;
 }
 */
+.font-nunito{
+    font-family: 'Nunito', sans-serif;
+}
 .font-raleway{
     font-family: 'Raleway', sans-serif;
 }
@@ -76,6 +79,14 @@ h1 {
     -webkit-box-shadow:0 0 10px -1px rgba(56,56,56,1);
     -moz-box-shadow:0 0 10px -1px rgba(56,56,56,1);
     box-shadow:0 0 10px -1px rgba(56,56,56,1)
+}
+
+
+.trans{
+    transition: all linear 0.5s;
+}
+.timerSection{
+    margin-bottom: 50px;
 }
 
 
@@ -119,7 +130,7 @@ h1 {
 .timerName-container {
     background-color: firebrick;
     color: #FFF;
-    height: 150px;
+    
 }
 
 .timerTitle {
