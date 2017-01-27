@@ -38,10 +38,10 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <ul class="nav nav-tabs">
                     <li ng-class="{ active: isSet(1) }" ng-click="setTab(1)" class="tabList">
-                        <a href class="tabAnchor">TIMER</a>
+                        <a href class="tabAnchor trans">TIMER</a>
                     </li>
                     <li ng-class="{ active: isSet(2) }" ng-click="setTab(2)" class="tabList">
-                        <a href class="tabAnchor">DATA</a>
+                        <a href class="tabAnchor trans">DATA</a>
                     </li>
                 </ul>
             </div>
@@ -50,14 +50,14 @@
             <div class="col-lg-12 col-sm-12 col-xs-12">
                     <div ng-show="isSet(1)">
                         <div class="onePanel">
-                            <button class="btn btn-reset" ng-click="btnResetClick()">RESET</button>
-                            <input maxlength="25" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Enter the routine name"/>
+                            <button class="btn btn-reset trans" ng-click="btnResetClick()">RESET</button>
+                            <input maxlength="25" class="trans input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Enter the routine name"/>
                             <datalist id="timerNames">
                                 <select ng-repeat="data in timerData | orderBy: 'timerName'">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
                                 </select>
                             </datalist>
-                            <button class="btn btn-warning" type="button" ng-click="btnSelectClick()">SELECT</button>
+                            <button class="btn btn-warning trans" type="button" ng-click="btnSelectClick()">SELECT</button>
                             <br/><br/>
                             <section class="instructions text-center center-block" ng-show="!enTimer">
                                 <h5 class="instructions-header font-mont">INSTRUCTIONS</h5>
@@ -86,7 +86,7 @@
                                 <span class="timerName text-right font-mont">
                                     <div class="timerName-container">{{ timers.timerName | uppercase }}</div>
                                 </span>
-                                <span class="timerSection" ng-repeat="(key,value) in timers.pastData" >
+                                <span ng-repeat="(key,value) in timers.pastData" >
                                     <span class="timerContainer">
                                         <span class="timerTitle font-mont">{{ key }}</span>
                                         <br/>
