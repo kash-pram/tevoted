@@ -11,7 +11,8 @@
     
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" media="all" href="css/custom.css">
-    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+<!--    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">-->
+    
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 
@@ -82,12 +83,14 @@
                         <div  ng-show="ifData()">
                             <div ng-repeat="timers in timerData | orderBy: 'timerName'">
                                 <div ng-show="timers.pastData | nonEmpty">
-                                <span class="timerName">{{ timers.timerName | uppercase }}</span>
+                                <span class="timerName text-right font-mont">
+                                    <div class="timerName-container">{{ timers.timerName | uppercase }}</div>
+                                </span>
                                 <span ng-repeat="(key,value) in timers.pastData" >
                                     <span class="timerContainer">
-                                        <span class="timerTitle">{{ key }}</span>
+                                        <span class="timerTitle font-mont">{{ key }}</span>
                                         <br/>
-                                        <span class="timerValues">
+                                        <span class="timerValues font-oswald">
                                             <span ng-if="value | splitTime:',':0 | nonZero">{{value | splitTime:',':0 }} H, </span>
                                             <span ng-if="value | splitTime:',':1 | nonZero">{{value | splitTime:',':1 }} M, </span>
                                             <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>

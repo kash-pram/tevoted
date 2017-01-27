@@ -19,6 +19,7 @@ input[readonly] {
     cursor: not-allowed;
     opacity: 0.3;
     background-color: #DCDCDC;
+    transition: all linear 0.5s;
 }
 option {
     cursor: default;
@@ -37,9 +38,11 @@ h1 {
     
 }
 
+/*
 .font-oswald {
     font-family: 'Oswald', sans-serif;
 }
+*/
 .font-raleway{
     font-family: 'Raleway', sans-serif;
 }
@@ -76,33 +79,55 @@ h1 {
 }
 
 
-.delete-timer{
-    left: -40px;
-    color: #FFF;
-    vertical-align: top;
-    background-color: #CD5C5C;
+.delete-timer {
+    color: #000;
+    background-color: #FFFAFA;
     position: relative;
+    font-variant-caps: all-petite-caps;
+
+    /*    trial*/
+    float:left;
+    right: -15px;
+}
+.delete-timer:hover{
+    color: #B22222;
 }
 .timerContainer {
-    display: inline-block;
+    display:inline-block;
     width: 150px;
-    border: 1px solid black;
+    border: 1px solid #DCDCDC;
     margin: 10px;
+    
+    /*    trial*/
+    float:left;
+    position: relative;
+    left: 40px;
+    min-height: 55px;
 }
 .timerName {
-    
     position: relative;
-    left: -10px;
-    font-weight: bolder;
-    
+    width: 230px;
+    font-weight:600;
     float: left;
-    
     display: block;
+    
+    /*    trial*/
+    clear: left;
+    padding-top: 25px;
+    
 }
+.timerName-container {
+    background-color: firebrick;
+    color: #FFF;
+    height: 150px;
+}
+
 .timerTitle {
-    font-size: 1.2em;
+    /*font-size: 1.2em;
     font-style: oblique;
-    font-variant-caps: all-petite-caps;
+    font-variant-caps: all-petite-caps;*/
+    
+
 }
 .timerValues {
     
@@ -114,12 +139,10 @@ h1 {
 }
 .startTimer {
     opacity: 1;
-/*    transition: visibility 0s, opacity 0.5s linear;*/
 }
 
 .stopTimer {
     opacity: 0.9;
-/*    transition: visibility 0s, opacity 0.5s linear;*/
 }
 .round-button {
 	width:25%;
@@ -127,6 +150,9 @@ h1 {
     left:50%;
     margin-left:-13%;
     padding-top: 30px;
+    
+    /*    trial*/
+    transition: all linear 0.5s;
 }
 .round-button-circle {
 	width: 100%;
@@ -136,6 +162,9 @@ h1 {
     overflow:hidden;
     background-color: #B22222;
     box-shadow: 0 0 3px gray;
+    
+/*    trial*/
+    transition: all linear 0.5s;
 }
 .round-button-circle:hover {
 	background:#8B0000;
@@ -166,6 +195,9 @@ h1 {
     left:50%;
     margin-left:-13%;
     padding-top: 30px;
+    
+    /*    trial*/
+    transition: all linear 0.5s;
 }
 .round-button-circle-stop {
 	width: 100%;
@@ -175,6 +207,9 @@ h1 {
     overflow:hidden;
     background-color: #66CDAA;
     box-shadow: 0 0 3px gray;
+    
+    /*    trial*/
+    transition: all linear 0.5s;
 }
 .round-button-circle-stop:hover {
 	background:#329a77;
@@ -191,7 +226,7 @@ h1 {
     left:0;
     margin-left:0;
 	text-align:center;
-	color:#FFFFFF;
+	color:#000;
     font-family:Verdana;
     font-size:1.2em;
     font-weight:bold;
@@ -206,6 +241,7 @@ h1 {
 }
 .btn {
     margin-bottom: 7px;
+    transition: all linear 0.5s;
 }
 .btn-reset {
     right:46px;
@@ -243,7 +279,8 @@ h1 {
 
 
 .input-lg {
-    width: 246px;
+    width: 264px;
+    transition: all linear 0.5s;
 }
 .input-lg:focus, .input-lg:active {
     outline: none !important;
@@ -285,6 +322,7 @@ h1 {
     height: inherit;
     padding: 0;
     margin: 0;
+    transition: all linear 0.3s;
 }
 .onePanel {
     margin-top: 60px;
