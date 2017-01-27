@@ -115,8 +115,8 @@
                 console.log('GET rejected');
             });
         };
-        //$scope.getTimerData();
-$(".loader").fadeOut("slow");
+        $scope.getTimerData();
+//$(".loader").fadeOut("slow");
         $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
@@ -129,6 +129,10 @@ $(".loader").fadeOut("slow");
             .then(function(resolved) {
                 $scope.timerData = resolved;
                 $(".loader").fadeOut("slow");
+                if(msg === "START")
+                    showToast("Timer started successfully", "success","hide");
+                else
+                    showToast("Timer stopped", "message","hide");
             })
             .catch(function(errorData) {
                 showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
@@ -177,7 +181,6 @@ $(".loader").fadeOut("slow");
                 $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
                 $(".loader").fadeIn("slow");
                 $scope.saveToServer("START");
-                showToast("Timer started successfully", "success","hide");
             } else {
                 $scope.dynClass = "startTimer";
                 $scope.timerAction = "START";
@@ -229,7 +232,6 @@ $(".loader").fadeOut("slow");
                 $scope.timerData[$scope.currentIndex].startTime = "";
                 $(".loader").fadeIn("slow");
                 $scope.saveToServer("PUT");
-                showToast("Timer stopped", "message","hide");
             }
         };
         $scope.btnResetClick = function () {
@@ -258,6 +260,7 @@ $(".loader").fadeOut("slow");
                 ).then(function(result){
                     $scope.timerData = result;
                     $(".loader").fadeOut("slow");
+                    showToast(timerName + " entry deleted", "warning", "hide");
                 }).catch(function(errorData) {
                     showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                     console.log('DELETE ERROR');
