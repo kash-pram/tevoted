@@ -32,6 +32,10 @@ a:hover {
 h1 {
     /*color: #66CDAA;*/
 }
+h4 {
+    font-weight: bold;
+    margin-bottom: 21px;
+}
 
 
 .font-oswald {
@@ -115,11 +119,11 @@ h1 {
 	padding-bottom: 100%;
     border-radius: 50%;
     overflow:hidden;
-    background-color: #66CDAA;
+    background-color: #B22222;
     box-shadow: 0 0 3px gray;
 }
 .round-button-circle:hover {
-	background:#329a77;
+	background:#8B0000;
     box-shadow: 0 0 10px gray;
 }
 .round-button a {
@@ -154,11 +158,11 @@ h1 {
 	padding-bottom: 100%;
     border-radius: 50%;
     overflow:hidden;
-    background-color: #B22222;
+    background-color: #66CDAA;
     box-shadow: 0 0 3px gray;
 }
 .round-button-circle-stop:hover {
-	background:#8B0000;
+	background:#329a77;
     box-shadow: 0 0 10px gray;
 }
 .round-button-stop a {
@@ -184,6 +188,9 @@ h1 {
 
 .btn:focus,.btn:active {
    outline: none !important;
+}
+.btn {
+    margin-bottom: 7px;
 }
 .btn-reset {
     right:46px;
@@ -234,9 +241,10 @@ h1 {
     display: inline-block;
 }
 
-ul li {
+.list-instructions li {
     padding: 0 20px 20px 0;
 }
+
 
 
 .tabList {
@@ -257,7 +265,6 @@ ul li {
     margin: 0;
 }
 .onePanel {
-    border: 1px solid black;
-    margin-top: 100px;
+    margin-top: 80px;
     min-height: 350px;
 }

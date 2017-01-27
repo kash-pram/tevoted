@@ -115,8 +115,8 @@
                 console.log('GET rejected');
             });
         };
-        $scope.getTimerData();
-//$(".loader").fadeOut("slow");
+        //$scope.getTimerData();
+$(".loader").fadeOut("slow");
         $scope.saveToServer = function(msg){
             var tmpObj = {
                 "_id" : $scope.timerData[$scope.currentIndex]._id,
