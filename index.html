@@ -28,10 +28,8 @@
     <div class="container text-center" ng-controller="MainCtrl">
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
-                <div class="">
-                    <div class="font-mont"><h1>TEVOTED</h1></div>
-                    <p>Online Time Management Tool</p>
-                </div>
+                <div class="font-mont"><h1>TEVOTED</h1></div>
+                <p>Online Time Management Tool</p>
             </div>
         </div>
         <br/>
@@ -52,7 +50,7 @@
                     <div ng-show="isSet(1)">
                         <div class="onePanel">
                             <button class="btn btn-reset" ng-click="btnResetClick()">RESET</button>
-                            <input maxlength="25" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Give timer a name"/>
+                            <input maxlength="25" class="input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Enter the routine name"/>
                             <datalist id="timerNames">
                                 <select ng-repeat="data in timerData | orderBy: 'timerName'">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
@@ -61,15 +59,16 @@
                             <button class="btn btn-warning" type="button" ng-click="btnSelectClick()">SELECT</button>
                             <br/><br/>
                             <section class="instructions text-center center-block" ng-show="!enTimer">
-                                <h4>Instructions</h4>
+                                <h4>INSTRUCTIONS</h4>
                                 <ul class="list-instructions text-left">
-                                    <li>This app helps to keep record for the time spent on your routine tasks, on a each day basis</li>
-                                    <li>Enter a NAME for the timer and click SELECT to register</li>
-                                    <li>Alternatively, you can select a timer from the archived DATA</li>
-                                    <li>START / STOP the timer (accordingly), to mark a time stamp</li>
-                                    <li>You can verfiy the Timer details from the DATA tab</li>
-                                    <li>You needed to be connected to the internet only during the START / STOP / DELETE operations</li>
-                                    <li>Meanwhile, the records will be preserved in the database</li>
+                                    <li>This app helps yout to keep record of your daily routine's time consumption</li>
+                                    <li>Enter a NAME of your routine task and click SELECT to register</li>
+                                    <li>Alternatively, you can type-in and SELECT a routine name from the already registered DATA</li>
+                                    <li>To punch-in / punch-out a routine timer, click the START / STOP button which would appear after the SELECT click</li>
+                                    <li>You can have any number of routine timer to run at the same time</li>
+                                    <li>Use the RESET button to shift between routines</li>
+                                    <li>You can analyse the recorded routines from the DATA tab</li>
+                                    <li>You need to be connected to the internet only during the START / STOP / DELETE operations. Meanwhile, the records will be preserved in the database</li>
                                 </ul>
                             </section>
                             <div class="round-button" ng-class="dynClass" ng-click="btnTimerClick()" ng-show="enTimer">

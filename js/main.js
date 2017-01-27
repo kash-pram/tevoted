@@ -290,7 +290,7 @@
                 }
             }
             else
-                showToast("Kindly enter a timer name","warning","hide");
+                showToast("Kindly enter a routine name","warning","hide");
         };
         // END EVENTS
 

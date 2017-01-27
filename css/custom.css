@@ -31,6 +31,7 @@ a:hover {
 }
 h1 {
     /*color: #66CDAA;*/
+    text-shadow: 2px 2px #DCDCDC;
 }
 h4 {
     font-weight: bold;
@@ -236,6 +237,8 @@ h4 {
 
 .instructions {
     padding-top: 30px;
+    max-width: 700px;
+    font-size: 1.2em;
 }
 .list-instructions {
     display: inline-block;
@@ -266,5 +269,6 @@ h4 {
 }
 .onePanel {
     margin-top: 80px;
+    margin-bottom: 80px;
     min-height: 350px;
 }
