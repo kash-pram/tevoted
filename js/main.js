@@ -167,6 +167,7 @@
         // EVENTS
         $scope.btnTimerClick = function() {
             if($scope.timerAction === "START"){
+console.log("TIMERSTART - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                 $scope.dynClass = "stopTimer";
                 toggleClass("stop");
                 $scope.timerAction = "STOP";
@@ -184,6 +185,7 @@
                 $(".loader").fadeIn("slow");
                 $scope.saveToServer("START");
             } else {
+console.log("TIMERSTOP - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                 $scope.dynClass = "startTimer";
                 $scope.timerAction = "START";
                 toggleClass("start");
@@ -240,6 +242,7 @@
             $scope.init();
             enableInput();
             toggleClass("start");
+console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
         };
         $scope.inpKeyPress = function ($event) {
             var tmpKeyCode = $event.which || $event.keyCode;
@@ -249,17 +252,14 @@
             } 
         };
         $scope.btnDeleteClick = function (timerName, timerDate, timerVal, evt) {
-            evt.preventDefault();
             if(timerName === $scope.currentTimer){
                 evt.stopPropagation();
                 showToast("Kindly reset the timer","warning","hide");
             } else {
                 $('#modalBtnDelete').off().on('click', function() {
-                    console.log("FIRST ", timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
-                    console.log('there');
                     evt.stopPropagation();
-                    console.log('next');
                     $(".loader").fadeIn("slow");
+console.log("BEFORE DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                     tevotedDeleteService.deleteData(uriName,
                       {
                         timerName:timerName,
@@ -268,7 +268,7 @@
                         method:"delete"
                       }
                     ).then(function(result){
-                        console.log("SECOND ", timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
+console.log("AFTERR DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                         $scope.timerData = result;
                         $(".loader").fadeOut("slow");
                         var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
@@ -305,8 +305,10 @@
                 $scope.findTimer($scope.currentTimer);
                 if($scope.currentIndex === -1){
                     // WHEN A NEW ROUTINE IS ADDED
+console.log("SELECT NEW - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                 } else {
                     if($scope.timerData[$scope.currentIndex].startTime !== ""){
+console.log("SELECT RUNNING - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                         $scope.timerAction = "STOP";
                         $scope.dynClass = "stopTimer";
                         toggleClass("stop");
@@ -315,6 +317,7 @@
                     else {
                         $scope.timerAction = "START";
                         $scope.dynClass = "startTimer";
+console.log("SELECT DATA - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
                     }
                 }
             }
