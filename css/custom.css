@@ -30,18 +30,15 @@ a:hover {
     color: #66CDAA;
 }
 h1 {
-    /*color: #66CDAA;*/
     text-shadow: 2px 2px #DCDCDC;
 }
 .sub-heading {
-    
+    color: #FFF;
+    background-color: #2F4F4F;
+    width: 350px;
 }
 
-/*
-.font-oswald {
-    font-family: 'Oswald', sans-serif;
-}
-*/
+
 .font-nunito{
     font-family: 'Nunito', sans-serif;
 }
@@ -88,60 +85,46 @@ h1 {
 
 .delete-timer {
     color: #000;
-    background-color: #FFFAFA;
-    
+    background-color: #fce8e8;
     font-variant-caps: all-petite-caps;
-
-    /*    trial*/
-    
-    
-    margin-top: 90px;
-    
+    position: absolute;
+    right: -15px;
+    bottom: -5px;
+    padding-right: 7px;
+    padding-left: 7px;
 }
 .delete-timer:hover{
     color: #B22222;
 }
-.timerContainer {
+.eachDate {
     display:inline-block;
-    width: 150px;
-    border: 1px solid #DCDCDC;
-    
-    /*deleted position relative flaot left*/
-    
+    position: relative;
     left: 40px;
     min-height: 54px;
-    
-    /*  trial  */
     padding: 20px;
     margin: 20px;
+    width: 150px;
+    border: 1px solid #DCDCDC;
+    float: left;
+}
+.dateContainer{
+    float: right;
+    position: relative;
+    width: 90%;
+    display: inline-block;
+    margin-bottom: 50px;
 }
 .timerName {
     position: relative;
     min-width: 230px;
-    font-weight:600;
     float: left;
-    display: block;
-    
-    /*    trial*/
-    clear: left;
+    display: inline-block;
     padding-top: 15px;
-    
-}
-.timerName-container {
-    background-color: firebrick;
+    background-color: #696969;
     color: #FFF;
-    padding: 10px;
-}
-
-.timerTitle {
-    /*font-size: 1.2em;
-    font-style: oblique;
-    font-variant-caps: all-petite-caps;*/
-    
-
-}
-.timerValues {
-    
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 15px;
 }
 
 
@@ -151,7 +134,6 @@ h1 {
 .startTimer {
     opacity: 1;
 }
-
 .stopTimer {
     opacity: 0.9;
 }
@@ -161,9 +143,6 @@ h1 {
     left:50%;
     margin-left:-13%;
     padding-top: 30px;
-    
-    /*    trial*/
-
 }
 .round-button-circle {
 	width: 100%;
@@ -173,9 +152,6 @@ h1 {
     overflow:hidden;
     background-color: #B22222;
     box-shadow: 0 0 3px gray;
-    
-/*    trial*/
-
 }
 .round-button-circle:hover {
 	background:#8B0000;
@@ -206,9 +182,6 @@ h1 {
     left:50%;
     margin-left:-13%;
     padding-top: 30px;
-    
-    /*    trial*/
-
 }
 .round-button-circle-stop {
 	width: 100%;
@@ -218,9 +191,6 @@ h1 {
     overflow:hidden;
     background-color: #66CDAA;
     box-shadow: 0 0 3px gray;
-    
-    /*    trial*/
-
 }
 .round-button-circle-stop:hover {
 	background:#329a77;
@@ -244,7 +214,6 @@ h1 {
     text-decoration:none;
 }
 
-/* ID BASED */
 
 
 .btn:focus,.btn:active {
@@ -306,9 +275,7 @@ h1 {
 }
 .list-instructions {
     display: inline-block;
-    
 }
-
 .list-instructions li {
     padding: 0 0 20px 0;
 }

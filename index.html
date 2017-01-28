@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col-lg-12 col-sm-12 col-xs-12">
                 <div class="font-mont"><h1>TEVOTED</h1></div>
-                <h5 class="sub-heading font-mont">Online Time Management Tool</h5>
+                <h5 class="sub-heading center-block font-mont">Online Time Management Tool</h5>
             </div>
         </div>
         <br/>
@@ -51,7 +51,7 @@
                     <div ng-show="isSet(1)">
                         <div class="onePanel">
                             <button class="btn btn-reset trans" ng-click="btnResetClick()">RESET</button>
-                            <input maxlength="25" class="trans input-lg" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Enter the routine name"/>
+                            <input maxlength="25" class="trans input-lg font-nunito" ng-keypress="inpKeyPress($event)" type="text" list="timerNames" name="inp_displName" ng-model="currentTimer" data-toggle="hover" data-trigger="hover" placeholder="Enter the routine name"/>
                             <datalist id="timerNames">
                                 <select ng-repeat="data in timerData | orderBy: 'timerName'">
                                     <option value="{{data.timerName}}">{{data.timerName}}</option>
@@ -82,22 +82,26 @@
                     <div class="onePanel" ng-show="isSet(2)">
                         <div ng-show="ifData()">
                             <div ng-repeat="timers in timerData | orderBy: 'timerName'">
-                                <div ng-show="timers.pastData | nonEmpty">
-                                <span class="timerName text-right font-mont">
-                                    <div class="timerName-container">{{ timers.timerName | uppercase }}</div>
-                                </span>
-                                <span ng-repeat="(key,value) in timers.pastData" >
-                                    <span class="timerContainer">
-                                        <span class="timerTitle font-mont">{{ key }}</span>
-                                        <br/>
-                                        <span class="timerValues font-nunito">
-                                            <span ng-if="value | splitTime:',':0 | nonZero">{{value | splitTime:',':0 }} H, </span>
-                                            <span ng-if="value | splitTime:',':1 | nonZero">{{value | splitTime:',':1 }} M, </span>
-                                            <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>
+                                <div class="" ng-show="timers.pastData | nonEmpty">
+                                    <div class="timerName">
+                                        <span class="text-right font-mont">
+                                            <div class="">{{ timers.timerName | uppercase }}</div>
                                         </span>
-                                    </span>
-                                    <span ng-click="btnDeleteClick(timers.timerName,key,value)"><a href="" class="delete-timer">DELETE</a></span>
-                                </span>
+                                    </div>
+                                    <div class="dateContainer">
+                                        <span class="" ng-repeat="(key,value) in timers.pastData" >
+                                            <span class="eachDate">
+                                                <span class="font-mont">{{ key }}</span>
+                                                <br/>
+                                                <span class="font-nunito">
+                                                    <span ng-if="value | splitTime:',':0 | nonZero">{{value | splitTime:',':0 }} H, </span>
+                                                    <span ng-if="value | splitTime:',':1 | nonZero">{{value | splitTime:',':1 }} M, </span>
+                                                    <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>
+                                                </span>
+                                                <span ng-click="btnDeleteClick(timers.timerName,key,value)"><a href="" class="delete-timer">DELETE</a></span>
+                                            </span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,5 +116,14 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>-->
     <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <div id="confirm" class="modal hide fade">
+                                              <div class="modal-body">
+                                                Are you sure?
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+                                                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                                              </div>
+                                            </div>
 </body>
 </html>

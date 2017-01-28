@@ -117,7 +117,9 @@
         };
         $scope.getTimerData();
 
-/*$scope.timerData = [{"timerName": "12345678912345678912345678", "startTime": "", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");*/
+/*
+$scope.timerData = [{"timerName": "DATATEXT23", "startTime": "", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");
+*/
         
         $scope.saveToServer = function(msg){
             var tmpObj = {
@@ -252,6 +254,26 @@
             if(timerName === $scope.currentTimer){
                 showToast("Kindly reset the timer","warning","hide");
             } else {
+                /*$('#confirm').modal({ backdrop: 'static', keyboard: false })
+        .one('click', '#delete', function() {
+                    $(".loader").fadeIn("slow");
+                    tevotedDeleteService.deleteData(uriName,
+                      {
+                        timerName:timerName,
+                        timerDate:timerDate,
+                        timerValue:timerVal,
+                        method:"delete"
+                      }
+                    ).then(function(result){
+                        $scope.timerData = result;
+                        $(".loader").fadeOut("slow");
+                        var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
+                        showToast( tmpToastMsg, "warning", "hide");
+                    }).catch(function(errorData) {
+                        showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
+                        console.log('DELETE ERROR');
+                    });
+                });*/
                 $(".loader").fadeIn("slow");
                 tevotedDeleteService.deleteData(uriName,
                   {
@@ -269,7 +291,7 @@
                     showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
                     console.log('DELETE ERROR');
                 });
-            }
+            }  // ELSE
         };
         $scope.btnSelectClick = function () {
             if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
