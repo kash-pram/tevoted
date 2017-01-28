@@ -33,9 +33,11 @@ h1 {
     text-shadow: 2px 2px #DCDCDC;
 }
 .sub-heading {
-    color: #FFF;
-    background-color: #2F4F4F;
-    width: 350px;
+    color: #CD5C5C;
+    /*background-color: #66CDAA;*/
+    width: 220px;
+    border-top: 1px solid #000;
+    padding-top: 5px;
 }
 
 
@@ -82,6 +84,13 @@ h1 {
 }
 
 
+#modalBtnCancel {
+    position: relative;
+    right: 25px;
+}
+
+
+
 
 .delete-timer {
     color: #000;
@@ -92,6 +101,7 @@ h1 {
     bottom: -5px;
     padding-right: 7px;
     padding-left: 7px;
+    border-radius: 10%;
 }
 .delete-timer:hover{
     color: #B22222;
@@ -120,10 +130,10 @@ h1 {
     float: left;
     display: inline-block;
     padding-top: 15px;
-    background-color: #696969;
+    background-color: #B22222;
     color: #FFF;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
     padding-right: 15px;
 }
 

@@ -98,7 +98,7 @@
                                                     <span ng-if="value | splitTime:',':1 | nonZero">{{value | splitTime:',':1 }} M, </span>
                                                     <span ng-if="value | splitTime:',':2 | nonZero">{{value | splitTime:',':2 }} S</span>
                                                 </span>
-                                                <span ng-click="btnDeleteClick(timers.timerName,key,value)"><a href="" class="delete-timer">DELETE</a></span>
+                                                <span ng-click="btnDeleteClick(timers.timerName,key,value, $event)"><a href="" data-toggle="modal" data-target="#confirmModal" class="delete-timer">DELETE</a></span>
                                             </span>
                                         </span>
                                     </div>
@@ -116,14 +116,39 @@
     <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.js"></script>-->
     <script type="text/javascript" src="js/custom.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
-    <div id="confirm" class="modal hide fade">
-                                              <div class="modal-body">
-                                                Are you sure?
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
-                                                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-                                              </div>
-                                            </div>
+    
+    
+    <div class="modal fade" id="confirmModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirm DELETE</h4>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal" id="modalBtnCancel">Cancel</button>
+            <button type="button" data-dismiss="modal" class="btn btn-primary" id="modalBtnDelete">Delete</button>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    
+<!--
+    <div id="confirm" class="modal hide fade">  
+      <div class="modal-body">
+        Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+        <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+      </div>
+    </div>
+-->
+    
 </body>
 </html>
