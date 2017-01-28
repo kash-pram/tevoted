@@ -131,10 +131,14 @@
             .then(function(resolved) {
                 $scope.timerData = resolved;
                 $(".loader").fadeOut("slow");
-                if(msg === "START")
+                if(msg === "START"){
                     showToast("Timer started successfully", "success","hide");
-                else
+console.log("START - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
+                }
+                else {
                     showToast("Timer stopped", "message","hide");
+console.log("STOP - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
+                }
             })
             .catch(function(errorData) {
                 showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
