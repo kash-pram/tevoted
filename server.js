@@ -71,7 +71,7 @@ app.put("/", function(req,res){
         var _unset = {};
         _unset[mongoDate] = "";
         mycollection.update( { timerName: mongoName }, { $unset: _unset }, function(){
-            mycollection.remove( { pastData: {} } );
+            mycollection.remove( { pastData: {}, startTime: {$ne : ""} } );
             mycollection.find(function (err, docs) {
                 res.send(docs);
             });

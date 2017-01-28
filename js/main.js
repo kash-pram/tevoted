@@ -249,13 +249,13 @@
             } 
         };
         $scope.btnDeleteClick = function (timerName, timerDate, timerVal, evt) {
-            evt.preventDefault();
+  //          evt.preventDefault();
             if(timerName === $scope.currentTimer){
                 evt.stopPropagation();
                 showToast("Kindly reset the timer","warning","hide");
             } else {
                 $('#modalBtnDelete').on('click', function() {
-                    evt.stopPropagation();
+/*                    evt.stopPropagation();*/
                     $(".loader").fadeIn("slow");
                     tevotedDeleteService.deleteData(uriName,
                       {
