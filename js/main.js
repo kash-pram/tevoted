@@ -1,340 +1,246 @@
-(function(){
-    angular.module('timerApp', [])
-    .filter('splitTime', function() {
-        return function(input, splitChar, splitIndex) {
-            return input.split(splitChar)[splitIndex];
-        }
-    })
-    .filter('nonZero', function() {
-        return function(inputVal) {
-            if(parseInt(inputVal) !== 0)
-                return true;
-            else
-                return false;
-        }
-    })
-    .filter('nonEmpty', function() {
-        return function(inputObj) {
-            if(angular.equals(inputObj, {}))
-                return false;
-            else
-                return true;
-        }
-    })
-    .factory('tevotedUpdateService', ['$http', function($http){
-        var updateData = function(uriName, dataObj){
-            return $http({
-              method: 'PUT',
-              data: dataObj,
-              url: uriName
-            })
-            .then(function successCallback(response) {
-                return response.data;
-            })
-            .catch(function errorCallback(err) {
-                throw err;
-            });
-        };
-        return {updateData:updateData};
-    }])
-    .factory('tevotedDeleteService', ['$http', function($http){
-        var deleteData = function(uriName, dataObj){
-            return $http({
-              method: 'PUT',
-              data: dataObj,
-              url: uriName
-            })
-            .then(function successCallback(response) {
-                return response.data;
-            })
-            .catch(function errorCallback(err) {
-                throw err;
-            });
-        };
-        return {deleteData:deleteData};
-    }])
-    .factory('tevotedService', ['$http', '$q', function($http, $q){
-        var getData = function (uriName){
-            var deferred = $q.defer();
-            $http({
-              method: 'GET',
-              url: uriName
-                }).then(function successCallback(response) {
-                    deferred.resolve(response.data);
-                }, function errorCallback(response) {
-                    deferred.reject(response.data);
-            });
-            return deferred.promise;
-        };
-        return {getData:getData};
-    }])
-    .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', 'tevotedDeleteService', function($scope, tevotedService, tevotedUpdateService, tevotedDeleteService) {
 
-        $scope.timerData = [];
-        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
-
-        // INITIALIZATION AKA RESET CODE
-        $scope.init = function(){
-            $scope.tab = 1;
-            $scope.timerAction = "START";
-            $scope.dynClass = "startTimer";
-            $scope.enTimer = false;
-            $scope.currentTimer = "";
-            $scope.currentIndex = -1;
-        };
-        $scope.init();
-        // END INITIALIZATION AKA RESET CODE
-
-        // TAB CONTROLS
-        $scope.setTab = function(newTab){
-            /*if(newTab === 1){
-              $(".onePanel").css("background-color", "#E0FFFF");
-            } else {
-              $("body").css("overflow", "auto");
-            }*/
-          $scope.tab = newTab;
-        };
-        $scope.isSet = function(tabNum){
-          return $scope.tab === tabNum;
-        };
-        $scope.ifData = function(){
-            if($scope.timerData.length === 0) {
-                return false;
+// UTILITIES
+function getTimeStamp(){
+    var dt = new Date();
+    var utcDate = dt.toUTCString();
+    return utcDate;
+}
+/*
+    $('.input-lg').on('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+           event.preventDefault();
+           return false;
+        }
+    });
+function getCalendar(year){
+    var monthsIndex = [Jan,Feb,Mar,Apr,May,June,July,Aug,Sep,Oct,Nov,Dec];
+    var daysIndexStart = [];
+    var daysIndexEnd = [];
+    tmpStartTime = tmpStartTime.split(":");
+    tmpCurrentTime = tmpCurrentTime.split(":");
+    if(tmpStartTime[2] - tmpCurrentTime[2] === 0){
+        //no year diff
+    }
+    var daysIndex = [];
+    // [31,28,31,30,31,30,31,31,30,31,30,31]
+    for(var i=0; i<12; i++){
+        if((i==1) || (i==7)){
+            if((i==1) && ((year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0))){
+                daysIndex[i] = 29;
             }
-            return true;
-        };
-        // END TAB CONTROLS
+            else if((i==1) && !((year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0))){
+                daysIndex[i] = 28;
+            } else {
+                daysIndex[i] = 30;
+            }
+        }
+        else
+            daysIndex[i] = 31;
+    }
+    return daysIndex;
+}
+function makeDateAdjust(tmpValOne, tmpValTwo){
+    if((tmpValTwo/60) > 1){
+        tmpValOne = tmpValOne + parseInt(tmpValTwo / 60);
+        tmpValTwo = (tmpValTwo % 60);
+    }
+    return [tmpValOne,tmpValTwo];
+}
+function getDayDiff(tmpStartTime, tmpCurrentTime){
+    // 11:Jan:2017
+    var dayDiff = 0;
+    var oneDay = 24*60*60*1000;
+    tmpStartTime = tmpStartTime.split(":");
+    tmpCurrentTime = tmpCurrentTime.split(":");
+    var monthsIndex = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    for(var i=0; i<12; i++){
+        if(tmpStartTime[1] === monthsIndex[i])
+            tmpStartTime[1] = i;
+        if(tmpCurrentTime[1] === monthsIndex[i])
+            tmpCurrentTime[1] = i;
+    }
+    // REFACTOR NEEDED
+    var tmpStart = new Date(tmpStartTime[2],tmpStartTime[1],tmpStartTime[0]);
+    var tmpCurrent = new Date(tmpCurrentTime[2],tmpCurrentTime[1],tmpCurrentTime[0]);
+    dayDiff =  Math.round(Math.abs((tmpCurrent.getTime() - tmpStart.getTime())/(oneDay)));
+    return dayDiff;
+    
+    diff = parseInt(currentTime[1]) + ((parseInt(startTime[1])===0)?0:(60 - parseInt(startTime[1])));
+}
+*/
+function getDateVal(tmpDateVal){
+    // Wed, 11 Jan 2017 12:15:20 GMT
+    tmpDateVal = tmpDateVal.split(" ");
+    var dateVal =  tmpDateVal[1] + "-" + tmpDateVal[2] + "-" + tmpDateVal[3];
+    return dateVal;
+    // 11-Jan-2017
+}
+function getDayDiff(tmpStartTime, tmpCurrentTime){
+    // Wed, 11 Jan 2017 12:15:20 GMT
+    var dayDiff = 0;
+    var oneDay = 24*60*60*1000;
+    var tmpStartDate = new Date(tmpStartTime);
+    var tmpCurrentDate = new Date(tmpCurrentTime);
+    dayDiff =  Math.round(Math.abs((tmpCurrentDate.getTime() - tmpStartDate.getTime())/(oneDay)));
+    return dayDiff;
+}
+function getHourDiff(tmpStartTime, tmpCurrentTime){
+    // Wed, 11 Jan 2017 12:15:20 GMT
+    var hourDiff = 0;
+    var startTime = tmpStartTime.split(" ");
+    var currentTime = tmpCurrentTime.split(" ");
+    
+    // IF THE END TIME IS WITHIN THE SAME DAY
+    if((startTime[1] === currentTime[1]) && (startTime[2] === currentTime[2]) && (startTime[3] === currentTime[3])){
+        startTime = startTime[4].split(":");
+        currentTime = currentTime[4].split(":");
+        hourDiff = parseInt(currentTime[0]) - parseInt(startTime[0]);
         
-        // UTILITY
-        $scope.getTimerData = function() {
-            tevotedService.getData(uriName).then(function(result) {
-                $scope.timerData = result;
-                $(".loader").fadeOut("slow");
-            }, function(reject){
-                showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                console.log('GET rejected');
-            });
-        };
-        $scope.getTimerData();
+    // IF THE END TIME FALLS ON THE VERY NEXT DAY
+    } else if (((parseInt(currentTime[1]) - parseInt(startTime[1])) === 1) && (startTime[2] === currentTime[2]) && (startTime[3] === currentTime[3])){
+        startTime = startTime[4].split(":");
+        currentTime = currentTime[4].split(":");
+        if(parseInt(startTime[1]) !== 0) // to do: testing needed
+            hourDiff = parseInt(currentTime[0]) + (23 - parseInt(startTime[0]));
+        else
+            hourDiff = parseInt(currentTime[0]) + (24 - parseInt(startTime[0]));
 
-/*$scope.timerData = [{"timerName": "DATATEXT23", "startTime": "", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");*/
-        
-        $scope.saveToServer = function(msg){
-            var tmpObj = {
-                "_id" : $scope.timerData[$scope.currentIndex]._id,
-                "timerName" : $scope.timerData[$scope.currentIndex].timerName,
-                "startTime" : $scope.timerData[$scope.currentIndex].startTime,
-                "pastData" : $scope.timerData[$scope.currentIndex].pastData,
-                "method" : "update"
-            };
-            tevotedUpdateService.updateData(uriName, tmpObj)
-            .then(function(resolved) {
-                $scope.timerData = resolved;
-                $(".loader").fadeOut("slow");
-                if(msg === "START"){
-                    showToast("Timer started successfully", "success","hide");
-console.log("START - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                }
-                else {
-                    showToast("Timer stopped", "message","hide");
-console.log("STOP - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                }
-            })
-            .catch(function(errorData) {
-                showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                console.log(msg,' ERROR');
-            });
-        };
-        $scope.findTimer = function (tmpName) {
-            var i;
-            for(i=0; i < $scope.timerData.length; i++){
-                if(tmpName === $scope.timerData[i].timerName){
-                    $scope.currentIndex = i;
-                    break;
-                }
-            }
-        };
-        $scope.isDatePresent = function (tmpDate) {
-            var innerIndex = -1;
-            var tmpObj = $scope.timerData[$scope.currentIndex].pastData;
-            for(var dateKey in tmpObj){
-                if(tmpObj.hasOwnProperty(dateKey)){
-                    if(dateKey === tmpDate){
-                        return true;
-                    }
-                }
-            }
-            return false;
-        };
-        // END UTILITY
+    // IF THE END TIME IS MORE THAN A DAY LONG
+    } else {
+        var dayDiff = getDayDiff(tmpStartTime,tmpCurrentTime);
+        dayDiff = parseInt(dayDiff)-1;
+        startTime = startTime[4].split(":");
+        currentTime = currentTime[4].split(":");
+        hourDiff = parseInt(currentTime[0]) + (24 - parseInt(startTime[0])) + (dayDiff*24);
+    }
+    return hourDiff;
+}
+function getMinSecDiff(tmpStartTime, tmpCurrentTime, tmpFlag){
+    // Wed, 11 Jan 2017 12:15:20 GMT
+    var diff = 0;
+    var startTime = tmpStartTime.split(" ");
+    var currentTime = tmpCurrentTime.split(" ");
 
-        // EVENTS
-        $scope.btnTimerClick = function() {
-            if($scope.timerAction === "START"){
-console.log("TIMERSTART - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                $scope.dynClass = "stopTimer";
-                toggleClass("stop");
-                $scope.timerAction = "STOP";
+    // TO USE DURING THE SAME MINUTE OR HOUR CONDITION CHECK
+    tmpStartTime = tmpStartTime.split(" ");
+    tmpCurrentTime = tmpCurrentTime.split(" ");
+    
+    startTime = startTime[4].split(":");
+    currentTime = currentTime[4].split(":");
+    
+    if(tmpFlag === "sec"){
+        // IF THE END TIME IS IN THE SAME MINUTE
+        if((tmpStartTime[1] === tmpCurrentTime[1]) && (tmpStartTime[2] === tmpCurrentTime[2]) && (tmpStartTime[3] === tmpCurrentTime[3]) && (startTime[0] === currentTime[0]) && (startTime[1] === currentTime[1]) ){
+            diff = parseInt(currentTime[2]) - parseInt(startTime[2]);
 
-                if($scope.currentIndex === -1){
-                    $scope.currentIndex = $scope.timerData.length;
-                    var tmpData = {};
-                    tmpData['_id'] = "";
-                    tmpData['timerName'] = $scope.currentTimer;
-                    tmpData['startTime'] = "";
-                    tmpData['pastData'] = {};
-                    $scope.timerData.push(tmpData);
-                }
-                $scope.timerData[$scope.currentIndex].startTime = getTimeStamp();
-                $(".loader").fadeIn("slow");
-                $scope.saveToServer("START");
-            } else {
-console.log("TIMERSTOP - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                $scope.dynClass = "startTimer";
-                $scope.timerAction = "START";
-                toggleClass("start");
-                
-                var tmpCurrentTime = getTimeStamp();
-                var tmpDate = getDateVal($scope.timerData[$scope.currentIndex].startTime);
-                
-                var tmpHours = getHourDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime);
-                var tmpMinutes = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "min");
-                var tmpSeconds = getMinSecDiff($scope.timerData[$scope.currentIndex].startTime, tmpCurrentTime, "sec");
+        // IF THE END TIME IS IN A DIFFERENT MINUTE
+        } else {
+            diff = parseInt(currentTime[2]) + (60 - parseInt(startTime[2]));
+        }
+    }
+    else {
+        // IF THE END TIME IS IN THE SAME HOUR
+        if((tmpStartTime[1] === tmpCurrentTime[1]) && (tmpStartTime[2] === tmpCurrentTime[2]) && (tmpStartTime[3] === tmpCurrentTime[3]) && (startTime[0] === currentTime[0])){
+            diff = parseInt(currentTime[1]) - parseInt(startTime[1]);
+            
+        // IF THE END TIME IS IN A DIFFERENT HOUR
+        } else {
+            diff = parseInt(currentTime[1]) + (60 - parseInt(startTime[1]));
+        }
+    }
+    return diff;
+}
+// END UTILITIES
 
-                tmpHours = parseInt(tmpHours);
-                tmpMinutes = parseInt(tmpMinutes);
-                tmpSeconds = parseInt(tmpSeconds);
 
-                // ADJUSTMENTS
-                if(tmpMinutes !== 0){
-                    tmpMinutes--;
-                }
-                if(tmpHours !== 0){
-                    tmpHours--;
-                }
-                
-                if($scope.isDatePresent(tmpDate)){
-                    // CUMULATE
-                    var tmpCumulate = $scope.timerData[$scope.currentIndex].pastData[tmpDate];
-                    var tmpCumArr = tmpCumulate.split(",");
-                    tmpHours = parseInt(tmpCumArr[0]) + tmpHours;
-                    tmpMinutes = parseInt(tmpCumArr[1]) + tmpMinutes;
-                    tmpSeconds = parseInt(tmpCumArr[2]) + tmpSeconds;
-                } else {
-                    // NEW ENTRY
-                    $scope.timerData[$scope.currentIndex].pastData[tmpDate] = "";
-                }
-                
-                // ADJUSTMENTS
-                if((tmpSeconds/60) > 1){
-                        tmpMinutes = tmpMinutes + parseInt(tmpSeconds / 60);
-                        tmpSeconds = (tmpSeconds % 60);
-                }
-                if((tmpMinutes/60) > 1){
-                        tmpHours = tmpHours + parseInt(tmpMinutes / 60);
-                        tmpMinutes = (tmpMinutes % 60);
-                }
-                
-                var tmpDuration = tmpHours + "," + tmpMinutes + "," + tmpSeconds;
-                $scope.timerData[$scope.currentIndex].pastData[tmpDate] = tmpDuration;
-                $scope.timerData[$scope.currentIndex].startTime = "";
-                $(".loader").fadeIn("slow");
-                $scope.saveToServer("PUT");
-            }
-        };
-        $scope.btnResetClick = function () {
-            $scope.init();
-            enableInput();
-            toggleClass("start");
-console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-        };
-        $scope.inpKeyPress = function ($event) {
-            var tmpKeyCode = $event.which || $event.keyCode;
-            if(tmpKeyCode === 13) {
-                $event.preventDefault();
-                $scope.btnSelectClick();
-            } 
-        };
-        $scope.btnDeleteClick = function (timerName, timerDate, timerVal, evt) {
-            if(timerName === $scope.currentTimer){
-                evt.stopPropagation();
-                showToast("Kindly reset the timer","warning","hide");
-            } else {
-                $('#modalBtnDelete').off().on('click', function() {
+// BUTTON CLICKS
+function disableInput(){
+    $('.input-lg').attr('readonly', true);
+    $('.input-lg').attr("data-content","Use the RESET to start over");
 
-                    $scope.init();
-                    enableInput();
-                    toggleClass("start");
+    $('.btn-warning').attr('disabled',true);
+    $('.btn-warning').removeClass("btn-warning").addClass("btn-warning-disabled");
 
-                    evt.stopPropagation();
-                    $(".loader").fadeIn("slow");
-console.log("BEFORE DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                    tevotedDeleteService.deleteData(uriName,
-                      {
-                        timerName:timerName,
-                        timerDate:timerDate,
-                        timerValue:timerVal,
-                        method:"delete"
-                      }
-                    ).then(function(result){
-console.log("AFTERR DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                        $scope.timerData = result;
-                        $(".loader").fadeOut("slow");
-                        var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
-                        showToast( tmpToastMsg, "warning", "hide");
-                    }).catch(function(errorData) {
-                        showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                        console.log('DELETE ERROR');
-                    });
-                });
-                /*$(".loader").fadeIn("slow");
-                tevotedDeleteService.deleteData(uriName,
-                  {
-                    timerName:timerName,
-                    timerDate:timerDate,
-                    timerValue:timerVal,
-                    method:"delete"
-                  }
-                ).then(function(result){
-                    $scope.timerData = result;
-                    $(".loader").fadeOut("slow");
-                    var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
-                    showToast( tmpToastMsg, "warning", "hide");
-                }).catch(function(errorData) {
-                    showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                    console.log('DELETE ERROR');
-                });*/
-            }  // ELSE
-        };
-        $scope.btnSelectClick = function () {
-            if($scope.currentTimer !== "" && $scope.currentTimer !== undefined){
-                $scope.enTimer = true;
-                disableInput();
+    $('.btn-reset-disabled').attr('disabled',false);
+    $('.btn-reset-disabled').removeClass("btn-reset-disabled").addClass("btn-reset");
+}
+function enableInput(){
+    $('.input-lg').attr('readonly', false);
+    $('.input-lg').attr("data-content","Limit to 25 alpha-numeric characters");
 
-                $scope.findTimer($scope.currentTimer);
-                if($scope.currentIndex === -1){
-                    // WHEN A NEW ROUTINE IS ADDED
-console.log("SELECT NEW - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                } else {
-                    if($scope.timerData[$scope.currentIndex].startTime !== ""){
-console.log("SELECT RUNNING - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                        $scope.timerAction = "STOP";
-                        $scope.dynClass = "stopTimer";
-                        toggleClass("stop");
-                        showToast("Timer already running", "warning","hide");
-                    }
-                    else {
-                        $scope.timerAction = "START";
-                        $scope.dynClass = "startTimer";
-console.log("SELECT DATA - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
-                    }
-                }
-            }
-            else
-                showToast("Kindly enter a routine name","warning","hide");
-        };
-        // END EVENTS
+    $('.btn-warning-disabled').attr('disabled',false);
+    $('.btn-warning-disabled').removeClass("btn-warning-disabled").addClass("btn-warning");
 
-    }]); // MAINCTRL END
+    $('.btn-reset').attr('disabled',true);
+    $('.btn-reset').removeClass("btn-reset").addClass("btn-reset-disabled");
+}
 
-})();
+$('document').ready(function() {
+    enableInput();
+    $('.input-lg').popover({trigger: "hover", placement: "top"});
+    $('.input-lg').on('click', function(){
+        $('.input-lg').popover('hide');
+    });
+
+    $('.input-lg').on('input', function() {
+        var c = this.selectionStart,
+            r = /[^A-Za-z0-9_\s]/gi,
+            v = $(this).val();
+        if(r.test(v)) {
+            $(this).val(v.replace(r, ''));
+            c--;
+        }
+        this.setSelectionRange(c, c);
+    });
+
+});
+
+// DECORATIONS
+function toggleClass(toggleMsg){
+    if(toggleMsg === "stop"){
+        $('.round-button').removeClass("round-button").addClass("round-button-stop");
+        $('.round-button-circle').removeClass("round-button-circle").addClass("round-button-circle-stop");
+    } else {
+        $('.round-button-stop').removeClass("round-button-stop").addClass("round-button");
+        $('.round-button-circle-stop').removeClass("round-button-circle-stop").addClass("round-button-circle");
+    }
+}
+function showToast(msg,msgStatus,toastStatus) {
+    if(msgStatus === "success") {
+        $('.toast').css('background-color', '#DFF2BF');
+        $('.toast').css('color', '#4F8A10');
+    }
+    else if(msgStatus === "message") {
+        $('.toast').css('background-color', '#BDE5F8');
+        $('.toast').css('color', '#00529B');
+    }
+    else if (msgStatus === "warning"){
+        $('.toast').css('background-color', '#FEEFB3');
+        $('.toast').css('color', '#9F6000');
+    }
+    else
+        ;
+    
+    if(toastStatus === "hide") {
+        $('.toast').html(msg).clearQueue().fadeIn(400).delay(2000).fadeOut(400);
+    } else {
+        $('.toast').html(msg).clearQueue().fadeIn(400);
+    }
+}
+
+
+
+
+function getScope(ctrlName) {
+    var sel = 'div[ng-controller="' + ctrlName + '"]';
+    return angular.element(sel).scope();
+}
+function addNewTimer(){
+    var $scope = getScope('MainCtrl');
+    $scope.curTimer = $('#inp_timerName').val();
+    $scope.$apply();
+    var tmpVal = $('#inp_timerName').val();
+    $('.input-lg').val(tmpVal);
+}
