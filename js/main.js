@@ -254,7 +254,7 @@
                 evt.stopPropagation();
                 showToast("Kindly reset the timer","warning","hide");
             } else {
-                $('#modalBtnDelete').one('click', function() {
+                $('#modalBtnDelete').off().on('click', function() {
                     console.log("FIRST ", timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
                     console.log('there');
                     evt.stopPropagation();
