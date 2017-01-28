@@ -262,10 +262,10 @@ console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentInde
             } else {
                 $('#modalBtnDelete').off().on('click', function() {
 
-                    $scope.init();
+    /*                $scope.init();
                     enableInput();
                     toggleClass("start");
-
+*/
                     evt.stopPropagation();
                     $(".loader").fadeIn("slow");
 console.log("BEFORE DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
