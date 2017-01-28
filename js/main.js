@@ -254,9 +254,11 @@
                 evt.stopPropagation();
                 showToast("Kindly reset the timer","warning","hide");
             } else {
-                $('#modalBtnDelete').on('click', function() {
-                    console.log(timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
+                $('#modalBtnDelete').one('click', function() {
+                    console.log("FIRST ", timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
+                    console.log('there');
                     evt.stopPropagation();
+                    console.log('next');
                     $(".loader").fadeIn("slow");
                     tevotedDeleteService.deleteData(uriName,
                       {
@@ -266,6 +268,7 @@
                         method:"delete"
                       }
                     ).then(function(result){
+                        console.log("SECOND ", timerName, " :Name, " , timerDate, " :Date, ", timerVal, " :Value");
                         $scope.timerData = result;
                         $(".loader").fadeOut("slow");
                         var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
