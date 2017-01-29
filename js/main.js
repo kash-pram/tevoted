@@ -160,21 +160,21 @@ function disableInput(){
     $('.input-lg').attr('readonly', true);
     $('.input-lg').attr("data-content","Use the RESET to start over");
 
-    $('.btn-warning').attr('disabled',true);
-    $('.btn-warning').removeClass("btn-warning").addClass("btn-warning-disabled");
+    $('.btn-select').attr('disabled',true);
+    $('.btn-select').removeClass("btn-select").addClass("btn-select-disabled");
 
-    $('.btn-reset-disabled').attr('disabled',false);
-    $('.btn-reset-disabled').removeClass("btn-reset-disabled").addClass("btn-reset");
+    /*$('.btn-reset-disabled').attr('disabled',false);
+    $('.btn-reset-disabled').removeClass("btn-reset-disabled").addClass("btn-reset");*/
 }
 function enableInput(){
     $('.input-lg').attr('readonly', false);
     $('.input-lg').attr("data-content","Limit to 25 alpha-numeric characters");
 
-    $('.btn-warning-disabled').attr('disabled',false);
-    $('.btn-warning-disabled').removeClass("btn-warning-disabled").addClass("btn-warning");
+    $('.btn-select-disabled').attr('disabled',false);
+    $('.btn-select-disabled').removeClass("btn-select-disabled").addClass("btn-select");
 
-    $('.btn-reset').attr('disabled',true);
-    $('.btn-reset').removeClass("btn-reset").addClass("btn-reset-disabled");
+    /*$('.btn-reset').attr('disabled',true);
+    $('.btn-reset').removeClass("btn-reset").addClass("btn-reset-disabled");*/
 }
 
 $('document').ready(function() {

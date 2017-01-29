@@ -90,8 +90,6 @@ h1 {
 }
 
 
-
-
 .delete-timer {
     color: #000;
     background-color: #fce8e8;
@@ -167,6 +165,10 @@ h1 {
 	background:#8B0000;
     box-shadow: 0 0 10px gray;
 }
+.round-button-circle:focus {
+	background:#B22222;
+    box-shadow: 0 0 3px gray;
+}
 .round-button a {
     display:block;
 	float:left;
@@ -184,8 +186,6 @@ h1 {
     font-weight:bold;
     text-decoration:none;
 }
-
-
 .round-button-stop {
 	width:25%;
     position:absolute;
@@ -205,6 +205,10 @@ h1 {
 .round-button-circle-stop:hover {
 	background:#329a77;
     box-shadow: 0 0 10px gray;
+}
+.round-button-circle-stop:focus {
+	background:#66CDAA;
+    box-shadow: 0 0 3px gray;
 }
 .round-button-stop a {
     display:block;
@@ -233,37 +237,47 @@ h1 {
     margin-bottom: 7px;
 }
 .btn-reset {
-    right:46px;
+    right:21px;
     position:relative;
     font-size:small;
     border: 0;
-    background-color: #66CDAA;
+    background-color: #2F4F4F;
     color: #FFF;
 }
 .btn-reset:hover {
-    background-color: #EC971F;
+    background-color: #CD5C5C;
+    color: #FFF;
+}
+.btn-reset:focus {
+    background-color: #2F4F4F;
     color: #FFF;
 }
 .btn-reset-disabled, .btn-reset-disabled:hover {
-    right:46px;
-    position:relative;
-    font-size:small;
-    border: 0;
     background-color: #D3D3D3;
     color: #FFF;
 }
-.btn-warning {
+.btn-select {
+    /*background-color: #EC971F;*/
     background-color: #66CDAA;
     color: #FFF;
-    border: 1px solid #66CDAA;
+    border: 0;
     position:relative;
-    left: 30px;
+    left: 19px;
 }
-.btn-warning-disabled, .btn-warning-disabled:hover {
+.btn-select:hover {
+    background-color: #EC971F;
+    /*background-color: #66CDAA;*/
+    color: #FFF;
+}
+.btn-select:focus {
+    background-color: #EC971F;
+    color: #FFF;
+}
+.btn-select-disabled, .btn-select-disabled:hover {
     background-color: #D3D3D3;
     color: #FFF;
     position:relative;
-    left: 30px;
+    left: 19px;
 }
 
 
