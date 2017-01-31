@@ -243,9 +243,16 @@ console.log("TIMERSTOP - ", $scope.currentTimer, " :TimerName, ", $scope.current
             }
         };
         $scope.btnResetClick = function () {
-            $scope.init();
+            // TEMPORARY FIX
+            $scope.timerAction = "START";
+            $scope.dynClass = "startTimer";
+            $scope.enTimer = false;
+            $scope.currentTimer = "";
+            $scope.currentIndex = -1;
             enableInput();
             toggleClass("start");
+            // TEMPORARY FIX END
+
 console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
         };
         $scope.inpKeyPress = function ($event) {
