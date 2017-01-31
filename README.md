@@ -1,4 +1,4 @@
-# tevoted.github.io
+# https://tevoted.github.io
 
 <h1>TEVOTED</h1>
 Online Time Management Tool
@@ -13,4 +13,4 @@ Online Time Management Tool
 <li>Use the <code>RESET</code> button to shift between routines</li>
 <li>You can analyse the recorded routines from the <code>DATA</code> tab</li>
 </ul>
-<span class="font-mont">Note:</span> <span>You need to be connected to the internet "only" during the <code>START</code> / <code>STOP</code> / <code>DELETE</code> operations</span>
+<strong>Note:</strong> <span>You need to be connected to the internet "only" during the <code>START</code> / <code>STOP</code> / <code>DELETE</code> operations</span>
