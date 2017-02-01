@@ -22,7 +22,6 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<!--<body>-->
 <body class="ng-cloak">
     <span class="toast font-mont"></span>
     <div class="loader"></div>
@@ -82,8 +81,24 @@
                     <div class="onePanel" ng-show="isSet(2)">
                         <div ng-show="ifData()">
                             <div ng-repeat="timers in timerData | orderBy: 'timerName'">
+                                <div ng-show="!(timers.pastData | nonEmpty)">
+                                    <div class="timerName" title="Click to SELECT the routine" ng-click="timerNameClick(timers.timerName)">
+                                        <span class="text-right font-mont">
+                                            <div>{{ timers.timerName | uppercase }}</div>
+                                        </span>
+                                    </div>
+                                    <div class="dateContainer font-mont">
+                                        <span class="eachDate">
+                                                <span class="font-mont">{{ timers.startTime | timerFormat }}</span>
+                                                <br/>
+                                                <span class="font-nunito">
+                                                    Timer Running
+                                                </span>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="" ng-show="timers.pastData | nonEmpty">
-                                    <div class="timerName">
+                                    <div class="timerName" title="Click to SELECT the routine" ng-click="timerNameClick(timers.timerName)">
                                         <span class="text-right font-mont">
                                             <div class="">{{ timers.timerName | uppercase }}</div>
                                         </span>
@@ -100,6 +115,13 @@
                                                 </span>
                                                 <span ng-click="btnDeleteClick(timers.timerName,key,value, $event)"><a href="" data-toggle="modal" data-target="#confirmModal" class="delete-timer">DELETE</a></span>
                                             </span>
+                                        </span>
+                                        <span class="eachDate" ng-if="timers.startTime">
+                                                <span class="font-mont">{{ timers.startTime | timerFormat }}</span>
+                                                <br/>
+                                                <span class="font-nunito">
+                                                    Timer Running
+                                                </span>
                                         </span>
                                     </div>
                                 </div>

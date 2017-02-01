@@ -21,6 +21,14 @@
                 return true;
         }
     })
+    .filter('timerFormat', function() {
+    //Wed, 01 Feb 2017 04:47:21 GMT
+        return function(gmtFormat) {
+            var dateFormat = gmtFormat.split(" ");
+            gmtFormat = dateFormat[1] +"-"+ dateFormat[2] +"-"+ dateFormat[3];
+            return gmtFormat;
+        }
+    })
     .factory('tevotedUpdateService', ['$http', function($http){
         var updateData = function(uriName, dataObj){
             return $http({
@@ -75,7 +83,6 @@
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
-            $scope.tab = 1;
             $scope.timerAction = "START";
             $scope.dynClass = "startTimer";
             $scope.enTimer = false;
@@ -83,6 +90,7 @@
             $scope.currentIndex = -1;
         };
         $scope.init();
+        $scope.tab = 1;
         // END INITIALIZATION AKA RESET CODE
 
         // TAB CONTROLS
@@ -115,9 +123,9 @@
                 console.log('GET rejected');
             });
         };
-        $scope.getTimerData();
+        //$scope.getTimerData();
 
-/*$scope.timerData = [{"timerName": "DATATEXT23", "startTime": "", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");*/
+$scope.timerData = [{"timerName": "PRAKASH", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {}},{"timerName": "DATATEXT23", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");
         
         $scope.saveToServer = function(msg){
             var tmpObj = {
@@ -242,16 +250,17 @@ console.log("TIMERSTOP - ", $scope.currentTimer, " :TimerName, ", $scope.current
                 $scope.saveToServer("PUT");
             }
         };
+        $scope.timerNameClick = function (dataTimerName){
+            $scope.init();
+            $scope.tab = 1;
+            $scope.setTab(1);
+            $scope.currentTimer = dataTimerName;
+            $scope.btnSelectClick();
+        };
         $scope.btnResetClick = function () {
-            // TEMPORARY FIX
-            $scope.timerAction = "START";
-            $scope.dynClass = "startTimer";
-            $scope.enTimer = false;
-            $scope.currentTimer = "";
-            $scope.currentIndex = -1;
+            $scope.init();
             enableInput();
             toggleClass("start");
-            // TEMPORARY FIX END
 
 console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentIndex, " :Index, ", $scope.timerData.length, " :Length");   // DEBUG
         };
@@ -268,10 +277,11 @@ console.log("RESET - ", $scope.currentTimer, " :TimerName, ", $scope.currentInde
                 showToast("Kindly reset the timer","warning","hide");
             } else {
                 $('#modalBtnDelete').off().on('click', function() {
-
+                    // TEMPORARY FIX
                     $scope.init();
                     enableInput();
                     toggleClass("start");
+                    // TEMPORARY FIX END
 
                     evt.stopPropagation();
                     $(".loader").fadeIn("slow");
@@ -294,23 +304,6 @@ console.log("AFTERR DELETE - ", $scope.currentTimer, " :TimerName, ", $scope.cur
                         console.log('DELETE ERROR');
                     });
                 });
-                /*$(".loader").fadeIn("slow");
-                tevotedDeleteService.deleteData(uriName,
-                  {
-                    timerName:timerName,
-                    timerDate:timerDate,
-                    timerValue:timerVal,
-                    method:"delete"
-                  }
-                ).then(function(result){
-                    $scope.timerData = result;
-                    $(".loader").fadeOut("slow");
-                    var tmpToastMsg = '"' + timerName + '" on "' + timerDate + '" is deleted';
-                    showToast( tmpToastMsg, "warning", "hide");
-                }).catch(function(errorData) {
-                    showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                    console.log('DELETE ERROR');
-                });*/
             }  // ELSE
         };
         $scope.btnSelectClick = function () {

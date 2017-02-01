@@ -133,8 +133,11 @@ h1 {
     padding-top: 1px;
     padding-bottom: 1px;
     padding-right: 15px;
+    cursor: pointer;
 }
-
+.timerName:hover {
+    background-color: #66CDAA;
+}
 
 .timer-button{
     margin-top: 21px;
