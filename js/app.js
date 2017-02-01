@@ -123,9 +123,9 @@
                 console.log('GET rejected');
             });
         };
-        //$scope.getTimerData();
+        $scope.getTimerData();
 
-$scope.timerData = [{"timerName": "PRAKASH", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {}},{"timerName": "DATATEXT23", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");
+/*$scope.timerData = [{"timerName": "PRAKASH", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {}},{"timerName": "DATATEXT23", "startTime": "Wed, 01 Feb 2017 04:47:21 GMT", "pastData": {"12-Jan-2017": "22,23,58", "3-Dec-2015": "0,2,32", "4-Dec-2015": "0,2,32", "5-Dec-2015": "0,2,32", "6-Dec-2015": "0,2,32", "10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32", "24-Dec-2015": "0,0,32", "16-Dec-2015": "0,2,32", "30-Nov-2016": "4,30,32"}},{"timerName": "dataOne", "startTime": "", "pastData": {"10-Dec-2015": "0,2,32", "12-Dec-2015": "0,2,32"}}];$(".loader").fadeOut("slow");*/
         
         $scope.saveToServer = function(msg){
             var tmpObj = {
