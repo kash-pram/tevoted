@@ -80,7 +80,7 @@
 
         $scope.timerData = [];
         //var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
-        var uriName = "onlimages.com";
+        var uriName = "https://onlimages.com";
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
