@@ -79,7 +79,8 @@
     .controller('MainCtrl', ['$scope','tevotedService', 'tevotedUpdateService', 'tevotedDeleteService', function($scope, tevotedService, tevotedUpdateService, tevotedDeleteService) {
 
         $scope.timerData = [];
-        var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
+        //var uriName = "https://ec2-35-164-183-71.us-west-2.compute.amazonaws.com";
+        var uriName = "onlimages.com";
 
         // INITIALIZATION AKA RESET CODE
         $scope.init = function(){
@@ -120,6 +121,7 @@
                 $(".loader").fadeOut("slow");
             }, function(reject){
                 showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
+                //showToast("Kindly add a security exception on your browser settings to use this web app", "warning", "show");
                 console.log('GET rejected');
             });
         };
