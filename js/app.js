@@ -121,7 +121,7 @@
                 $(".loader").fadeOut("slow");
             }, function(reject){
                 /*showToast("There seems to be a problem. Kindly reload the page", "warning", "show");*/
-                showToast("Kindly open https://onlimages.com and add a security exception in the Advanced settings, to use this app.", "warning", "show");
+                showToast("Kindly click <a href='https://onlimages.com' target='_blank'>onlimages</a> and add a security exception in the Advanced settings, to use this app.", "warning", "show");
                 console.log('GET rejected');
             });
         };
