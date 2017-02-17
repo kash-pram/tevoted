@@ -6,10 +6,9 @@ var ObjectId = require('mongodb').ObjectID;
 var bodyParser = require('body-parser');
 
 var fs = require('fs');
-var options = {
-    ca:   fs.readFileSync('sub.class1.server.ca.pem'),
-    key:  fs.readFileSync('ssl.key'),
-    cert: fs.readFileSync('ssl.crt')
+ var options = {
+   key: fs.readFileSync('./privatekey.pem'),
+   cert: fs.readFileSync('./crtserver.crt')
 };
 
 var app = express();
