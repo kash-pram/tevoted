@@ -120,8 +120,8 @@
                 $scope.timerData = result;
                 $(".loader").fadeOut("slow");
             }, function(reject){
-                showToast("There seems to be a problem. Kindly reload the page", "warning", "show");
-                //showToast("Kindly add a security exception on your browser settings to use this web app", "warning", "show");
+                /*showToast("There seems to be a problem. Kindly reload the page", "warning", "show");*/
+                showToast("Kindly open https://onlimages.com and add a security exception in the Advanced settings, to use this app.", "warning", "show");
                 console.log('GET rejected');
             });
         };
