@@ -1,0 +1,71 @@
+<div class="row dashboard-page">
+	<div class="col-xs-12 st-sort-edit">
+		<h1 class="text-center" style="margin:0">{{clock}}</h1>
+		<h3 ng-hide="editable" class="pull-left no-margin-top">{{datePicked | date:'longDate'}} {{filters.amOrPm}}</h3>
+		<table st-table="timeTableDataDisplay" class="table table-striped table-hover" ng-class="{'margin-top-40':!editable}">
+			<thead ng-show="timeTableLength > 0">
+				<tr>
+					<th>Mode</th>
+					<th>Route</th>
+					<th>Driver</th>
+					<th>Tag Ons</th>
+					<th>Tablet Login</th>
+					<th>Tablet Health</th>
+					<th>Dispatch Confirmation</th>
+					<th>Departure</th>
+					<th>On-time Performance</th>
+					<th>Send Alert</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="text-center" ng-if="timeTableLength < 1 && !$root.pageLoading">
+					<td colspan="100%" class="text-center" style="padding:100px;font-size:60px;">
+						<span><i class="fa fa-exclamation"></i> No Results</span>
+					</td>
+				</tr>
+				<tr ng-repeat="route in timeTableDataDisplay">
+					<td>{{ ::route.mode}}</td>
+					<td>{{ ::route.shortName}}</td>
+					<td>{{ ::runDriverMap[ route.runId ] ? runDriverMap[ route.runId ] : '-'}}</td>
+					<td>{{ ::tabletStatuses[ route.shortName ].tagOns || tabletStatuses[ route.shortName ].tagOns === 0 ? tabletStatuses[ route.shortName ].tagOns : '-' }}</td>
+					<td class="text-center" ng-class="tabletOnStatus( route ) == 'Late' ? 'danger':''">
+						<span class="success" ng-if="tabletOnStatus( route ) == 'On'">
+							On
+						</span>
+						<span class="danger" ng-if="tabletOnStatus( route ) == 'Off'">
+							Off
+						</span>
+						<span ng-if="tabletOnStatus( route ) == 'Late' || tabletOnStatus( route ) == 'Early'">
+							<span>{{::howLate(route.tablet_login)}}</span><br>
+							<span class="small">Sched: {{::formatScheduledTime(route.tablet_login)}}</span>
+						</span>
+					</td>
+					<td class="text-center tablet-health" ng-class="::tabletStatuses[ route.shortName ].batteryLevel < 60 ? 'danger':''">
+						<span class="tablet-health-percent" ng-if="::tabletStatuses[ route.shortName ].batteryLevel">
+							{{ ::tabletStatuses[ route.shortName ].batteryLevel + '%' }}
+						</span>
+						<span ng-if="::!tabletStatuses[ route.shortName ].batteryLevel">-</span>
+						<br><i class="fa" ng-class="::getBatteryIcon(tabletStatuses[ route.shortName ].batteryLevel)"></i>
+					</td>
+					<td class="text-center">
+						<input type="checkbox" disabled>
+					</td>
+					<td class="text-center" ng-class="::!runDepartMap[ route.runId ] && howLate(route.yard_depart) > 7 && howLate(route.yard_depart) < 900 ? 'danger':''">
+						<span ng-if="::!runDepartMap[ route.runId ] && howLate(route.yard_depart) < 900">
+							<span>{{::howLate(route.yard_depart)}}</span><br>
+							<span class="small">Sched: {{::formatScheduledTime(route.yard_depart)}}</span>
+						</span>
+					</td>
+					<td>
+						<span ng-repeat="stop in route.stops track by $index">
+							<i uib-tooltip-html="::getStopTooltipString(stop)" class="fa" ng-class="::getDotClass(etas[stop.stopId])"></i>
+						</span>
+					</td>
+					<td class="text-center" ng-class="tabletOnStatus( route ) == 'Late' || (!runDepartMap[ route.runId ] && howLate(route.yard_depart) > 0) ? 'danger':''">
+						<a ui-sref="notifications">Send Alert</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

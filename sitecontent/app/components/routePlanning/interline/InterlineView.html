@@ -1,0 +1,45 @@
+<div class="interline-page">
+	
+	<slide-down-content title="All Interlines">
+		<ol class="breadcrumb interline-block" ng-class="{'selected-multi-run':selectedMultiRunId == interline[0].multiRunId}" ng-repeat="interline in interlines" ui-sref="interline({multiRunId:interline[0].multiRunId})">
+			<li class="interline-run" ng-repeat="run in interline"><span style="font-weight:bold;">Route {{::shortNameByRouteId[run.routeId]}}</span> <span style="font-size: 11px;">{{::run.firstStopTimeFormatted}} - {{::run.lastStopTimeFormatted}}</span></li>
+		</ol>
+	</slide-down-content>
+
+	<div class="row" style="margin-top:60px">
+		<div class="col-xs-12">
+			<leaflet id="map" markers="markers" paths="paths" defaults="defaults" layers="layers"></leaflet>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<h1>Editing Existing Interline</h1>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<h3>Search Routes</h3>
+			<select class="form-control" ng-options="route.routeId as route.shortName for route in allRoutes" ng-model="routeSearchText" ng-change="searchRoutes()"></select>
+			<div ng-repeat="run in routeRuns">
+				<div class="btn btn-default" id="{{run.runId}}" data-drag="true" jqyoui-draggable="{animate:true}" data-jqyoui-options="{revert: 'invalid'}" ng-model="run" ng-hide="shouldHideRun(run)">
+					<span style="font-weight:bold;">Route {{::shortNameByRouteId[run.routeId]}}</span> <span style="font-size: 11px;">{{run.firstStopTimeFormatted}} - {{run.lastStopTimeFormatted}}</span>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<div class="thumbnail" id="interlineDrop" data-drop="true" data-jqyoui-options="{greedy:true,revert: 'valid',hoverClass:'droppable-hover'}" ng-model="interlinedRuns" jqyoui-droppable="{multiple:true}" style='min-height:50px;padding:20px;'>
+				<div ng-repeat="run in interlinedRuns">
+					<div class="btn-group inside" data-drag="true" jqyoui-draggable="{animate:true}" id="{{run.runId}}" ng-model="interlinedRuns[$index]">
+						<div class="btn btn-default" aria-label="Left Align" style="background-color:{{run.polylineColor}}" ng-click="centerMap()">
+						  <i class="fa fa-location-arrow fa-inverse"></i>
+						</div>
+						<div class="btn btn-default">
+							<span style="font-weight:bold;">Route {{::shortNameByRouteId[run.routeId]}}</span> <span style="font-size: 11px;">{{run.firstStopTimeFormatted}} - {{run.lastStopTimeFormatted}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="btn btn-info pull-right" ng-click="saveInterline()">Save Current Interline</div>
+		</div>
+	</div>
+
+</div>

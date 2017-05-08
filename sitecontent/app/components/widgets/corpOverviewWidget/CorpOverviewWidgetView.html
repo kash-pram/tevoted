@@ -1,0 +1,55 @@
+<div class="widget-corp" ng-class="loading ? 'loader':''">
+	<div class="loader-container text-center color-black">
+	    <div><i class="fa fa-refresh fa-spin fa-3x"></i></div>
+	    <div>Loading</div>
+	</div>
+	<div class="card primary">
+    <div class="card-body half-padding no-padding-top"  ng-repeat="(shortName, busData) in data.capacity">
+    	<div class="row">
+    		<div class="col-xs-12 no-margin-bottom" style="min-height:30px;color:#fff;background-color:#353D47">
+    			<h5>Bus {{shortName}}</h5>
+  			</div>
+    	</div>
+    	
+    	<div class="row margin-top-10" ng-repeat="(runId, runData) in busData">
+	    	<div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 text-center no-margin-bottom">
+	    		<div style="padding-bottom:100%;">
+	    			<div class="exact-center">
+	    				<h4 class="font-weight-300">7:15am Run {{runId}}</h4>
+    				</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="col-xs-3 col-sm-2 col-sm-offset-4 col-md-3 col-md-offset-0 col-lg-2 col-lg-offset-4 no-margin-bottom">
+	    		<div class="hover-darken square-border" ui-sref="ridership">
+	    			<div class="exact-center">
+	    				<h5>-</h5>
+    				</div>
+	    			<div class="bottom-center">Rides</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 no-margin-bottom">
+	    		<div class="hover-darken square-border" ui-sref="onTimeReport">
+	    			<div class="exact-center">
+	    				<h3 class="no-margin">-</h3>
+    				</div>
+	    			<div class="bottom-center">On Time</div>
+	    		</div>
+	    	</div>
+
+	    	<div class="col-xs-3 col-sm-2 col-md-3 col-lg-2 no-margin-bottom">
+	    		<div class="hover-darken square-border" ui-sref="capacity">
+	    			<div class="exact-center">
+	    				<h3 class="no-margin">{{runData}}%</h3>
+    				</div>
+	    			<div class="bottom-center">Peak Cap</div>
+	    		</div>
+	    	</div>
+	    	<div class="clear-both"></div>
+    	</div>
+
+  	</div>
+
+  </div>
+</div>

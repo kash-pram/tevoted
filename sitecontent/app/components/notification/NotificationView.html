@@ -1,0 +1,58 @@
+<div class="row notification-page">
+	<div class="col-xs-12">
+		<div class="btn-group btn-group-lg btn-group-justified" role="group">
+			<a class="btn" ng-class="noteType == 'alert' ? 'btn-info' : 'btn-default'" ng-click="selectAlert()">
+				<i class="fa fa-check"></i>
+				Alert
+			</a>
+			<a class="btn" ng-class="noteType == 'notification' ? 'btn-info' : 'btn-default'" ng-click="selectNotification()">
+				<i class="fa fa-check"></i>
+				Notification
+			</a>
+		</div>
+	</div>
+
+	<div class="col-xs-12 text-center nga-default nga-squash-right" ng-hide="noteType">
+		<h1>
+			<i class="fa fa-level-up fa-flip-horizontal"></i>
+			Select One
+			<i class="fa fa-level-up"></i>
+		</h1>
+	</div>
+	<div class="panel panel-default nga-default nga-squash-right" ng-show="noteType">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-xs-12">
+					<h2 class="text-center">Send {{noteType == 'alert' ? 'an Alert' : 'a Notification'}}</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12 col-sm-9">
+					<h4 class="text-center">Route</h4>
+					<div class="row">
+						<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"  ng-show="noteType =='alert'">
+							<select class="form-control" ng-model="selectedRoute" ng-change="routeSelected()" ng-options="busNumber for busNumber in alertRoutes">
+								<option value="">Select a Route</option>
+							</select>
+						</div>
+						<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4"  ng-hide="noteType =='alert'">
+							<select class="form-control" ng-model="selectedRoute" ng-change="routeSelected()" ng-options="shortName for shortName in routes">
+								<option value="">Select a Route</option>
+							</select>
+						</div>
+						<div class="col-xs-12 col-sm-10 col-sm-offset-1 nga-default nga-fade" ng-show="selectedRoute && selectedTemplate">
+							<textarea class="form-control" rows="8" ng-model="message" placeholder="Select a route and template first!"></textarea>
+							<div class="btn btn-info btn-lg" ng-click="openConfirm()">Send {{noteType}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-3 nga-default nga-fade" ng-show="selectedRoute">
+					<h4 class="text-center">Templates</h4>
+					<p ng-repeat="template in templates[noteType]">
+						<a href="#" ng-click="selectTemplate(template.url)">{{template.name}}</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

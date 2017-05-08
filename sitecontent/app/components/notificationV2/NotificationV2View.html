@@ -1,0 +1,128 @@
+<div class="row notifications-page">
+	<div class="col-xs-12 col-md-3" style="background-color:#E1F0F9">
+		<h5 class="text-center">Notification will target:</h5>
+		<h4 class="text-center" ng-hide="userCountLoading">{{userCount}} users</h4>
+		<h4 class="text-center" ng-show="userCountLoading"><i class="fa fa-spinner fa-pulse"></i></h4>
+		<hr>
+		<h5 class="text-center">Filters</h5>
+		<div class="form-group">
+			<label for="runId">Run Ids</label>
+			<input id="runId" ng-model="context.runId" class="form-control" type="text" ng-list ng-model-options="modelOptions">
+		</div>
+		<div class="form-group">
+			<label for="routeId">Route Ids</label>
+			<input id="routeId" ng-model="context.routeId" class="form-control" type="text" ng-list ng-model-options="modelOptions">
+		</div>
+		<div class="form-group">
+			<label for="companyId">Company Ids</label>
+			<input id="companyId" ng-model="context.companyId" class="form-control" type="text" ng-list ng-model-options="modelOptions">
+		</div>
+		<div class="form-group">
+			<label for="role">Role Names</label>
+			<input id="role" ng-model="context.role" class="form-control" type="text" ng-list ng-model-options="modelOptions">
+		</div>
+
+		<label for="activeInLast">Active In Last...</label>
+		<div class="btn-group active-in-last" role="group">
+		  <button type="button" class="btn" ng-class="activeInLastButton == 'day' ? 'btn-info' : 'btn-default'" ng-click="activeInLastClick('day')">Day</button>
+		  <button type="button" class="btn" ng-class="activeInLastButton == 'week' ? 'btn-info' : 'btn-default'" ng-click="activeInLastClick('week')">Week</button>
+		  <button type="button" class="btn" ng-class="activeInLastButton == 'month' ? 'btn-info' : 'btn-default'" ng-click="activeInLastClick('month')">Month</button>
+		  <button type="button" class="btn" ng-class="activeInLastButton == 'custom' ? 'btn-info' : 'btn-default'" ng-click="activeInLastClick('custom')">Custom</button>
+		</div>
+
+		<div class="form-group" uib-collapse="activeInLastButton != 'custom'">
+			<input id="activeInLast" ng-model="context.activeInLast" placeholder="Active In Last (seconds)" class="form-control" type="text" ng-list ng-model-options="modelOptions">
+		</div>
+
+		{{context}}
+	</div>
+
+
+	<div class="col-xs-12 col-md-9">
+	
+	  <div class="card">
+			<div class="card-body no-padding">
+			  <uib-tabset active="active">
+			  	<uib-tab index="0">
+			  		<uib-tab-heading>
+			  			<i class="fa fa-hand-o-right" aria-hidden="true"></i> Start
+			  		</uib-tab-heading>
+			  		This is the template part
+			  	</uib-tab>
+			    <uib-tab index="1">
+			      <uib-tab-heading>
+			        <i class="fa fa-info-circle"></i> Push Notification
+			      </uib-tab-heading>
+			      <div id="sidephone">
+				      <p>
+				      	<label for="textPushInput">Push text</label>
+				      	<textarea class="form-control" id="textPushInput" ng-model="pushText"></textarea>
+			      	</p>
+			      	<p>
+				      	<label>Action</label><br>
+				      	{{radio}}
+				      	<input type="radio" name="action" ng-model="radio.action" value="null" id="null"> <label for="null">None</label><br>
+				      	<input type="radio" name="action" ng-model="radio.action" value="route" id="route"> <label for="route">Link to Route</label><br>
+				      	<input type="radio" name="action" ng-model="radio.action" value="run" id="run"> <label for="run">Link to Run</label><br>
+				      	<input type="radio" name="action" ng-model="radio.action" value="profile" id="profile"> <label for="profile">Link to Account</label><br>
+				      	<input type="radio" name="action" ng-model="radio.action" value="url" id="url"> <label for="url">Link to Url</label><br>
+			      	</p>
+			      	<p>
+			      		<div uib-collapse="radio.action != 'route'">
+			      			Route Id
+			      			<input class="form-control" ng-model="payload" type="text">
+			      		</div>
+			      		<div uib-collapse="radio.action != 'run'">
+			      			Route Id
+			      		</div>
+			      		<div uib-collapse="radio.action != 'url'">
+			      			Url
+			      		</div>
+			      	</p>
+			      </div>
+			      <div id="phone">
+			      	<img src="/assets/images/blank-iphone.png" id="phoneImage">
+			      	<img src="/assets/images/ridepal-square.png" id="ridepalAppLogo">
+			      	<div id="messageText">
+			      		<div id="ridepalAppName">RidePal <span class="tinyIphoneText"> now</span></div>
+			      		<div class="iphoneText">
+			      			{{pushText}}
+			      			<br><span class="tinyIphoneText">slide to view</span>
+			      		</div>
+			      	</div>
+			      </div>
+			    </uib-tab>
+			    <uib-tab index="2">
+			      <uib-tab-heading>
+			        <i class="fa fa-comment"></i> SMS
+			      </uib-tab-heading>
+			      SMMMMMMMMS
+			    </uib-tab>
+			    <uib-tab index="3">
+			      <uib-tab-heading>
+			        <i class="fa fa-envelope"></i> Email
+			      </uib-tab-heading>
+			      <div>
+			      	<label for="emailSubject">Subject</label>
+			      	<input type="text" class="form-control" id="emailSubject" ng-model="emailSubject">
+		      	</div>
+		      	<div>
+			      	<label for="textEmailBody">Body</label>
+			      	<textarea class="form-control" id="textEmailBody" rows="10" ng-model="emailBody"></textarea>
+			      </div>
+			    </uib-tab>
+			    <uib-tab index="4">
+			      <uib-tab-heading>
+			        <i class="fa fa-bell"></i> In App Message
+			      </uib-tab-heading>
+			      IN ZEEEEEE APP
+			    </uib-tab>
+			  </uib-tabset>
+		  </div>
+		</div>
+
+	</div>
+
+
+
+</div>

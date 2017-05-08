@@ -1,0 +1,254 @@
+<div class="row on-time-page" style="overflow:visible">
+	<div class="col-xs-12 nga-default nga-slide-left-add nga-slide-left-remove nga-absolute" ng-show="view.radio == 'table'" style="overflow:visible">
+		<div class="row" style="overflow:visible">
+			<div class="col-xs-12 text-center" ng-show="noResults">
+				<h1><span class="glyphicon glyphicon-list-alt"> Sorry, there are no results for this search</h1>
+			</div>
+			<div class="col-xs-12 text-center" ng-if="displayTable" style="overflow:visible">
+		    <div class="btn-group" uib-dropdown open-class="export-downdown-menu" is-open="status.isopen" auto-close="outsideClick">
+		      <button id="export-data-button" type="button" class="btn btn-lg btn-info" uib-dropdown-toggle ng-disabled="disabled">
+		        <i class="fa fa-save"></i> Export CSV <span class="caret"></span>
+		      </button>
+		      <ul uib-dropdown-menu role="menu" aria-labelledby="export-data-button">
+		        <li role="menuitem">
+		          <div class="checkbox3 checkbox-inline checkbox-check">
+			          <input type="checkbox" id="include-departed" 
+			          	ng-model="selected.actual"
+									ng-value="true">
+			          <label for="include-departed">
+			            Include actual time
+			          </label>
+			        </div>
+		        </li>
+		        <li role="menuitem">
+		          <div class="checkbox3 checkbox-inline checkbox-check">
+			          <input type="checkbox" id="include-scheduled" 
+			          	ng-model="selected.scheduled"
+									ng-value="true">
+			          <label for="include-scheduled">
+			            Include scheduled time
+			          </label>
+			        </div>
+		        </li>
+		        <li role="menuitem">
+		        	<button class="btn btn-info" 
+								ng-csv="getCsvData('am')" 
+								filename="ontime_export_{{::displayParameters.start}}-{{::displayParameters.end}}-am.csv"
+								csv-header="getCsvHeaders('am')">
+								Export AM
+							</button>
+							<button class="btn btn-info" 
+								ng-csv="getCsvData('pm')" 
+								filename="ontime_export_{{::displayParameters.start}}-{{::displayParameters.end}}-pm.csv"
+								csv-header="getCsvHeaders('pm')">
+								Export PM
+							</button>
+		        </li>
+		      </ul>
+		    </div>
+			</div>
+
+			<div class="col-xs-12 text-center" ng-show="spinner">
+				<i class="fa fa-refresh fa-spin" style="font-size:75px;margin-top: 85px;"></i>
+			</div>
+
+			<div class="col-xs-12 nga-default nga-fade" ng-if="displayTable">
+				<div class="card card-default">
+			    <div class="card-header">
+			        <div class="card-title">
+		            <div class="title"><i class="fa fa-info"></i> {{::displayParameters.mode}} #{{::displayParameters.shortName}}</div>
+			        </div>
+			        <div class="card-title pull-right" style="padding: 1.2em 25px;">
+		        	 	<div class="title"><i class="fa fa-calendar"></i> {{::displayParameters.start}} to {{::displayParameters.end}}</div>
+			        </div>
+			        <div class="clear-both"></div>
+			    </div>
+
+			    <div class="card-body no-padding" ng-if="!arrayIsEmpty('am')">
+			    	<h3 style="margin:15px 0 0 25px">AM</h3>
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>
+										Day
+									</th>
+									<th>
+										Run
+									</th>
+									<th>
+										First Stop
+									</th>
+									<th ng-repeat="stopName in ::stopList.am">
+										{{::stopName}}
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="run in ::displayData.am">
+									<tr ng-repeat="date in ::run.dates">
+										<td>{{::date.date}}</td>
+										<td>{{::run.runId}}</td>
+										<td>{{::getFirstStopTime(run)}}</td>
+										<td ng-repeat="stopName in ::stopList.am" ng-class="::getBackgroundClass( getCorrectStopDiff(date, stopName, run) )">
+											<span uib-tooltip="Scheduled: {{::getCorrectStopScheduled(date, stopName, run)}} - Actual: {{::getCorrectStopActual(date, stopName, run)}}">
+												{{::getCorrectStopDiff(date, stopName, run)}}
+											</span>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="card-body no-padding" ng-if="!arrayIsEmpty('pm')">
+						<h3 style="margin:15px 0 0 25px">PM</h3>
+						<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>
+										Day
+									</th>
+									<th>
+										Run
+									</th>
+									<th>
+										First Stop
+									</th>
+									<th ng-repeat="stopName in ::stopList.pm">
+										{{::stopName}}
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="run in ::displayData.pm">
+									<tr ng-repeat="date in ::run.dates">
+										<td>{{::date.date}}</td>
+										<td>{{::run.runId}}</td>
+										<td>{{::getFirstStopTime(run)}}</td>
+										<td ng-repeat="stopName in stopList.pm" ng-class="::getBackgroundClass( getCorrectStopDiff(date, stopName, run) )">
+											<span uib-tooltip="Scheduled: {{::getCorrectStopScheduled(date, stopName, run)}} - Actual: {{::getCorrectStopActual(date, stopName, run)}}">
+												{{::getCorrectStopDiff(date, stopName, run)}}
+											</span>
+										</td>
+									</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-xs-12 nga-default nga-slide-right-add nga-slide-right-remove nga-absolute" ng-show="view.radio == 'map'" style="float:right;margin:0">
+		<div class="run-select-container">
+			<div class="list-group">
+				<a href="#" class="list-group-item disabled">
+			    Runs
+			  </a>
+				<a href="#" class="list-group-item" ng-repeat="(runId,run) in runs" ng-click="setRun(runId)" ng-class="runId == selectedRunId ? 'active' : ''" ng-click="setMapData()">
+					{{runId}} - First Stop: {{formatTime(run.stops[0].stopTime)}}
+			  </a>
+			</div>
+		</div>
+		<div class="ion-container" ng-show="displayTable">
+			<ionslider ng-if="showSlider" min="{{slider.min}}" max="{{slider.max}}" ng-model="slider.model" grid="{{slider.grid}}" grid-snap="{{slider.gridSnap}}" step="{{slider.step}}" grid-margin="1" from="{{slider.from}}" on-change="setMapData" force-edges="{{slider.forceEdges}}" prettify="slider.prettify"></ionslider>
+		</div>
+		<ui-gmap-google-map center='map.center' options="map.options" zoom='map.zoom' control="map.control">
+
+
+
+
+    	<ui-gmap-markers ng-if="markers.length > 1"
+            models="markers"
+		        coords="'self'"
+		        idKey="'stopId'"
+            title="'title'"
+            options="'options'"
+            isLabel="'true'"
+            click="onClick"
+            >
+
+        <ui-gmap-windows show="show">
+          <div ng-non-bindable>
+          	<div>{{stopName}}</div>
+          	<div>{{title}}</div>
+        	</div>
+        </ui-gmap-windows>
+
+    	</ui-gmap-markers>
+
+    	<ui-gmap-polyline ng-if="polyline.path"
+    				path='polyline.path'
+    				stroke="polyline.stroke"
+            clickable='false'
+            draggable='false'
+            editable='false'
+            geodesic='true'
+            visible='true'
+            static='true'
+        		>
+			</ui-gmap-polyline>
+
+
+		</ui-gmap-google-map>
+	</div>
+
+</div>
+
+
+
+
+
+
+<slide-in-content button-text="Filters" expanded="expanded">
+	<div class="col-xs-12" style="margin-bottom:20px">
+		<fieldset>
+			<div class="multi-switch multi-switch-primary switch-ios2" style="margin-left: 7px;">
+				<input id="table" ng-model="view.radio" value="table" ng-checked="view.radio == 'table'" ng-change="radioToggleChanged()" name="view" type="radio">
+				<label for="table" onclick="" ng-class="view.radio == 'table' ? 'checked':''"><i class="fa fa-table"></i> Table</label>
+
+				<input id="map" ng-model="view.radio" value="map" ng-checked="view.radio == 'map'" ng-change="radioToggleChanged()" name="view" type="radio">
+				<label for="map" onclick="" ng-class="view.radio == 'map' ? 'checked':''"><i class="fa fa-map-marker"></i> Map</label>
+
+				<a></a>
+			</div>
+		</fieldset>
+	</div>
+	<form class="form-horizontal">
+	  <div class="form-group" ng-class="missingBus ? 'has-error' : ''">
+	    <label for="inputBus" class="col-sm-3 control-label">Route Number</label>
+	    <div class="col-sm-9">
+		   	<select
+					class="form-control"
+					ng-model="select.selectedRoute"
+					ng-change="validateForm()"
+					ng-options='route as route.shortName for route in routes | orderBy:busSort | filter:active()'
+					id="inputBus">
+				</select>
+	    </div>
+	  </div>
+				
+	  <div class="form-group">
+	    <label for="inputStart" class="col-sm-3 control-label">Start Date</label>
+	    <div class="col-sm-9">
+		    <p class="input-group" style="margin:0">
+          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.startDateField" is-open="startOpened" id="inputStart" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary marginless" ng-click="startOpened = !startOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+	    </div>
+	  </div>
+
+	  <div class="form-group">
+	    <label for="inputEnd" class="col-sm-3 control-label">End Date</label>
+	    <div class="col-sm-9">
+		    <p class="input-group" style="margin:0">
+        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.endDateField" is-open="endOpened" id="inputEnd" />
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-primary marginless" ng-click="endOpened = !endOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+      </p>
+	    </div>
+	  </div>
+
+		<button class="btn btn-info form-control" ng-click="getResults()" angular-ripple>Submit</button>
+	</form>
+</slide-in-content>

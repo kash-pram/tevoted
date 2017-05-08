@@ -1,0 +1,123 @@
+<div class="row capacity-page">
+	<div class="col-xs-12 filter-bar">
+		<div class="row">
+			<div class="col-xs-12 col-sm-4  no-margin-bottom">
+				<div class="form-group">
+			    <label for="inputStart" class="col-sm-4 control-label" style="text-align: right;margin-top:5px;">Start Date</label>
+			    <div class="col-sm-8">
+				    <p class="input-group" style="margin:0">
+		          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.startDateField" is-open="startOpened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" id="inputStart" ng-change="getCapacityData()" />
+		          <span class="input-group-btn">
+		            <button type="button" class="btn btn-primary marginless" ng-click="startOpened = !startOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+		          </span>
+		        </p>
+			    </div>
+			  </div>
+			</div>
+			<div class="col-xs-12 col-sm-4  no-margin-bottom">
+				<div class="form-group">
+			    <label for="inputEnd" class="col-sm-4 control-label" style="text-align: right;margin-top:5px;">End Date</label>
+			    <div class="col-sm-8">
+				    <p class="input-group" style="margin:0">
+		        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.endDateField" is-open="endOpened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" id="inputEnd" ng-change="getCapacityData()" />
+		        <span class="input-group-btn">
+		          <button type="button" class="btn btn-primary marginless" ng-click="endOpened = !endOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+		        </span>
+		      </p>
+			    </div>
+			  </div>
+			</div>
+
+			<div class="col-xs-12 col-sm-4">
+				<div class="multi-switch multi-switch-primary switch-ios2" style="margin-left: 7px;">
+					<input id="peak" ng-model="switch.radio" value="Peak" ng-checked="switch.radio == 'Peak'" ng-change="radioToggleChanged()" name="switch" type="radio">
+					<label for="peak" onclick="" ng-class="switch.radio == 'Peak' ? 'checked':''"><i class="fa fa-long-arrow-up"></i> Peak</label>
+
+					<input id="average" ng-model="switch.radio" value="Average" ng-checked="switch.radio == 'Average'" ng-change="radioToggleChanged()" name="switch" type="radio">
+					<label for="average" onclick="" ng-class="switch.radio == 'Average' ? 'checked':''"><i class="fa fa-balance-scale"></i> Avg</label>
+
+					<a></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 no-margin-bottom" style="margin-top: 80px;">
+		<div class="race-messages" ng-show="go">
+			<h1 ng-show="go">Go!</h1>
+		</div>
+		<div class="row">
+
+			<div class="col-xs-12 text-center" ng-show="spinner">
+				<i class="fa fa-refresh fa-spin" style="font-size:75px;margin-top: 85px;"></i>
+			</div>
+
+			<div class="col-xs-12 nga-default nga-fade-add nga-none-remove no-margin-bottom" ng-hide="spinner">
+				<div class="row">
+
+					<div class="col-xs-12 nga-default nga-slide-left-add nga-slide-left-remove nga-absolute no-margin-bottom" ng-show="routeView">
+						<div class="row">
+						  <div class="col-xs-12 col-lg-6" ng-repeat="capacity in capacityData | orderBy: 'shortNameInt'" ng-hide="view">
+						  	<div class="card hover-darken" ng-click="selectRoute(capacity)">
+							  	<div class="card-header">
+							  		<div class="card-title">
+							  			{{::capacity.shortName}}
+							    	</div>
+						    	</div>
+							  	<uib-progressbar value="getValue(capacity,true)" type="{{getType(getValue(capacity))}} fadeRelative">
+							  		<span>
+											{{getValue(capacity)}}%	  		
+							  			<div ng-include="'/assets/images/left-bus.svg'" class="bus-svg"></div>
+							  		</span>
+									</uib-progressbar>
+								</div>
+							</div>
+							<div class="col-xs-12 text-center no-margin-bottom">
+								<div class="btn btn-default" ng-click="raceBuses()">Race!</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 nga-default nga-slide-right-add nga-slide-right-remove nga-absolute no-margin-bottom" ng-hide="routeView">
+						<div class="card">
+							<div class="card-header">
+								<span class="fa-stack fa-xl hover-darken" style="margin: 5px;float:left" angular-ripple ng-click="goBack()">
+								  <i class="fa fa-circle fa-stack-2x"></i>
+								  <i class="fa fa-arrow-left fa-stack-1x" style="color: #fff;"></i>
+								</span>
+								<div class="card-title text-center"  style="float:none">
+									<span style="text-transform: capitalize;">{{selectedRoute.mode}} {{selectedRoute.shortName}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-top:20px">
+							<div class="col-lg-6 col-xs-12" ng-repeat="run in selectedRoute.runs">
+			          <div class="card" ng-class="getType(getValue(run))">
+			            <div class="graph-header" style="padding: 10px 10px 15px 10px;">
+			              <canvas id="{{::run.runId}}" class="chart chart-line" chart-data="::run.chartData"
+									  chart-labels="::run.chartLabels" chart-legend="false" chart-series="[run.runId]" chart-options="::options" chart-colours="::colors">
+										</canvas>
+										<div class="chartjs-tooltip run-{{run.runId}}"></div>
+			            </div>
+			            <div class="card-body half-padding" style="margin-right: -1px;">
+			              <h4 class="float-left no-margin font-weight-300">{{::run.runTime}} Run</h4>
+			              <h4 class="float-left no-margin font-weight-300" rbac rbac-role-only="'ridepal'" style="font-size:12px;line-height:20px">&nbsp;({{::run.runId}})</h4>
+			              <h4 class="float-right no-margin font-weight-300">{{switch.radio}} Capacity: {{getValue(run)}}%</h4>
+			              <div class="clear-both"></div>
+			            </div>
+			          </div>
+			        </div>
+		        </div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</div>
+

@@ -1,0 +1,88 @@
+<div class="row riders-page">
+
+	<div class="col-xs-12 col-sm-6">
+		<div class="card primary">
+			<div class="card-header">
+				<div class="card-title">
+					<span class="title"><i class="fa fa-user"></i> Riders in your Company</span>
+				</div>
+			</div>
+			<div class="card-body half-padding">
+				<input type="text" class="form-control" placeholder="Org Id" ng-model="filters.orgId" ng-change="updateOrgId()" ng-model-options="{ debounce: 700 }" rbac rbac-role-only="'ridepal'">
+				<div class="form-group floating-label-wrapper" ng-show="filters.orgId">
+          <label for="filterRiders">Filter Riders</label>
+          <input type="text" class="form-control" id="filterRiders" placeholder="Filter Riders" ng-model="filters.riders" with-floating-label>
+        </div>
+				<div class="text-center margin-all-15" ng-show="loading.riders" ng-if="filters.orgId">
+					<i class="fa fa-4x fa-refresh fa-spin"></i>
+				</div>
+				<ul class="list-group animation-list-group" style="max-height: 75vh;overflow-y:auto" ng-if="filters.orgId">
+					<li class="list-group-item nga-default nga-stagger nga-collapse" ng-repeat="rider in riders | filter: filters.riders">
+						<div class="row">
+							<div class="col-xs-12 no-margin-bottom">
+								{{::rider.email}}
+								<i class="fa fa-times pull-right hover-red"
+									ng-click="openRemoveConfirm(rider)"
+								></i>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-6" ng-if="filters.orgId">
+		<div class="card primary">
+			<div class="card-header">
+				<div class="card-title">
+					<span class="title"><i class="fa fa-plus"></i> Add Rider</span>
+				</div>
+			</div>
+			<div class="card-body half-padding">
+					<div class="col-xs-12">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="email">Email Address</label>
+		          <input type="text" class="form-control" id="email" placeholder="Email Address" ng-model="newUser.email" ng-change="emailChanged()" with-floating-label>
+		        </div>
+	        </div>
+	        <div class="col-xs-12" uib-collapse="hidden.ridepass">
+	        	<h4>Register new user</h4>
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="ridepass">Ridepass #</label>
+		          <input type="text" class="form-control" id="ridepass" placeholder="Ridepass #" ng-model="newUser.ridepass" with-floating-label>
+		        </div>
+		        <div class="form-group floating-label-wrapper" rbac rbac-role-only="'ridepal'">
+		          <label for="orgId">Company Id</label>
+		          <input type="text" class="form-control" id="orgId" placeholder="Company Id" ng-model="newUser.orgId" with-floating-label>
+		        </div>
+		        <span class="link" ng-click="hidden.additional = !hidden.additional" style="font-size: 12px;color: #22a7f0;cursor:pointer">
+		        	Optional fields 
+		        	<i class="fa" ng-class="hidden.additional ? 'fa-caret-down' : 'fa-caret-up'"></i>
+		        	</span>
+	        </div>
+	        <div class="col-xs-12" uib-collapse="hidden.additional">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="firstName">First Name</label>
+		          <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="newUser.first_name" with-floating-label>
+		        </div>
+		        <div class="form-group floating-label-wrapper">
+		          <label for="lastName">Last Name</label>
+		          <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="newUser.last_name" with-floating-label>
+		        </div>
+	        </div>
+	        <div class="col-xs-12">
+	        	<div class="btn" 
+	        		style="width:100%;margin-bottom:20px" 
+	        		ng-click="hidden.ridepass ? searchUser() : registerProspect()" 
+	        		ng-class="hidden.ridepass ? 'btn-info' : 'btn-success'"
+	        		angular-ripple>
+	        		{{hidden.ridepass ? 'Search For User' : 'Register New User'}}
+        		</div>
+	        </div>
+        </div>
+  		</div>
+		</div>
+	</div>
+
+</div>

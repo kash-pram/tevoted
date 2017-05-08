@@ -1,0 +1,204 @@
+<div class="ridership-page">
+
+	<slide-in-content button-text="Filters"  expanded="expanded">
+		<form class="form-horizontal">
+
+		  <div class="form-group" ng-class="missingBus ? 'has-error' : ''">
+		    <label for="inputBus" class="col-sm-3 control-label">Route Number
+		    <span rbac rbac-role-only="'ridepal'"><br><span style="font-size:11px;" class="text-muted">Inactive</span>
+					<input type="checkbox"
+					ng-model="showInactiveBuses"
+					ng-value="true"></span></label>
+		    <div class="col-sm-9">
+			   	<select
+						class="form-control"
+						ng-model="selected.route"
+						ng-change="validateForm()"
+						ng-options='route.shortName for route in routes | orderBy:busSort | filter:active()'
+						id="inputBus">
+					</select>
+		    </div>
+		  </div>
+
+			<div class="form-group" rbac rbac-role-only="'ridepal'">
+		    <label for="inputCompany" class="col-sm-3 control-label">Rider's Company</label>
+		    <div class="col-sm-9">
+			    <select
+							class="form-control"
+							ng-model="selected.company"
+							ng-options="company.name for company in companies"
+							id="inputCompany"
+						>
+					</select>
+		    </div>
+		  </div>
+					
+		  <div class="form-group">
+		    <label for="inputStart" class="col-sm-3 control-label">Start Date</label>
+		    <div class="col-sm-9">
+			    <p class="input-group" style="margin:0">
+	          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.startDateField" is-open="startOpened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" id="inputStart" />
+	          <span class="input-group-btn">
+	            <button type="button" class="btn btn-primary" ng-click="startOpened = !startOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+	          </span>
+	        </p>
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="inputEnd" class="col-sm-3 control-label">End Date</label>
+		    <div class="col-sm-9">
+			    <p class="input-group" style="margin:0">
+          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.endDateField" is-open="endOpened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" id="inputEnd" />
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="endOpened = !endOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+        </p>
+		    </div>
+		  </div>
+
+		  <div class="form-group">
+		  	<label for="inputUnique" class="col-sm-3 control-label">Unique Riders</label>
+		  	<div class="col-sm-9">
+		  		<div class="checkbox3 checkbox-check">
+				    <input type="checkbox" id="inputUnique"
+					    ng-model="selected.unique"
+							ng-value="true"
+							ng-change="deleteResultData()">
+				    <label for="inputUnique"></label>
+			  	</div>
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-12">
+				<button class="btn btn-info form-control" ng-click="getResults()" angular-ripple>Submit</button>
+			</div>
+		</form>
+	</slide-in-content>
+
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<p class="pull-left">
+				<i class="fa fa-info-circle fa-4x hover-darken" tooltip-placement="right" uib-tooltip="This data represents the information for riders during the given time span for a specific company/route."></i>
+			</p>
+			<button class="btn btn-info btn-lg"  ng-show="resultData"
+				ng-csv="getCsvData()" 
+				filename="ridership_export.csv"
+				csv-header="getCsvHeaders()"
+				angular-ripple>
+				<i class="fa fa-save"></i> Export CSV
+			</button>
+		</div>
+
+		<div class="col-xs-12 text-center" ng-show="spinner">
+			<i class="fa fa-refresh fa-spin" style="font-size:75px;margin-top: 85px;"></i>
+		</div>
+
+		<div class="col-xs-12 text-center" ng-show="noResults">
+			<h1><span class="glyphicon glyphicon-list-alt"> Sorry, there are no results for this search</h1>
+		</div>
+
+		<div class="col-xs-12 nga-default nga-fade" ng-if="resultData && !selected.unique" widget-ridership ridership-data="rawRidership" graph-height="250" style="z-index:1"></div>
+
+		<div class="col-xs-12 nga-default nga-fade" ng-if="resultData">
+				<div class="card card-default">
+			    <div class="card-header">
+			        <div class="card-title">
+		            <div class="title"><i class="fa fa-info"></i> {{::displayParameters.mode}} #{{::displayParameters.shortName}}</div>
+			        </div>
+			        <div class="card-title pull-right" style="padding: 1.2em 25px;">
+		        	 	<div class="title"><i class="fa fa-calendar"></i> {{::displayParameters.start}} to {{::displayParameters.end}}</div>
+			        </div>
+			        <div class="clear-both"></div>
+			    </div>
+			    <div class="card-body no-padding">
+						<table st-table="resultData" st-safe-src="resultDataSafe" on-filter="updateExportDataOnSearch" class="table table-hover">
+							<thead>
+									<tr>
+										<th colspan="100%"><input st-search="" class="form-control" placeholder="Search rows..." type="text"/></th>
+									</tr>
+							</thead>
+
+							<thead ng-if="!selected.unique">
+								<tr>
+									<th>User Id</th>
+									<th>User Role</th>
+									<th>Check-In Coords</th>
+									<th ng-if="mode == 'van'">Validated</th>
+									<th ng-if="mode == 'van'">Distance to Driver (m)</th>
+									<th ng-if="mode == 'bus'">Barcode</th>
+									<th>Email</th>
+									<th>Name</th>
+									<th>Company</th>
+									<th>Mode</th>
+									<th>Route</th>
+									<th>Stop</th>
+									<th>Boarded</th>
+									<th ng-if="mode == 'bus'">Monthly Pass/Ride</th>
+								</tr>
+							</thead>
+
+							<tbody ng-if="!selected.unique">
+								<tr ng-repeat="item in resultData">
+									<td>{{::item.userId}}</td>
+									<td>{{::item.userRole}}</td>
+									<td><a ng-if="::item.latitude" target="blank" href="https://www.google.com/maps/place/{{::item.latitude}},{{::item.longitude}}"><i class="fa fa-map-marker" style="color:#C31919"></i></a></td>
+									<td ng-if="mode == 'van'">{{::item.validated}}</td>
+									<td ng-if="mode == 'van'">{{::item.distanceToDriver !== null ? item.distanceToDriver : "-"}}</td>
+									<td ng-if="mode == 'bus'">{{::item.barcode}}</td>
+									<td>{{::item.email}}</td>
+									<td>{{::item.firstName}} {{::item.lastName}}</td>
+									<td>{{::item.companyName}}</td>
+									<td>{{::item.mode}}</td>
+									<td>{{::item.shortName}}</td>
+									<td>{{::item.stopBoardedAddress}}</td>
+									<td>{{::item.displayDate}}</td>
+									<td ng-if="mode == 'bus'">{{::item.debit}}</td>
+								</tr>
+							</tbody>
+
+							<thead ng-if="selected.unique">
+								<tr>
+									<th>User Id</th>
+									<th ng-if="mode == 'bus'">Barcode</th>
+									<th>Email</th>
+									<th>Name</th>
+									<th>Company</th>
+									<th>Route</th>
+									<th>Ride Counts</th>
+								</tr>
+							</thead>
+
+							<tbody ng-if="selected.unique">
+								<tr ng-repeat="item in resultData">
+									<td>{{::item.userId}}</td>
+									<td ng-if="mode == 'bus'">{{::item.barcode}}</td>
+									<td>{{::item.email}}</td>
+									<td>{{::item.firstName}} {{::item.lastName}}</td>
+									<td>{{::item.companyName}}</td>
+									<td>{{::item.shortName}}</td>
+									<td>{{::item.rideCount}}</td>
+								</tr>
+							</tbody>
+
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<div st-pagination="" st-displayed-pages="10" st-items-by-page="filters.itemsPerPage" st-template="/components/shared/CustomPagination.html"></div>
+									</td>
+									<td colspan="20%" class="form-inline" ng-show="resultData.length > 0">
+										<div class="form-group pull-right">
+											<label for="perPage">Per page:</label>
+											<select class="form-control" id="perPage" ng-model="filters.itemsPerPage" ng-options="number for number in [5,10,25,50,100,1000]"></select>
+										</div>
+									</td>
+								</tr>
+							</tfoot>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

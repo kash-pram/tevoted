@@ -1,0 +1,152 @@
+<div class="row filter-row">
+	<div class="col-xs-12 col-sm-9 map-container">
+		<i uib-popover-template="'optionsPopover.html'" 
+			class="fa fa-cog fa-3x hover-darken" 
+			popover-placement="left"
+			style="position: absolute;right: 25px;z-index: 1;top: 10px;color: #5A5A5A;"></i>
+		<ui-gmap-google-map center='map.center' zoom='map.zoom' control='map.control' events="map.events">
+			<ui-gmap-polyline ng-repeat="latLng in latLngs"
+				path='latLng'
+                  stroke='map.stroke'
+                  clickable='false'
+                  draggable='false'
+                  editable='false'
+                  static='true'
+                  fit='true'
+                  control="polyline.control"
+
+	        >
+			</ui-gmap-polylines>
+			
+
+
+		    <ui-gmap-marker ng-repeat="stop in stopData[selectedRunId].stops"
+	            coords="stop.center"
+	            idKey="stop.id"
+	            options="{icon:'/assets/images/bus.png'}">
+		    </ui-gmap-marker>
+
+		    <ui-gmap-marker ng-repeat="checkin in checkinLatLngs"
+          coords="checkin.center"
+          idKey="checkin.id"
+          options="{icon:'/assets/images/checkin.png',zIndex:9999999}">
+            <ui-gmap-window show="show">
+                <div>
+                	{{checkin.user.first_name[0]}}. {{checkin.user.last_name}} <br>
+                	{{checkin.reservation.role}} <br>
+                	Time: {{checkin.time | date:'medium'}} <br>
+									Distance: {{checkin.distance}} <br>
+									{{checkin.location_accuracy ? 'GPS accuracy (m): ' + checkin.location_accuracy : ''}}
+                </div>
+            </ui-gmap-window>
+		    </ui-gmap-marker>
+
+			<ui-gmap-markers  ng-if="map.zoom > 15"
+	            models='latLng'
+	            coords="'self'"
+	            click="onClick">
+	            <ui-gmap-windows show="show" ng-if="map.zoom > 15">
+	                <div ng-non-bindable>Generated: {{time | date:'medium'}}<br>Uploaded: {{timeUploaded | date:'medium'}}<br>Speed: {{speed}}<br>Accuracy (m): {{accuracy}}</div>
+	            </ui-gmap-windows>
+		    </ui-gmap-markers>
+
+		</ui-gmap-google-map>
+		<div class="loader animated" ng-show="mapLoading" ng-class="mapLoading ? 'fadeIn' : 'fadeOut'">
+			<div class="loader-container">
+		    	<i class="fa fa-refresh fa-spin fa-4x"></i>
+			</div>
+	    </div>
+	    <div class="map-hint animated" ng-show="showHint" ng-class="showHint ? 'pulse' : 'fadeOut'">
+	    	<h2>Zoom in to see markers</h2>
+    	</div>
+	</div>
+
+	<div class="col-xs-10 col-sm-3 slide-in-filters" ng-class="{'expanded':expanded}">
+		<div class="row">
+			<div class="col-xs-12 no-margin-bottom">
+				<div style="width:100%" class="btn-group">
+	            	<label style="width:50%" class="btn btn-default" ng-model="filters.amOrPm" uib-btn-radio="'AM'" ng-click="assignAmPm()">AM</label>
+					<label style="width:50%" class="btn btn-default" ng-model="filters.amOrPm" uib-btn-radio="'PM'" ng-click="assignAmPm()">PM</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="row margin-top-10 animated" ng-show="data.start">
+			<div class="col-xs-12 no-margin-bottom">
+				<label for="tz">Timezone</label>
+				<select class="form-control" id="tz" ng-model="data.tz" ng-options="tz for tz in timezones"></select>
+			</div>
+		</div>
+
+		<div class="row margin-top-10 animated" ng-show="data.start">
+			<div class="col-xs-12 no-margin-bottom">
+				<div class="form-group no-margin-bottom">
+					<label for="dLabel">Start</label>
+					<div class="dropdown">
+					    <a class="dropdown-toggle my-toggle-select-start" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+				        	<input type="text" class="form-control" data-ng-model="data.startFormatted">
+					    </a>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					        <datetimepicker data-ng-model="data.start"
+		        				data-on-set-time="timeWasSet()"
+		                        data-datetimepicker-config="{ minView:'minute', dropdownSelector: '.my-toggle-select-start',startView:'hour' }"></datetimepicker>
+					    </ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 no-margin-bottom">
+				<div class="form-group no-margin-bottom">
+					<label for="dLabel">End</label>
+					<div class="dropdown">
+					    <a class="dropdown-toggle my-toggle-select-end" id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="">
+				        	<input type="text" class="form-control" data-ng-model="data.endFormatted">
+					    </a>
+					    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+					        <datetimepicker data-ng-model="data.end"
+		        				data-on-set-time="timeWasSet()"
+		                        data-datetimepicker-config="{ minView:'minute', dropdownSelector: '.my-toggle-select-end',startView:'hour',minuteStep:15 }"></datetimepicker>
+					    </ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 text-center margin-top-20" ng-show="busLoading">
+				<i class="fa" ng-class="{'fa-refresh':busLoading,'fa-spin':busLoading}"></i>
+			</div>
+			<div class="col-xs-12 busContainer margin-top-20">
+				<table class="table table-hover">
+					<tbody>
+					<tr class="busRow text-center" ng-click="selectRun(bus.runId)" ng-class="{'selectedRun':selectedRunId == bus.runId}" ng-repeat="bus in busData | filter:filterAmPm">
+						<td colspan="1" style="width:25%" valign="middle" style="vertical-align:middle">{{bus.shortName}}<br>{{bus.mode.charAt(0).toUpperCase() + bus.mode.slice(1)}}</td>
+						<td colspan="1" style="width:25%" valign="middle" style="vertical-align:middle">{{bus.runId}}<br>Run</td>
+						<td colspan="1" style="width:33%" valign="middle" style="vertical-align:middle">{{bus.firstStopTime}} 
+							<i class="fa fa-arrow-right"></i> 
+							{{bus.lastStopTime}}
+						</td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="btn btn-primary slide-filter-button hidden-sm hidden-md hidden-lg"  ng-click="expanded = !expanded">
+			<i class="fa" ng-class="{'fa-angle-double-left':!expanded,'fa-angle-double-right':expanded}"></i> Filters
+		</div>
+	</div>
+
+
+
+</div>
+
+
+
+<script type="text/ng-template" id="optionsPopover.html">
+	<div class="btn" ng-click="toggleRestrictedStreets()" ng-class="restrictedStreets.map ? 'btn-info':'btn-default'">
+		<i class="fa fa-check" ng-show="restrictedStreets.map"></i> Restricted Streets
+	</div><br>
+	<div class="btn" ng-click="toggleArterialStreets()" ng-class="arterialStreets.map ? 'btn-info':'btn-default'">
+		<i class="fa fa-check" ng-show="arterialStreets.map"></i> Arterial Streets
+	</div>
+	<div class="clear-both"></div>
+</script>

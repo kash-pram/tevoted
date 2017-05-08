@@ -1,0 +1,31 @@
+<div class="modal-header  text-center">
+		<h1>Save Runs</h1>
+</div>
+<div class="modal-body">
+	<div class="row run-save-modal">
+		<div class="col-xs-12 text-center no-margin-bottom">
+			<div class="row">
+				<div class="col-xs-12">
+					<h5>When do you want these changes to take effect?</h5>
+			    <div class="btn-group btn-group-justified" role="group">
+						<a class="btn" ng-class="toggle.updateWhen == 'now' ? 'btn-info' : 'btn-default'" ng-click="toggleUpdate('now')">
+							<i class="fa fa-check"></i> Now
+						</a>
+						<a class="btn" ng-class="toggle.updateWhen == 'later' ? 'btn-info' : 'btn-default'" ng-click="toggleUpdate('later')">
+							<i class="fa fa-check"></i> Later
+						</a>
+					</div>
+				</div>
+				<div uib-collapse="toggle.updateWhen == 'now'" class="col-xs-12">
+					<h5>Ok then, when do you want it updated?</h5>
+					<ddatetimepicker ng-model="toggle.updateRunsAt"></ddatetimepicker>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="btn btn-success btn-lg" ng-disabled="saveRunIsDisabled()" style="width: 100%;" ng-click="saveRunIsDisabled() || saveRuns()">Save</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

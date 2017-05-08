@@ -1,0 +1,142 @@
+<div class="reservations-page">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="card primary" ng-class="{'card-info': mode == 'Edit'}">
+				<div class="card-header">
+					<div class="card-title">
+						<span class="title">{{mode}} Reservation{{newReservation.id ? ': ID #' + newReservation.id : ''}}</span>
+					</div>
+				</div>
+    		<div class="card-body half-padding">
+    			<div class="col-xs-6" style="max-height: 100%;">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="runTimelineId">Run Timeline Id (comma separated)</label>
+		          <input type="text" class="form-control" id="runTimelineId" placeholder="Run Timeline Id (comma separated)" ng-model="newReservation.run_timeline_id" with-floating-label>
+		        </div>
+	        </div>
+
+					<div class="col-xs-6">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="userId">User Id (if different from current user; comma separated)</label>
+		          <input type="text" class="form-control" id="userId" placeholder="User Id (if different from current user; comma separated)" ng-model="newReservation.user_id" with-floating-label>
+		        </div>
+					</div>
+
+	        <div class="col-xs-6">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="role">Role (driver or rider)</label>
+		          <input type="text" class="form-control" id="role" placeholder="Role (driver or rider)" ng-model="newReservation.role" with-floating-label>
+		        </div>
+					</div>
+
+	        <div class="col-xs-6">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="localRideDate">Local Ride Date</label>
+		          <input type="text" ng-click="isCollapsed2 = !isCollapsed2" ng-disabled="mode == 'Edit'" class="form-control" id="localRideDate" placeholder="Local Ride Date" value="{{newReservation.local_ride_date ? newReservation.local_ride_date : selectedDates.length + ' dates selected'}}" with-floating-label>
+		          <uib-datepicker uib-collapse="!isCollapsed2" show-weeks="false" ng-model='activeDate' style="position: fixed;z-index: 20;background: white;padding: 20px;border: solid 1px #c5c5c5;" multi-select='selectedDates'></uib-datepicker>
+		        </div>
+					</div>
+
+	        <div class="col-xs-12">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="state">State (created, checkedin, validated, or cancelled)</label>
+		          <input type="text" class="form-control" id="state" placeholder="State (created, checkedin, validated, or cancelled)" ng-model="newReservation.state" with-floating-label>
+		        </div>
+					</div>
+
+					<div class="col-xs-6">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="latitude">Latitude (optional)</label>
+		          <input type="text" class="form-control" id="latitude" placeholder="Latitude (optional)" ng-model="newReservation.latitude" with-floating-label>
+		        </div>
+					</div>
+					<div class="col-xs-6">
+	      		<div class="form-group floating-label-wrapper">
+		          <label for="longitude">Longitude (optional)</label>
+		          <input type="text" class="form-control" id="longitude" placeholder="Longitude (optional)" ng-model="newReservation.longitude" with-floating-label>
+		        </div>
+					</div>
+					<div class="col-xs-3">
+						<div class="btn btn-danger hover-darken" style="width:100%;margin-bottom:20px" ng-click="clearReservation()">Clear</div>
+					</div>
+					<div class="col-xs-9">
+						<div class="btn btn-info hover-darken" style="width:100%;margin-bottom:20px" ng-click="saveReservation()">
+							Save Reservation{{newReservation.id ? ': ID #' + newReservation.id : ''}}
+						</div>
+					</div>
+    		</div>
+  		</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="card primary">
+				<div class="card-header">
+					<div class="card-title">
+						<span class="title">All Reservations</span>
+					</div>
+					<div style="padding: 1.2em 25px;float:right">
+						<div class="btn btn-info-hollow-dark no-margin-top no-margin-bottom btn-sm" ng-click="isCollapsed = !isCollapsed">Filters</div>
+					</div>
+					<div class="col-xs-12" uib-collapse="isCollapsed">
+						<div class="row">
+						<div class="col-xs-3" style="max-height: 100%;">
+			      		<div class="form-group floating-label-wrapper">
+				          <label for="filtersrunTimelineId">Run Timeline Id</label>
+				          <input type="text" class="form-control" id="filtersrunTimelineId" placeholder="Run Timeline Id" ng-model="filters.run_timeline_id" with-floating-label ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 1000, 'blur': 0 } }" ng-change="filtersChanged()">
+				        </div>
+			        </div>
+
+							<div class="col-xs-3">
+			      		<div class="form-group floating-label-wrapper">
+				          <label for="filtersuserId">User Id</label>
+				          <input type="text" class="form-control" id="filtersuserId" placeholder="User Id" ng-model="filters.user_id" with-floating-label ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" ng-change="filtersChanged()">
+				        </div>
+							</div>
+
+			        <div class="col-xs-3">
+			      		<div class="form-group floating-label-wrapper">
+				          <label for="filtersrole">Role</label>
+				          <input type="text" class="form-control" id="filtersrole" placeholder="Role" ng-model="filters.role" with-floating-label ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" ng-change="filtersChanged()">
+				        </div>
+							</div>
+
+			        <div class="col-xs-3">
+			      		<div class="form-group floating-label-wrapper">
+				          <label for="filterslocalRideDate">Local Ride Date</label>
+				          <input type="text" class="form-control" id="filterslocalRideDate" placeholder="Local Ride Date" ng-model="filters.local_ride_date" with-floating-label ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }" ng-change="filtersChanged()">
+				        </div>
+							</div>
+						</div>
+					</div>
+				</div>
+    		<div class="card-body half-padding">
+	    		<div class="col-xs-12 text-center" ng-show="gettingReservations">
+	    			<i class="fa fa-refresh fa-spin fa-4x" style="margin:30px"></i>
+	    		</div>
+    			<div class="col-xs-12" style="max-height: 100%;" ng-class="gettingReservations ? 'loader':''">
+						<ul class="list-group animation-list-group" style="max-height: 75vh;overflow-y:auto">
+							<li class="list-group-item nga-default nga-stagger nga-collapse" ng-repeat="reservation in reservations">
+								<div class="row">
+									<div class="col-xs-12 no-margin-bottom">
+										{{::reservation.user_id.first_name}} {{::reservation.user_id.last_name}} 
+										({{::reservation.user_id.id}}) - 
+										<b>Run Timeline Id: {{::reservation.run_timeline_id.id}}</b> - 
+										Local Ride Date: {{::reservation.local_ride_date}} - 
+										<u>Role: {{::reservation.role}}</u> - 
+										<b>State: {{::reservation.state}}</b>
+										<div class="btn btn-info-hollow-dark pull-right no-margin-top no-margin-bottom btn-xs"
+											ng-click="selectReservation(reservation)"
+										>Edit</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+    		</div>
+  		</div>
+		</div>
+	</div>
+</div>

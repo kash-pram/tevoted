@@ -1,0 +1,48 @@
+<div class="corp-dashboard-page">
+<div class="btn btn-lg btn-info" ng-click="ping()">PING</div>
+	<div class="row">
+    <div class="col-xs-12 text-center">
+      <div class="btn-group" role="group" aria-label="...">
+			  <button type="button" class="btn" ng-class="selectedDateRange == 'Today' ? 'btn-primary' : 'btn-default'" ng-click="selectDateRange('Today')">Today</button>
+			  <button type="button" class="btn" ng-class="selectedDateRange == 'Last 7 days' ? 'btn-primary' : 'btn-default'" ng-click="selectDateRange('Last 7 days')">Last 7 days</button>
+			  <button type="button" class="btn" ng-class="selectedDateRange == 'Last 30 days' ? 'btn-primary' : 'btn-default'" ng-click="selectDateRange('Last 30 days')">Last 30 days</button>
+			  <button type="button" class="btn" ng-class="selectedDateRange == 'Custom' ? 'btn-primary' : 'btn-default'" ng-click="selectCustom()">Custom <i class="fa fa-caret-down"></i></button>
+			</div>
+    </div>
+  </div>
+
+  <div class="row" uib-collapse="customCollapsed">
+    <div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+		    <label for="inputStart" class="col-sm-3 control-label" style="text-align: right;margin-top:5px;">Start Date</label>
+		    <div class="col-sm-9">
+			    <p class="input-group" style="margin:0">
+	          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.startDateField" is-open="startOpened" datepicker-options="dateOptions" id="inputStart" ng-change="selectDate()" />
+	          <span class="input-group-btn">
+	            <button type="button" class="btn btn-primary marginless" ng-click="startOpened = !startOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+	          </span>
+	        </p>
+		    </div>
+		  </div>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<div class="form-group">
+		    <label for="inputEnd" class="col-sm-3 control-label" style="text-align: right;margin-top:5px;">End Date</label>
+		    <div class="col-sm-9">
+			    <p class="input-group" style="margin:0">
+	        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dates.endDateField" is-open="endOpened" datepicker-options="dateOptions" id="inputEnd" ng-change="selectDate()" />
+	        <span class="input-group-btn">
+	          <button type="button" class="btn btn-primary marginless" ng-click="endOpened = !endOpened"><i class="glyphicon glyphicon-calendar"></i></button>
+	        </span>
+	      </p>
+		    </div>
+		  </div>
+		</div>
+	</div>
+
+	<div class="row">
+    <div class="col-sm-12 col-md-6" widget-corp ridership-data="ridership" capacity-data="capacity" loading-fn="loading.capacity"></div>
+    <div class="col-xs-12 col-sm-6 hover-darken" ui-sref="ridership" widget-ridership ridership-data="ridership" graph-height="250" loading-fn="loading.ridership"></div>
+  </div>
+
+</div>

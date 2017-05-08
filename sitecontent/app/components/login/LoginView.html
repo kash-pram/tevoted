@@ -1,0 +1,26 @@
+<div class="login-box animated fadeIn">
+    <div class="login-form row">
+        <div class="col-sm-12 text-center login-header">
+            <img src="/assets/images/logo.png">
+            <h4 class="login-title">{{$root.portalName}} Portal</h4>
+        </div>
+        <div class="col-sm-12">
+            <div class="login-body">
+                <form ng-submit="submit()">
+                    <div class="control">
+                        <input type="text" class="form-control" ng-model="loginObj.email" placeholder="Email" spellcheck="false"/>
+                    </div>
+                    <div class="control">
+                        <input type="password" class="form-control" ng-model="loginObj.password" placeholder="Password" />
+                    </div>
+                    <div class="login-button text-center">
+                        <input type="submit" class="btn btn-primary" value="Login">
+                    </div>
+                </form>
+            </div>
+            <div class="login-footer">
+                <!-- <span class="text-right"><a href="#" class="color-white">Forgot password?</a></span> -->
+            </div>
+        </div>
+    </div>
+</div>

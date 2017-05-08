@@ -1,0 +1,120 @@
+<div class="vehicle-management-page">
+	<div class="row">
+		<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+			<div class="form-group">
+			  <label for="vehicles">Select Vehicle</label>
+				<select class="form-control" ng-change="selectVehicle()" id="vehicles" ng-model="selectedVehicle" ng-options="vehicle as getLabel(vehicle) for vehicle in vehicles | orderBy:'customerId'"></select>
+			</div>
+		</div>
+	</div>
+	<form name="form" class="css-form" novalidate>
+	<div class="row">
+			<div class="col-xs-6 col-sm-1">
+		  	<div class="form-group">
+			    <label for="typeInput">Type</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" id="typeInput" ng-model="formData.type" name="typeInput" placeholder="Type">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-4">
+				<div class="form-group">
+			    <label for="makeInput">Make</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" id="makeInput" ng-model="formData.make" name="makeInput" placeholder="Make">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-4">
+				<div class="form-group">
+			    <label for="modelInput">Model</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" id="modelInput" ng-model="formData.model" name="modelInput" placeholder="Model">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-2">
+		  	<div class="form-group">
+			    <label for="yearInput">Year</label>
+			    <input ng-readonly="allReadonly" type="number" min="1900" max="2200" class="form-control" id="yearInput" ng-model="formData.year" name="yearInput" placeholder="Year">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-1">
+		  	<div class="form-group">
+			    <label for="capacityInput">Capacity</label>
+			    <input ng-readonly="allReadonly" type="number" min="0" max="200" required class="form-control" id="capacityInput" ng-model="formData.capacity" name="capacityInput" placeholder="Capacity">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-4">
+		  	<div class="form-group">
+			    <label for="vinInput">VIN Number</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" id="vinInput" ng-model="formData.vin" name="vinInput" placeholder="VIN">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-4">
+		  	<div class="form-group">
+			    <label for="internalIdInput">Internal ID</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" required id="internalIdInput" ng-model="formData.customerId" name="internalIdInput" placeholder="Internal ID">
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6 col-sm-4">
+		  	<div class="form-group">
+			    <label for="licenseInput">License</label>
+			    <input ng-readonly="allReadonly" type="text" class="form-control" id="licenseInput" ng-model="formData.license" name="licenseInput" placeholder="License">
+		  	</div>
+	  	</div>
+
+	</div>
+	<div class="row">
+
+			<div class="col-xs-6">
+		  	<div class="checkbox3 checkbox-check">
+			    <input ng-readonly="allReadonly" type="checkbox" id="wifiInput" name="wifiInput" ng-model="formData.wifi">
+			    <label for="wifiInput">
+			    	WiFi
+			    </label>
+		  	</div>
+	  	</div>
+
+			<div class="col-xs-6">
+		  	<div class="checkbox3 checkbox-check">
+		    	<input ng-readonly="allReadonly" type="checkbox" id="bikeRackInput" name="bikeRackInput" ng-model="formData.bike">
+			    <label for="bikeRackInput">
+			    	Bike Rack
+			    </label>
+		  	</div>
+			</div>
+
+			<div class="col-xs-6">
+				<div class="form-group">
+			    <label for="inputStart" class="control-label">Start Date</label>
+			    <ddatetimepicker readonly="startReadonly" options="{{startDatepickerOptions}}" ng-model="formData.startDate"></ddatetimepicker>
+			  </div>
+		  </div>
+
+		  <div class="col-xs-6">
+				<div class="form-group">
+			    <label for="inputStart" class="control-label">End Date</label>
+			    <ddatetimepicker readonly="allReadonly" options="{{startDatepickerOptions}}" ng-model="formData.endDate"></ddatetimepicker>
+			  </div>
+		  </div>
+
+			<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+				<div class="btn-group btn-group-lg btn-group-justified" role="group">
+					<a type="button" class="btn btn-primary" ng-click="clearForm()" ng-disabled="form.$pristine" value="Reset">Reset</a>
+					<a type="submit" class="btn btn-info" ng-class="getSaveBtnClass()" ng-disabled="form.$invalid || form.$pristine" ng-click="saveVehicle()" value="Save">
+						<span ng-hide="success" ng-if="form.$submitted">
+							<i class="fa fa-refresh fa-spin"></i>
+						</span>
+						<span ng-show="success">
+							<i class="fa fa-check"></i>
+						</span>
+						<span> Save</span>
+					</a>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</div>

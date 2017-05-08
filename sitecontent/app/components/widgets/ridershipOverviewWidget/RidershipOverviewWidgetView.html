@@ -1,0 +1,16 @@
+<div class="widget-ridership" ng-class="loading ? 'loader':''">
+<div class="loader-container text-center color-black">
+    <div><i class="fa fa-refresh fa-spin fa-3x"></i></div>
+    <div>Loading</div>
+</div>
+	<div class="card primary">
+    <div style="min-height:250px;padding:10px;padding-right:20px">
+      <nvd3 options="chartOptions" data="chartData"></nvd3>
+    </div>
+    <div class="card-body half-padding grey-top-border">
+      <h4 class="float-left font-weight-300">Total rides</h4>
+      <h2 class="float-right no-margin font-weight-300">{{rides}}</h2>
+      <div class="clear-both"></div>
+    </div>
+  </div>
+</div>

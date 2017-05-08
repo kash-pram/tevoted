@@ -1,0 +1,81 @@
+<form name="form"  novalidate>
+<div class="modal-header">
+  <h3 class="modal-title"><i class="fa fa-pencil"></i> {{createMode ? 'Creating New' : 'Editing'}} Route</h3>
+</div>
+<div class="modal-body create-route">
+
+	<div class="row">
+		<div class="col-xs-6">
+		  <div class="form-group floating-label-wrapper" ng-class="{'has-error':form.mode.$invalid && form.submitted}">
+				<label for="mode">Mode</label>
+				<select class="form-control" ng-disabled="::!createMode" name="mode" id="mode" ng-change="form.submitted = false" placeholder="Mode" data-ng-model="route.mode" with-floating-label required>
+				  <option value="bus">Bus</option>
+				  <option value="van">Van</option>
+				  <option value="car">Car</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper" ng-class="{'has-error':form.shortName.$invalid && form.submitted}">
+				<label for="shortName">Name</label>
+				<input type="text" class="form-control" ng-class="" ng-disabled="::!createMode" ng-change="form.submitted = false"name="shortName" id="shortName" placeholder="Name" data-ng-model="route.shortName" with-floating-label required>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper">
+				<label for="from">From</label>
+				<input type="text" class="form-control" ng-disabled="::!createMode" name="from" id="from" placeholder="From" data-ng-model="route.from" with-floating-label>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper">
+				<label for="to">To</label>
+				<input type="text" class="form-control" ng-disabled="::!createMode" name="to" id="to" placeholder="To" data-ng-model="route.to" with-floating-label>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper" ng-class="{'has-error':form.operatorId.$invalid && form.submitted}" style="margin-bottom:0">
+				<label for="operator">Operator</label>
+				<select class="form-control" ng-disabled="::!createMode" ng-options="operator.operatorId as operator.operatorName for operator in operators" name="operatorId" id="operator" placeholder="Operator" ng-model="route.operatorId" ng-change="form.submitted = false" with-floating-label required></select>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper" name="isPublicCheckbox" id="isPublicCheckbox">
+				<label for="isPublic">Is Public</label>
+				<div class="checkbox3 checkbox-check">
+			    <input type="checkbox" name="isPublic" id="isPublic"
+				    ng-model="route.isPublic"
+						ng-value="true">
+					<label for="isPublic"></label>
+		  	</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper" ng-class="{'has-error':form.startDate.$invalid && form.submitted}">
+				<label for="startDate">Start Date</label>
+				<ddatetimepicker options="{{::datepickerOptions()}}" ng-change="form.submitted = false" ng-model="route.startDate" name="startDate" id="startDate" readonly="::!createMode" required></ddatetimepicker>
+			</div>
+		</div>
+		<div class="col-xs-6">
+			<div class="form-group floating-label-wrapper">
+				<label for="endDate">End Date</label>
+				<ddatetimepicker options="{{::datepickerOptions()}}" ng-model="route.endDate" name="endDate" id="endDate" include-remove="true"></ddatetimepicker>
+			</div>
+		</div>
+	</div>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-warning pull-left" type="button" ng-click="cancel()">Cancel</button>
+  <button class="btn btn-success" type="button" type="submit" ng-click="save(form.$valid)">Save</button>
+</div>
+</form>

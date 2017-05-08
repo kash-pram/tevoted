@@ -1,0 +1,143 @@
+<div class="side-menu sidebar-inverse sidebar" ng-controller="SidebarCtrl">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="side-menu-container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">
+                    <div class="icon fa fa-bus"></div>
+                    <div class="title">RidePal {{$root.portalName}}</div>
+                </a>
+            </div>
+            <ul class="nav navbar-nav" ng-if="authorizationsSet">
+                <li ng-class="{active: $state.includes('dispatchDashboard')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="dispatchDashboard">
+                        <span class="icon fa fa-tachometer"></span><span class="title">Dispatch Dashboard</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('routeScorecard')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="routeScorecard">
+                        <span class="icon fa fa-pencil-square-o"></span><span class="title">Route Scorecard</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('tracking')}" rbac rbac-role-only="['operator','ridepal','organization']">
+                    <a ui-sref="tracking">
+                        <span class="icon fa fa-compass"></span><span class="title">Tracking</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('tabletHealth')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="tabletHealth">
+                        <span class="icon fa fa-thumbs-o-up"></span><span class="title">Tablet Health</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('routeReplay')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="routeReplay">
+                        <span class="icon fa fa-repeat"></span><span class="title">Route Replay</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('vehicleManagement')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="vehicleManagement">
+                        <span class="icon fa fa-cog"></span><span class="title">Fleet Management</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('drivermanagement')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a href="{{getOperatorEndpoint()}}/driver-management">
+                        <span class="icon fa fa-cogs"></span><span class="title">Driver Management</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('routePlanning') || $state.includes('editRun')}" rbac rbac-role-only="'ridepal'">
+                    <a ui-sref="routePlanning">
+                        <span class="icon fa fa-map-signs"></span><span class="title">Route Management</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('notifications')}" rbac rbac-role-only="['operator','ridepal']">
+                    <a ui-sref="notifications">
+                        <span class="icon fa fa-envelope-o"></span><span class="title">Notifications</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('ridership')}" rbac rbac-role-only="['organization','ridepal','operator']">
+                    <a ui-sref="ridership">
+                        <span class="icon fa fa-users"></span><span class="title">Ridership Report</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('onTimeReport')}" rbac rbac-role-only="['organization','ridepal','operator']">
+                    <a ui-sref="onTimeReport">
+                        <span class="icon fa fa-clock-o"></span><span class="title">On Time Report</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('employeeManagement')}" rbac rbac-role-only="['ridepal']" ng-if="false">
+                    <a ui-sref="employeeManagement">
+                        <span class="icon fa fa-user-plus"></span><span class="title">Employee Management</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('capacity')}" rbac rbac-role-only="['ridepal','organization','operator']">
+                    <a ui-sref="capacity">
+                        <span class="icon fa fa-line-chart"></span><span class="title">Capacity Utilization Report</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('routePlanning') || $state.includes('editRun')}" rbac rbac-role-only="'ridepal'" ng-if="false">
+                    <a ui-sref="routePlanning">
+                        <span class="icon fa fa-map-signs"></span><span class="title">Route Planning</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('account')}" rbac rbac-role-only="'ridepal'" ng-if="false">
+                    <a ui-sref="account">
+                        <span class="icon fa fa-cog"></span><span class="title">My Account</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('rolesAndPermissions')}" rbac rbac-role-only="'ridepal'">
+                    <a ui-sref="rolesAndPermissions">
+                        <span class="icon fa fa fa-eye-slash"></span><span class="title">Roles & Permissions</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('reservations')}" rbac rbac-role-only="'ridepal'">
+                    <a ui-sref="reservations">
+                        <span class="icon fa fa fa-calendar-check-o"></span><span class="title">Reservations</span>
+                    </a>
+                </li>
+
+                <li ng-class="{active: $state.includes('riders')}" rbac rbac-role-only="'ridepal'">
+                    <a ui-sref="riders">
+                        <span class="icon fa fa fa-user-plus"></span><span class="title">Rider Management</span>
+                    </a>
+                </li>
+
+                <!-- Dropdown for refernece-->
+                <!--
+                <li class="panel panel-default dropdown">
+                    <a data-toggle="collapse" href="#dropdown-icon">
+                        <span class="icon fa fa-archive"></span><span class="title">Icons</span>
+                    </a>
+                    <div id="dropdown-icon" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul class="nav navbar-nav">
+                                <li><a href="icons/glyphicons.html">Glyphicons</a>
+                                </li>
+                                <li><a href="icons/font-awesome.html">Font Awesomes</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                -->
+                <!-- End reference dropdown -->
+
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+</div>

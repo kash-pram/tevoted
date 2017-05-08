@@ -1,0 +1,76 @@
+
+<div class="row tracking-page">
+	<div class="col-xs-5 col-sm-4 col-md-3" style="max-height:calc(100vh - 102px);margin-bottom:0;overflow:auto">
+		<div class="row"  style="margin-bottom: 0;">
+			<div class="col-xs-12 text-center" style="margin-bottom: 0;">
+				<div class="btn btn-default" ng-click="selectAll()">
+					Select All
+				</div>
+				<div class="btn btn-default" ng-click="deselectAll()">
+					Deselect All
+				</div>
+				<div class="btn btn-default" ng-click="activeOnly()">
+					Active
+				</div>
+				<div class="btn btn-default" ng-click="shuttlesOnly()">
+					Shuttles
+				</div>
+				<div class="btn btn-default" ng-click="vanpoolsOnly()">
+					Vanpools
+				</div>
+			</div>
+		</div>
+		<div class="row" style="margin-top:10px">
+			<div class="col-xs-12" style="margin-bottom: 0;">
+				<ul class="list-group"  style="margin-bottom: 0;">
+					<li class="list-group-item hover-darken" style="border: 1px solid #ddd;" ng-class="{'active': activeRoutes.indexOf(route.shortName) != -1}" 
+						ng-click="addRemoveRoute(route)" ng-repeat="route in ::schedules">
+						<i class="fa fa-circle" ng-style="::getColor(route.shortName)"></i>
+						{{::route.shortName}}
+						<span ng-show="isActiveBus(route.shortName)">(Active)</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-7 col-sm-8 col-md-9" style="margin-bottom: 0;">
+		<ui-gmap-google-map 
+					center='map.center'
+					options='map.options'
+					zoom='map.zoom'
+					control='map.control'
+					>
+
+			<ui-gmap-markers
+            models='display.markers'
+            idKey='"tabletId"'
+            coords="'self'"
+            options="'options'"
+            icon="'icon'"
+            clickable="::false"
+            >
+    	</ui-gmap-markers>
+
+    	<ui-gmap-markers
+            models='display.stops'
+            coords="'self'"
+            icon="'icon'"
+            clickable="::false"
+            >
+    	</ui-gmap-markers>
+
+
+			<ui-gmap-polyline ng-repeat="polyline in display.polylines"
+						path="::polyline.path"
+						stroke="::polyline.stroke"
+						static="::true"
+						clickable="::false"
+						visible="::true"
+						editable="::false"
+						>
+			</ui-gmap-polyline>
+
+		</ui-gmap-google-map>
+	</div>
+
+</div>

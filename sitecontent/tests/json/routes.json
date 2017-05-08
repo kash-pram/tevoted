@@ -1,0 +1,506 @@
+[
+  {
+    "shortName": "33",
+    "routeId": 60,
+    "to": "San Mateo",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1453239995000,
+    "endDate": null
+  },
+  {
+    "shortName": "91",
+    "routeId": 58,
+    "to": "San Francisco",
+    "from": "San Mateo",
+    "isPublic": false,
+    "startDate": 1452155048000,
+    "endDate": null
+  },
+  {
+    "shortName": "90",
+    "routeId": 57,
+    "to": "San Francisco",
+    "from": "San Mateo",
+    "isPublic": false,
+    "startDate": 1452117185000,
+    "endDate": null
+  },
+  {
+    "shortName": "89",
+    "routeId": 56,
+    "to": "San Francisco",
+    "from": "San Mateo",
+    "isPublic": false,
+    "startDate": 1452116461000,
+    "endDate": null
+  },
+  {
+    "shortName": "88",
+    "routeId": 55,
+    "to": "San Francisco",
+    "from": "San Mateo",
+    "isPublic": false,
+    "startDate": 1452115760000,
+    "endDate": null
+  },
+  {
+    "shortName": "86",
+    "routeId": 54,
+    "to": "Cupertino",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1452115519000,
+    "endDate": null
+  },
+  {
+    "shortName": "87",
+    "routeId": 53,
+    "to": "San Francisco",
+    "from": "Santa Clara",
+    "isPublic": false,
+    "startDate": 1452114012000,
+    "endDate": null
+  },
+  {
+    "shortName": "85",
+    "routeId": 52,
+    "to": "San Francisco",
+    "from": "Mountain View",
+    "isPublic": false,
+    "startDate": 1452113827000,
+    "endDate": null
+  },
+  {
+    "shortName": "84",
+    "routeId": 51,
+    "to": "San Francisco",
+    "from": "Mountain View",
+    "isPublic": false,
+    "startDate": 1452112938000,
+    "endDate": null
+  },
+  {
+    "shortName": "83",
+    "routeId": 50,
+    "to": "San Francisco",
+    "from": "Mountain View",
+    "isPublic": false,
+    "startDate": 1452112734000,
+    "endDate": null
+  },
+  {
+    "shortName": "82",
+    "routeId": 48,
+    "to": "San Francisco",
+    "from": "Cupertino",
+    "isPublic": false,
+    "startDate": 1451677077000,
+    "endDate": null
+  },
+  {
+    "shortName": "81",
+    "routeId": 47,
+    "to": "San Francisco",
+    "from": "Santa Clara",
+    "isPublic": false,
+    "startDate": 1450729662000,
+    "endDate": null
+  },
+  {
+    "shortName": "15",
+    "routeId": 46,
+    "to": "San Francisco",
+    "from": "Milpitas",
+    "isPublic": false,
+    "startDate": 1447038917000,
+    "endDate": null
+  },
+  {
+    "shortName": "64",
+    "routeId": 45,
+    "to": "San Francisco",
+    "from": "Sunnyvale",
+    "isPublic": false,
+    "startDate": 1447005636000,
+    "endDate": null
+  },
+  {
+    "shortName": "63",
+    "routeId": 44,
+    "to": "SF - Owens Street Garage",
+    "from": "SF - Owens Street Garage",
+    "isPublic": false,
+    "startDate": 1446452104000,
+    "endDate": null
+  },
+  {
+    "shortName": "62",
+    "routeId": 43,
+    "to": "SF - 699 Townsend",
+    "from": "SF - Civic Center Bart",
+    "isPublic": false,
+    "startDate": 1446449449000,
+    "endDate": null
+  },
+  {
+    "shortName": "61",
+    "routeId": 42,
+    "to": "SF - 699 Townsend",
+    "from": "SF - Embarcadero Bart",
+    "isPublic": false,
+    "startDate": 1446408057000,
+    "endDate": null
+  },
+  {
+    "shortName": "44",
+    "routeId": 41,
+    "to": "San Francisco",
+    "from": "Los Gatos",
+    "isPublic": false,
+    "startDate": 1446396974000,
+    "endDate": null
+  },
+  {
+    "shortName": "8",
+    "routeId": 37,
+    "to": "Petaluma",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1435024800000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "98",
+    "routeId": 38,
+    "to": "Petaluma",
+    "from": "Berkley",
+    "isPublic": false,
+    "startDate": 1435024800000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "32",
+    "routeId": 36,
+    "to": "Palo Alto",
+    "from": "San Ramon",
+    "isPublic": false,
+    "startDate": 1432954800000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "9",
+    "routeId": 33,
+    "to": "Menlo Park",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1427868000001,
+    "endDate": 1451513793000
+  },
+  {
+    "shortName": "14",
+    "routeId": 34,
+    "to": "San Francisco",
+    "from": "Mountain View",
+    "isPublic": false,
+    "startDate": 1427868000001,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "21",
+    "routeId": 35,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": true,
+    "startDate": 1427868000001,
+    "endDate": null
+  },
+  {
+    "shortName": "18",
+    "routeId": 31,
+    "to": "Palo Alto",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1420272000000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "28",
+    "routeId": 32,
+    "to": "Palo Alto",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1420272000000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "49",
+    "routeId": 30,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": true,
+    "startDate": 1414972800000,
+    "endDate": null
+  },
+  {
+    "shortName": "4",
+    "routeId": 29,
+    "to": "San Francisco",
+    "from": "San Jose",
+    "isPublic": false,
+    "startDate": 1414713600000,
+    "endDate": 1427133253000
+  },
+  {
+    "shortName": "54",
+    "routeId": 28,
+    "to": "San Bruno",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1413849600000,
+    "endDate": 1435687017000
+  },
+  {
+    "shortName": "10",
+    "routeId": 27,
+    "to": "San Bruno/Brisbane",
+    "from": "Walmart (private) Glen Park BART",
+    "isPublic": false,
+    "startDate": 1411430400000,
+    "endDate": 1435687017000
+  },
+  {
+    "shortName": "2",
+    "routeId": 26,
+    "to": "Glendale [LA]",
+    "from": "Venice [LA]",
+    "isPublic": false,
+    "startDate": 1410825600000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "1",
+    "routeId": 1,
+    "to": "Sunnyvale",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "5",
+    "routeId": 2,
+    "to": "Mountain View",
+    "from": "Oakland",
+    "isPublic": true,
+    "startDate": 1388563200000,
+    "endDate": null
+  },
+  {
+    "shortName": "6",
+    "routeId": 3,
+    "to": "Dublin",
+    "from": "San Jose",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "7",
+    "routeId": 4,
+    "to": "Sunnyvale",
+    "from": "Walmart (private) Pleasanton/Fremont",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432969199000
+  },
+  {
+    "shortName": "9",
+    "routeId": 5,
+    "to": "Menlo Park",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1427868000000
+  },
+  {
+    "shortName": "10",
+    "routeId": 6,
+    "to": "San Bruno/Brisbane",
+    "from": "Walmart (private) Balboa Park BART",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1411430399999
+  },
+  {
+    "shortName": "14",
+    "routeId": 7,
+    "to": "San Francisco",
+    "from": "Mountain View",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1427868000000
+  },
+  {
+    "shortName": "16",
+    "routeId": 8,
+    "to": "Pleasanton",
+    "from": "Sunnyvale",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "17",
+    "routeId": 9,
+    "to": "Mountain View",
+    "from": "Pleasanton",
+    "isPublic": true,
+    "startDate": 1388563200000,
+    "endDate": null
+  },
+  {
+    "shortName": "19",
+    "routeId": 10,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": true,
+    "startDate": 1388563200000,
+    "endDate": null
+  },
+  {
+    "shortName": "20",
+    "routeId": 11,
+    "to": "Sunnyvale",
+    "from": "Walmart (private) San Bruno",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1413604800000
+  },
+  {
+    "shortName": "21",
+    "routeId": 12,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1427868000000
+  },
+  {
+    "shortName": "22",
+    "routeId": 13,
+    "to": "Menlo Park",
+    "from": "South San Jose",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "24",
+    "routeId": 14,
+    "to": "San Francisco",
+    "from": "San Jose ",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "27",
+    "routeId": 15,
+    "to": "Mountain View",
+    "from": "Pleasanton",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "29",
+    "routeId": 16,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": true,
+    "startDate": 1388563200000,
+    "endDate": null
+  },
+  {
+    "shortName": "30",
+    "routeId": 17,
+    "to": "San Bruno",
+    "from": "Walmart (private) Sunnyvale",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1413604800000
+  },
+  {
+    "shortName": "31",
+    "routeId": 18,
+    "to": "Palo Alto",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432999849000
+  },
+  {
+    "shortName": "42",
+    "routeId": 19,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1441151999000
+  },
+  {
+    "shortName": "49",
+    "routeId": 20,
+    "to": "Mountain View",
+    "from": "San Francisco",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1414972799999
+  },
+  {
+    "shortName": "52",
+    "routeId": 21,
+    "to": "San Bruno/Brisbane",
+    "from": "Walmart (private) - San Jose/Cupertino",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432969199000
+  },
+  {
+    "shortName": "53",
+    "routeId": 22,
+    "to": "San Bruno",
+    "from": "Walmart (private) Mountain View",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1411343999999
+  },
+  {
+    "shortName": "55",
+    "routeId": 23,
+    "to": "San Bruno/Brisbane",
+    "from": "Walmart (private) Fremont/Union City",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432969199000
+  },
+  {
+    "shortName": "57",
+    "routeId": 24,
+    "to": "San Bruno/Brisbane",
+    "from": "Walmart (private) Pleasanton",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432969199000
+  },
+  {
+    "shortName": "58",
+    "routeId": 25,
+    "to": "Sunnyvale/Mountain View",
+    "from": "Walmart (private) Foster City",
+    "isPublic": false,
+    "startDate": 1388563200000,
+    "endDate": 1432969199000
+  }
+]

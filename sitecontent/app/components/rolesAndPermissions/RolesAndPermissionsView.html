@@ -1,0 +1,235 @@
+<div class="roles-permissions-page">
+	<div class="row" ng-class="{'roleSelected':notEmpty(selectedRole)}">
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<div class="card primary">
+				<div class="card-header">
+					<div class="card-title">
+						<span class="title">Roles</span>
+					</div>
+				</div>
+    		<div class="card-body half-padding">
+    			<div class="col-xs-12" style="max-height: 100%;">
+    				<div class="btn btn-info-hollow-dark" style="width:100%" ng-hide="loading.roles" ng-click="openModal('roleModal')"><i class="fa fa-plus"></i> Add Role</div>
+						<input type="text" class="form-control" placeholder="Filter roles by name" ng-model="filters.roleName" ng-hide="loading.roles">
+						<div class="text-center margin-all-15" ng-show="loading.roles">
+								<i class="fa fa-4x fa-refresh fa-spin"></i>
+							</div>
+						<ul class="list-group animation-list-group" style="max-height: 75vh;overflow-y:auto">
+							<li class="list-group-item nga-default nga-stagger nga-collapse pointer" angular-ripple ng-class="{selected: selectedRole == role}" ng-repeat="role in roles | filter:{searchString:filters.roleName}" ng-click="selectRole(role)">
+								<div class="row">
+									<div class="col-xs-12 no-margin-bottom">
+										<b>{{::role.company}}</b> {{::role.context_type}} - {{::role.name}}
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+    		</div>
+  		</div>
+		</div>
+
+		<div class="col-xs-12 col-sm-6 col-md-4">
+			<div class="row">
+				<div class="col-xs-12" ng-show="notEmpty(selectedRole)">
+					<div class="card primary">
+						<div class="card-header">
+							<div class="card-title">
+								<span class="title">This Role's Permissions</span>
+							</div>
+						</div>
+		    		<div class="card-body half-padding">
+		    			<div class="col-xs-12">
+		    				<input type="text" class="form-control" placeholder="Filter permissions" ng-model="filters.rolePermissions" ng-hide="loading.rolePermissions">
+		    				<div class="text-center margin-all-15" ng-show="loading.rolePermissions">
+									<i class="fa fa-4x fa-refresh fa-spin"></i>
+								</div>
+								<ul class="list-group animation-list-group" style="max-height: 31vh;overflow-y:auto">
+									<li class="list-group-item nga-default nga-stagger nga-collapse pointer" ng-repeat="permission in rolePermissions | filter: filters.rolePermissions" ng-click="detatchPermission(permission)">
+										<div class="row">
+											<div class="col-xs-12 no-margin-bottom">
+												{{permission.action}} {{permission.object}}
+												<div class="float-right">
+													<i class="fa fa-minus hover-shadow hover-shadow-danger"></i>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+		    		</div>
+		  		</div>
+				</div>
+
+				<div class="col-xs-12">
+					<div class="card primary">
+						<div class="card-header">
+							<div class="card-title">
+								<span class="title">All Permissions</span>
+							</div>
+						</div>
+		    		<div class="card-body half-padding">
+		    			<div class="col-xs-12">
+		    				<div class="btn btn-info-hollow-dark" style="width:100%" ng-click="openModal('permissionModal')"><i class="fa fa-plus"></i> Add Permission</div>
+								<input type="text" class="form-control" placeholder="Filter permissions" ng-model="filters.allPermissions" ng-hide="loading.allPermissions">
+								<div class="text-center margin-all-15" ng-show="loading.allPermissions">
+									<i class="fa fa-4x fa-refresh fa-spin"></i>
+								</div>
+								<ul class="list-group animation-list-group" style="max-height: 31vh;overflow-y:auto">
+									<li class="list-group-item nga-default nga-stagger nga-collapse pointer" ng-repeat="permission in allPermissions | filter: filters.allPermissions" ng-click="attachPermission(permission)">
+										<div class="row">
+											<div class="col-xs-12 no-margin-bottom">
+												{{permission.action}} {{permission.object_id.name}}
+												<div class="float-right">
+													<i class="fa fa-plus hover-shadow hover-shadow-success"></i>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+		    		</div>
+		  		</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-xs-12 col-md-4">
+			<div class="row">
+				<div class="col-xs-12"  ng-show="notEmpty(selectedRole)">
+					<div class="card primary">
+						<div class="card-header">
+							<div class="card-title">
+								<span class="title">Users With This Role</span>
+							</div>
+						</div>
+		    		<div class="card-body half-padding">
+		    			<div class="col-xs-12">
+								<input type="text" class="form-control" placeholder="Filter users" ng-model="filters.usersWithRole" ng-hide="loading.usersWithRole">
+								<div class="text-center margin-all-15" ng-show="loading.usersWithRole">
+									<i class="fa fa-4x fa-refresh fa-spin"></i>
+								</div>
+								<ul class="list-group animation-list-group" style="max-height: 31vh;overflow-y:auto">
+									<li class="list-group-item nga-default nga-stagger nga-collapse pointer" ng-repeat="user in usersWithRole | filter: filters.usersWithRole" ng-click="detachUser(user)">
+										<div class="row">
+											<div class="col-xs-12 no-margin-bottom">
+												{{user.first_name}} {{user.last_name}}: {{user.email}}
+												<div class="float-right">
+													<i class="fa fa-minus hover-shadow hover-shadow-danger"></i>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+		    		</div>
+		  		</div>
+				</div>
+
+				<div class="col-xs-12">
+					<div class="card primary">
+						<div class="card-header">
+							<div class="card-title">
+								<span class="title">Search Users</span>
+							</div>
+						</div>
+		    		<div class="card-body half-padding">
+		    			<div class="col-xs-12">
+								<input type="text" class="form-control" placeholder="Search users" ng-model="filters.searchUsers" ng-change="searchUsers()" ng-model-options="{debounce:400}">
+								<div class="text-center margin-all-15" ng-show="loading.users">
+									<i class="fa fa-4x fa-refresh fa-spin"></i>
+								</div>
+								<ul class="list-group animation-list-group" style="max-height: 31vh;overflow-y:auto">
+									<li class="list-group-item nga-default nga-stagger nga-collapse pointer" ng-repeat="user in searchedUsers" ng-click="attachUser(user)">
+										<div class="row">
+											<div class="col-xs-12 no-margin-bottom">
+												{{user.first_name}} {{user.last_name}}: {{user.email}}
+												<div class="float-right">
+													<i class="fa fa-plus hover-shadow hover-shadow-success"></i>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+		    		</div>
+		  		</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modals -->
+	<script type="text/ng-template" id="roleModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Add Role</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="row">
+    		<div class="col-xs-12 text-center">
+		      <div class="btn btn-lg" ng-click="newRole.context_type = 'ridepal'" ng-class="newRole.context_type=='ridepal' ? 'btn-info':'btn-default'">Ridepal</div>
+		      <div class="btn btn-lg" ng-click="newRole.context_type = 'operator'" ng-class="newRole.context_type=='operator' ? 'btn-info':'btn-default'">Operator</div>
+		      <div class="btn btn-lg" ng-click="newRole.context_type = 'organization'" ng-class="newRole.context_type=='organization' ? 'btn-info':'btn-default'">Organization</div>
+	      </div>
+      </div>
+      <div class="row">
+      	<div class="col-xs-12 col-md-8 col-md-offset-2" ng-if="newRole.context_type == 'operator'">
+      		<div class="form-group floating-label-wrapper">
+	          <label for="contextOperatorId">Operator Id</label>
+	          <input type="text" class="form-control" id="contextOperatorId" placeholder="Operator Id" ng-model="newRole.context_id" with-floating-label>
+	        </div>
+      	</div>
+      	<div class="col-xs-12 col-md-8 col-md-offset-2" ng-if="newRole.context_type == 'organization'">
+      		<div class="form-group floating-label-wrapper">
+	          <label for="contextOrgId">Organization Id</label>
+	          <input type="text" class="form-control" id="contextOrgId" placeholder="Organization Id" ng-model="newRole.context_id" with-floating-label>
+	        </div>
+      	</div>
+      </div>
+      <div class="row">
+      	<div class="col-xs-12 col-md-8 col-md-offset-2">
+      		<div class="form-group floating-label-wrapper">
+	          <label for="roleName">Role Name</label>
+	          <input type="text" class="form-control" id="roleName" placeholder="Role Name" ng-model="newRole.name" with-floating-label>
+	        </div>
+      	</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success pull-right" type="button" ng-click="createRole()">Create Role</button>
+      <button class="btn btn-default pull-left" type="button" ng-click="$close()">Cancel</button>
+    </div>
+  </script>
+
+  <script type="text/ng-template" id="permissionModal.html">
+    <div class="modal-header">
+      <h3 class="modal-title">Add Role</h3>
+    </div>
+    <div class="modal-body">
+    	<div class="row">
+    		<div class="col-xs-12 text-center">
+		      <div class="btn btn-lg" ng-click="newPermission.action = 'create'" ng-class="newPermission.action=='create' ? 'btn-info':'btn-default'">Create</div>
+		      <div class="btn btn-lg" ng-click="newPermission.action = 'read'" ng-class="newPermission.action=='read' ? 'btn-info':'btn-default'">Read</div>
+		      <div class="btn btn-lg" ng-click="newPermission.action = 'update'" ng-class="newPermission.action=='update' ? 'btn-info':'btn-default'">Update</div>
+		      <div class="btn btn-lg" ng-click="newPermission.action = 'delete'" ng-class="newPermission.action=='delete' ? 'btn-info':'btn-default'">Delete</div>
+	      </div>
+      </div>
+      <div class="row">
+      	<div class="col-xs-12 col-md-8 col-md-offset-2">
+      		<div class="form-group floating-label-wrapper">
+	          <label for="objectName">Api Endpoint</label>
+	          <input type="text" class="form-control" id="objectName" placeholder="Api Endpoint" ng-model="newPermission.name" with-floating-label>
+	        </div>
+      	</div>
+    	</div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success pull-right" type="button" ng-click="createPermission()">Create Permission</button>
+      <button class="btn btn-default pull-left" type="button" ng-click="$close()">Cancel</button>
+    </div>
+  </script>
+
+
+</div>

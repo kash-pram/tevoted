@@ -1,0 +1,72 @@
+<div class="row route-planning-page">
+	<div class="col-xs-12">
+		<div class="card card-primary">
+      <div class="card-header">
+          <div class="card-title">
+              <div class="title"><i class="fa fa-map-signs"></i> Routes</div>
+          </div>
+          <div class="btn btn-info-hollow" ng-click="addEditRoute()">Add Route</div>
+          <div class="clear-both"></div>
+      </div>
+      <div class="card-body no-padding" style="max-height:300px;overflow-y:auto">
+      	<table class="table table-hover no-margin">
+      		<thead>
+      			<tr>
+      				<th>Route Name</th>
+      				<th>To</th>
+      				<th>From</th>
+      			</tr>
+      		</thead>
+      		<tbody>
+	      		<tr ng-repeat="route in routes" ng-click="selectRoute(route)" ng-class="route.shortName == selectedRoute.shortName ? 'info':'hover-darken'">
+	      			<td>{{route.shortName}}</td>
+	      			<td>{{route.from}}</td>
+	      			<td>{{route.to}}</td>
+	      		</tr>
+      		</tbody>
+      	</table>
+    	</div>
+  	</div>
+
+    <div class="nga-default nga-fade-add no-animate-on-leave" ng-if="runGroupsSet()">
+      <div class="card margin-top-20">
+        <div class="card-body">
+          <div class="btn btn-info-hollow-dark pull-right margin-top-15" ng-click="addEditRoute(selectedRoute)">Edit Route</div>
+          <h1 class="margin-top-10" style="text-transform: capitalize;">{{selectedRoute.mode}} {{selectedRoute.shortName}}</h1>
+          <p rbac rbac-role-only="'ridepal'">Operator: {{selectedRoute.operator}}</p>
+          <p>
+            {{startString}} <br>
+            {{endString}}
+          </p>
+
+          <div class="card margin-top-20 hover-darken" ng-repeat="(amOrPm, runGroup) in runGroups" ui-sref="editRun({routeId:selectedRoute.routeId,meridiem:amOrPm})">
+            <div class="card-body no-padding table-responsive">
+              <h5 style="margin-left:8px;text-transform: capitalize">{{amOrPm}}</h5>
+              <table class="table no-margin" ng-if="runHeaders[amOrPm].length > 0">
+                <thead>
+                  <tr>
+                    <th>Run Id</th>
+                    <th ng-repeat="header in ::runHeaders[amOrPm]">{{::header.stopName}}</th>
+                  </tr>
+                </thead>
+                <tbody ng-repeat="runTimeline in ::runGroup">
+                  <tr ng-repeat="run in ::runTimeline">
+                    <td ng-class="::{'col-xs-3': runHeaders[amOrPm].length == 3, 'col-xs-4':runHeaders[amOrPm].length == 2 }">
+                      {{run.runId}}
+                    </td>
+                    <td ng-repeat="header in ::runHeaders[amOrPm]" ng-class="::{'col-xs-3': runHeaders[amOrPm].length == 3, 'col-xs-4':runHeaders[amOrPm].length == 2 }">
+                      {{::getStopTime(run, header)}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    	
+    </div>
+
+	</div>
+</div>

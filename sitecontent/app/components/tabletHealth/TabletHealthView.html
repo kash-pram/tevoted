@@ -1,0 +1,47 @@
+<div class="row tablet-page">
+	<uib-progressbar value="progressValue" type="info"></uib-progressbar>
+	<div class="col-xs-12">
+		<table st-table="tabletStatusesOriginal" st-safe-src="tabletStatusesDisplay" class="table table-striped table-hover" ng-class="{'margin-top-40':!editable}">
+			<thead ng-show="tabletStatusesDisplay.length > 0">
+				<tr>
+					<th st-sort="getters.shortName" st-sort-default="true" class="st-sort">Bus</th>
+					<th st-sort="batteryStatus" class="st-sort">Battery Status</th>
+					<th st-sort="batteryLevel" class="st-sort">Battery Level</th>
+					<th st-sort="tabletId" class="st-sort">Tablet Id</th>
+					<th st-sort="appVersion">App Version</th>
+					<th st-sort="lastHealthUpdateTime" class="st-sort">Last Update</th>
+					<th st-sort="lastMarkerTime" class="st-sort">Last GPS</th>
+					<th st-sort="tagOns" class="st-sort">Tag Ons</th>
+				</tr>
+			</thead>
+		<tbody>
+			<tr ng-repeat="tablet in tabletStatusesOriginal">
+				<td ng-class="getColoring(tablet)">
+					{{tablet.shortName}}
+				</td>
+				<td>
+					{{tablet.batteryStatus}}
+				</td>
+				<td>
+					{{tablet.batteryLevel}}
+				</td>
+				<td>
+					{{tablet.tabletId}}
+				</td>
+				<td>
+					{{tablet.appVersion}}
+				</td>
+				<td>
+					{{tablet.lastHealthUpdateTime | date:'M/d/yy h:mm:ss a'}}
+				</td>
+				<td>
+					<a ng-if="tablet.lastLat && tablet.lastLong" href="https://www.google.com/maps/place/{{tablet.lastLat}},{{tablet.lastLong}}"><i class="fa fa-map-marker" style="color:#C31919"></i> {{tablet.lastMarkerTime | date:'M/d/yy h:mm:ss a'}}</a>
+					<span ng-if="!tablet.lastLat || !tablet.lastLong">{{tablet.lastMarkerTime | date:'M/d/yy h:mm:ss a'}}</span>
+				</td>
+				<td>
+					{{tablet.tagOns}}
+				</td>
+			</tr>
+		</tbody>
+	</div>
+</div>

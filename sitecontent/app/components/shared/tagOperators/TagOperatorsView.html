@@ -1,0 +1,43 @@
+<!-- This button not in row on purpose
+<div class="row">
+-->
+	<div class="col-xs-3 no-margin-bottom">
+		<div class="btn btn-primary" role="button" data-toggle="collapse" href="#advanced" aria-expanded="false" aria-controls="advanced">
+			Advanced Filters
+		</div>
+	</div>
+<!--
+</div>
+-->
+<div class="col-xs-12">
+<div class="row collapse" id="advanced">
+	<div class="col-xs-12 no-margin-bottom" style="height:18px;">
+		<span class="danger" ng-show="errors">You must enter values for all three inputs</span>
+	</div>
+	<div class="col-xs-12 col-sm-3 col-lg-2">
+		<select class="form-control" ng-model="filters.addAdvanced.key" ng-options="{fieldValue:value,fieldName:name} as name for (value,name) in fields">
+			<option value="">Select field</option>
+		</select>
+	</div>
+	<div class="col-xs-12 col-sm-3 col-lg-2">
+		<select class="form-control" ng-model="filters.addAdvanced.operator" ng-options="value for value in operators">
+			<option value="">Select relationship</option>
+		</select>
+	</div>
+	<div class="col-xs-12 col-sm-3 col-lg-2">
+		<input class="form-control" ng-model="filters.addAdvanced.value" placeholder="Enter value" type="text">
+	</div>
+	<div class="col-xs-12 col-sm-3 col-lg-2">
+		<div class="btn btn-default btn-no-margin btn-full-width" ng-click="addAdvancedFilter()">Add Filter</div>
+	</div>
+</div>
+</div>
+<div class="col-xs-12">
+<div class="row">
+	<div class="col-xs-12">
+		<uib-alert class="no-margin-bottom" ng-repeat="advancedFilter in filters.advancedFilters" type="warning" close="removeAdvancedFilter($index)" style="margin-right: 15px;display:inline-block;">
+			{{advancedFilter.fieldName}} <u>{{advancedFilter.operator}}</u> {{advancedFilter.value}}
+		</uib-alert>
+	</div>
+</div>
+</div>

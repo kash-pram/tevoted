@@ -1,0 +1,96 @@
+<div class="row">
+	<div class="col-xs-12 nga-default nga-stagger nga-slide-up no-margin-bottom" style="max-height:100%;padding-top:0;padding-bottom:0" ng-show="isVisible">
+		<div class="row" ng-hide="editing">
+			<div class="col-xs-12 text-center">
+				<h5 class="no-margin">Click map to create a stop</h5>
+				<div>or</div>
+				<input ng-if="!oldStop" type="text" options="{types: 'geocode'}" details="autocomplete.details" ng-autocomplete data-ng-model="autocomplete.text" execute-function="addressSelected()" class="form-control" placeholder="Enter the new stop's location">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 text-center" uib-collapse="!shouldShowStopInputs()">
+				<h3 ng-hide="editing">Enter new stop details</h3>
+				<h3 ng-show="editing">Edit stop details</h3>
+				<div class="row" style="margin-top:25px">
+					<div class="margin-bottom-10 col-xs-12 col-sm-8">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="city">City</label>
+							<input type="text" class="form-control" id="city" placeholder="City" data-ng-model="stop.city" with-floating-label>
+						</div>
+					</div>
+					<div class="margin-bottom-10 col-xs-12 col-sm-4">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="state">State</label>
+							<input type="text" class="form-control" id="state" placeholder="State" data-ng-model="stop.state" with-floating-label>
+						</div>
+					</div>
+					<div class="margin-bottom-10 col-xs-12 col-sm-8">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="zipcode">Zip</label>
+							<input type="text" class="form-control" id="zipcode" placeholder="Zip" data-ng-model="stop.zipcode" with-floating-label>
+						</div>
+					</div>
+					<div class="margin-bottom-10 col-xs-12 col-sm-4">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="marketId">Market Id</label>
+							<input type="text" class="form-control" id="marketId" placeholder="Market Id" data-ng-model="stop.marketId" readonly with-floating-label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="margin-bottom-10 col-xs-12">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="streetAddress">Address/Stop Name</label>
+							<input type="text" class="form-control" id="streetAddress" placeholder="Address/Stop Name" data-ng-model="stop.streetAddress" with-floating-label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="margin-bottom-10 col-xs-6">
+						<div class="form-group floating-label-wrapper">
+							<label style="display: none;" for="stopRadius">Stop Radius</label>
+							<input type="text" class="form-control" id="stopRadius" placeholder="Stop Radius" data-ng-model="stop.radius" with-floating-label>
+						</div>
+					</div>
+					<div class="col-xs-6">
+						<div class="btn btn-info-hollow-dark" ng-click="editStopRadius()">
+							Edit Radius
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="margin-bottom-10 col-xs-12">
+						<div class="form-group  floating-label-wrapper">
+							<label style="display: none;" for="description">Description</label>
+							<textarea rows="4" style="width:100%" id="description" placeholder="Description of surroundings" data-ng-model="stop.description" class="form-control"  with-floating-label></textarea>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						Please aim street-view at stop location
+						<div id="streetView" class="text-center" style="height: 300px;">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="btn btn-success" ng-click="saveStop()" style="width:100%">
+							<i class="fa fa-plus"></i> {{editing == true ? 'Update' : 'Create'}} Stop
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+
+
+	</div>
+</div>

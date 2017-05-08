@@ -1,0 +1,46 @@
+{
+  "name": "angular-simple-rbac",
+  "authors": [
+    "Patrick Toerner <patrick.toerner@gmail.com>"
+  ],
+  "description": "This module provides simple role based access control (RBAC) for angular apps",
+  "main": "dist/angular-simple-rbac.js",
+  "keywords": [
+    "angular",
+    "rbac",
+    "permissions",
+    "roles",
+    "routes"
+  ],
+  "license": "MIT",
+  "homepage": "http://patricktoerner.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "config",
+    "test",
+    "src",
+    "Gruntfile.js",
+    ".jshintrc",
+    ".gitignore",
+    ".travis.yml",
+    "tests"
+  ],
+  "devDependencies": {
+    "angular-mocks": "*"
+  },
+  "dependencies": {
+    "angular": "^1.4.0",
+    "angular-ui-router": "^0.2.0"
+  },
+  "_release": "19edb4f549",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "19edb4f549d57cc6b2cec7c20e2ad0ec914e3135"
+  },
+  "_source": "https://github.com/patricktoerner/angular-simple-rbac.git",
+  "_target": "master",
+  "_originalSource": "angular-simple-rbac"
+}

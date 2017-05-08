@@ -1,0 +1,66 @@
+<div class="row">
+
+
+
+  <div class="col-xs-12 col-sm-7 col-sm-push-5">
+  	<div class="card card-default">
+      <div class="card-header">
+          <div class="card-title">
+              <div class="title"><i class="fa fa-search"></i> Add Employees</div>
+          </div>
+          <div class="clear-both"></div>
+      </div>
+      <div class="card-body">
+      <div class="input-group">
+      	<input type="text" class="form-control" placeholder="jane@ridepal.com">
+	      <span class="input-group-btn">
+	        <button class="btn btn-info" type="button" style="margin-top:0"><i class="fa fa-search"></i></button>
+	      </span>
+	    </div>
+    	</div>
+  	</div>
+	</div>
+
+
+
+	<div class="col-xs-12 col-sm-5 col-sm-pull-7">
+		<div class="card card-info">
+      <div class="card-header">
+          <div class="card-title">
+              <div class="title"><i class="fa fa-users"></i> Employees Under Your Subsidy</div>
+          </div>
+          <div class="clear-both"></div>
+      </div>
+      <div class="card-body no-padding">
+        <table class="table table-hover">
+          <thead>
+          	<tr>
+          		<th>Name</th>
+          		<th>Email</th>
+          		<th class="text-center">Delete</th>
+          	</tr>
+          </thead>
+          <tbody>
+          	<tr ng-repeat="i in [1,2,3,4,5]">
+          		<td>Patrick</td>
+          		<td>patrick@todo.com</td>
+          		<td class="text-center">
+        				<a href="#" ng-click="deleteUser(user)"><i class="fa fa-minus-circle"></i></a>
+          		</td>
+          	</tr>
+          </tbody>
+        </table>
+    	</div>
+  	</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+</div>

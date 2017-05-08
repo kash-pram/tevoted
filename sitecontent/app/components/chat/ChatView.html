@@ -1,0 +1,27 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 text-center">
+		<div class="form-group floating-label-wrapper">
+			<label for="runId">Run Id</label>
+			<input id="runId" type="text" class="form-control" ng-model="runId" placeholder="Run Id" with-floating-label ng-change="subscribeToRunsChats(runId)">
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div style="border:solid 1px #ccc;height:300px;overflow-y:auto;overflow-x:hidden;width:100%;padding:5px">
+			<div class="row" ng-repeat="message in allMessages | orderBy:'id':true ">
+				<div class="col-xs-12 no-margin-bottom">
+					User {{message.user_id}} <span style="font-size:10px;color:#969696">at {{message.created_at| date : 'short'}}</span>: {{message.message}} 
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 text-center">
+		<input id="message" type="text" class="form-control" ng-model="message" placeholder="Message">
+		<div class="btn btn-info" style="width:100%" ng-click="sendMessage()">Send</div>
+	</div>
+</div>

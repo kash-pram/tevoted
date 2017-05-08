@@ -1,0 +1,195 @@
+<div class="run-edit-page" ng-if="::!isMobile()">
+	<div class="routeHeader" ng-show="!$root.pageLoading">
+		Route {{routeName}} {{meridiem}}
+	</div>
+	<leaflet id="map" markers="markers" paths="paths" defaults="defaults" layers="layers">
+	</leaflet>
+	<div class="card overflow-visible">
+		<!-- Endpoint Management -->
+		<div class="card-body endpoint-management text-center table-responsive nga-default nga-fade-add nga-none-remove"  ng-if="runIsSelected()" style="border-bottom: solid 1px #ccc;">
+			<div class="btn btn-info btn-xs pull-right" ng-click="selectedRun.endpoints.origin.push({id:0})"><i class="fa fa-plus"></i> Add Endpoint Row</div> 
+			<h4>Managing Endpoints for Run '{{selectedRun.runId}}'</h4>
+			<table class="table">
+    		<thead>
+    			<tr>
+            <th>Yard <input class="form-control input-sm" type="text" ng-change="getYards()" ng-model="m.operatorId" placeholder="operatorId" rbac rbac-role-only="'ridepal'" style="text-align: center;width: 50%;float: right;padding: 0px;margin: 0px;line-height: 10px;height: 18px;font-size: 10px;"></th>
+    				<th>Login</th>
+    				<th>Preflight</th>
+    				<th>Departure</th>
+    				<th>Delete</th>
+    			</tr>
+    		</thead>
+    		<tbody>
+          <tr ng-repeat="origin in selectedRun.endpoints.origin">
+          	<td>
+          		<select class="form-control" ng-model="origin.yardId" ng-options="yard.id as yard.name for yard in yardList" ng-change="addYardDataToEndPoints()" style="width:100px;"></select>
+        		</td>
+            <td style="padding: 0 8px;"><ddatetimepicker options="{{::endpointOptions(origin,'loginTime')}}" ng-model="origin.loginTime"></ddatetimepicker></td>
+            <td style="padding: 0 8px;"><ddatetimepicker options="{{::endpointOptions(origin,'preflightTime')}}" ng-model="origin.preflightTime"></ddatetimepicker></td>
+            <td style="padding: 0 8px;"><ddatetimepicker options="{{::endpointOptions(origin,'departTime')}}" ng-model="origin.departTime"></ddatetimepicker></td>
+            <td>
+            	<span class="fa-stack" ng-click="deleteOrigin(origin)">
+							  <i class="fa fa-circle-thin fa-stack-2x"></i>
+							  <i class="fa fa-trash fa-stack-1x"></i>
+							</span>
+            </td>
+          </tr>
+    		</tbody>
+    	</table>
+		</div>
+		<!-- End of Endpoint Management -->
+
+		<!-- Run Management -->
+    <div class="card-body table-responsive" style="overflow-x: auto;">
+    	<table class="table table-hover no-margin run-management-table">
+    		<thead>
+    			<tr>
+            <th>Run Id</th>
+            <th>
+	            <!--<div class="hoverItYeah">-->
+	            	<!--<input type="number" placeholder="Offset" ng-model="offset">-->
+	            	<div class="btn btn-info btn-xs pull-right" ng-click="duplicateLastRun()"><i class="fa fa-plus"></i> Add Run</div>
+	            	<!--<div class="clear-both" style="color:#fff"> .</div>-->
+            	<!--</div>-->
+          	</th>
+    				<th ng-repeat="header in runHeader">
+    					<i class="fa fa-times-circle-o hover-darken" ng-click="removeStop(header)"></i> 
+    					{{::header.stopName}} 
+    					<span ng-click="switchPickupDropOff(header)" class="pickupDropoff">[{{header.stopType}}]</span>
+  					</th>
+    			</tr>
+    		</thead>
+    		<tbody ng-repeat="runTimeline in runGroup | orderBy:sortRunTimelines">
+          <tr ng-repeat="run in ::runTimeline track by $index" class="animated slideInDown" ng-class="::{'disabled':$index !== runTimeline.length - 1}">
+            <td style="min-width: 250px;">
+              <i ng-class="::{'vis-hidden':$index == 0}" class="fa fa-share fa-flip-vertical"></i> 
+              <span class="runId hover-darken" ng-class="selectedPolylineRun.runId === run.runId ? 'selectedPolylineRun': ''" ng-click="selectRunForPolylineEditing(run)">
+              	{{run.runId}}
+            	</span>
+              <div class="pull-right">
+              	<span class="success" ng-if="::$index != 0">Starts: {{::run.dates.start | date:'MMM d, y h:mma'}}</span>
+              	<span class="danger" ng-if="::run.dates.end"> Ends: {{::run.dates.end | date:'MMM d, y h:mma'}}</span></div>
+            </td>
+            <td ng-if="runHeader.length > 0" class="text-center">
+            	<i ng-if="::$index === runTimeline.length - 1" popover-placement="right" uib-popover-template="'options.html'" class="fa fa-cog fa-2x"></i>
+            </td>
+            <td ng-repeat="header in runHeader" style="padding: 0 8px; min-width: 132px;" ng-init="thisStop=getStop(run, header)">
+    			    <ddatetimepicker options="{{::timepickerOptions(thisStop)}}" on-change="reorderStops()" ng-model="thisStop.stopTime" include-remove="true" readonly="$parent.$index !== runTimeline.length - 1"></ddatetimepicker>
+            </td>
+            <td ng-if="runHeader.length === 0">Add stops on the left</td>
+          </tr>
+    		</tbody>
+    	</table>
+  	</div>
+
+  	<script type="text/ng-template" id="options.html">
+  		<div class="btn btn-info-hollow-dark btn-xs" ng-click="openStopRadiusModal(getStop(run, runHeader[0]))" style="margin-right:10px;margin-top:0;margin-bottom:0">Staging</div>
+      <div class="btn btn-info-hollow-dark btn-xs" ng-click="editEndpoints(run)" style="margin-right:10px;margin-top:0;margin-bottom:0">Endpoints</div>
+      <div class="btn btn-info-hollow-dark btn-xs" ng-click="selectRunForPolylineEditing(run)" style="margin-right:10px;margin-top:0;margin-bottom:0">Edit Polyline</div>
+      <div class="btn btn-info-hollow-dark btn-xs" ui-sref="interline({multiRunId:run.multiRunId})" style="margin-top:0;margin-bottom:0">Interline</div>
+    </script>
+  	<!-- End of Run Management -->
+
+  	<div class="card-footer">
+  		<div class="col-xs-3 pull-left padding-bottom-7">
+  			<div class="btn btn-danger btn-sm" ng-click="openDelete()">Delete Runs</div>
+  		</div>
+  		<div class="col-xs-3 pull-right text-right padding-bottom-7">
+  			<div class="btn btn-success btn-sm" ng-click="openSave()">Save Runs</div>
+  		</div>
+		</div>
+	</div>
+
+	<div class="stop-list-container">
+		<div class="row">
+			<div class="col-xs-12 nga-default nga-slide-left-add nga-slide-left-remove nga-absolute stop-list" ng-if="stopListView">
+				<div rbac rbac-role-only="'ridepal'" class="text-center btn btn-info-hollow-dark create-stop-btn" ng-click="toggleCreatingStop()">{{creatingStop ? 'Stop Creating New Stop' : 'Create Stop'}}</div>
+				<create-stop is-visible="creatingStop" on-address-select="createStopAddressSelected" map-instance="map" geo-code-fn="geoCodeFn"></create-stop>
+				<div class="row">
+					<div class="col-xs-12 nga-default nga-slide-down" ng-hide="creatingStop" style="max-height: 100%;">
+						<input type="text" class="form-control" placeholder="Filter stops by name" ng-model="filter.filterText" ng-change="filterListedStops()">
+						<ul class="list-group animation-list-group">
+							<li class="list-group-item nga-default nga-stagger nga-collapse" ng-repeat="stop in filteredListedStops" ng-click="clickStop(stop)" ng-mouseenter="hoveringOnStop(stop.stopDescId)" ng-mouseleave="stoppedHoveringOnStop(stop.stopDescId)">
+								<div class="row">
+									<div class="col-xs-12 no-margin-bottom">
+										{{::stop.stopDescId}}: {{::stop.stopName}}
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 nga-default nga-slide-right-add nga-slide-right-remove nga-absolute stopView" ng-hide="stopListView">
+				<div class="btn btn-info back-stop-btn" ng-click="backToStopList()" ><i class="fa fa-chevron-left"></i> Back</div>
+				<div class="row">
+					<div class="col-xs-12" ng-show="editingStop">
+						<create-stop is-visible="editingStop" on-address-select="createStopAddressSelected" map-instance="map" stop="stopToUpsert" geo-code-fn="geoCodeFn"></create-stop>
+					</div>
+
+					<div class="col-xs-12 nga-default nga-slide-down" ng-hide="editingStop" style="min-height: 700px;">
+						<div class="row">
+
+							<div class="col-xs-12 text-center">
+								<img class="img-responsive" style="margin: auto" ng-src="{{selectedStop.picture_url}}">
+							</div>
+
+							<div class="col-xs-6">
+								<div class="form-group floating-label-wrapper">
+				          <label for="stopId">Stop Desc Id</label>
+				          <input type="text" class="form-control" id="stopId" readonly placeholder="Stop Desc Id" ng-model="selectedStop.stopDescId" with-floating-label>
+				        </div>
+							</div>
+
+							<div class="col-xs-6">
+								<div class="form-group floating-label-wrapper">
+				          <label for="city">City</label>
+				          <input type="text" class="form-control" id="city" readonly placeholder="City" ng-model="selectedStop.city" with-floating-label>
+				        </div>
+							</div>
+
+							<div class="col-xs-12">
+								<div class="form-group floating-label-wrapper">
+				          <label for="address">Address</label>
+				          <input type="text" class="form-control" id="address" readonly placeholder="Address" ng-model="selectedStop.street_address" with-floating-label>
+				        </div>
+							</div>
+
+							<div class="col-xs-12">
+								<div class="form-group floating-label-wrapper">
+				          <label for="description">Description</label>
+				          <textarea type="text" rows="4" class="form-control" id="description" readonly placeholder="Description" ng-model="selectedStop.description" with-floating-label></textarea>
+				        </div>
+							</div>
+
+							<div class="col-xs-12">
+								<div class="btn btn-lg btn-success" style="width:100%" ng-click="addListedStopToRun(selectedStop)">
+									<i class="fa fa-plus"></i> Add To Run
+								</div>
+							</div>
+
+							<div class="col-xs-12" rbac rbac-role-only="'ridepal'">
+								<div class="btn btn-danger" style="width:100%" ng-click="editStop()">
+									<i class="fa fa-pencil"></i> Edit Stop
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+</div>
+<div class="row" ng-if="::isMobile()">
+	<div class="col-xs-12 text-center">
+		<h1><i class="fa fa-frown-o" aria-hidden="true"></i></h1>
+		<h2>Woah there!</h2>
+		<h5>This page is too awesome for mobile viewing</h5>
+		<h5>Please use a larger screen for the full experience</h5>
+	</div>
+</div>
