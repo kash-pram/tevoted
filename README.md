@@ -1,5 +1,3 @@
-# https://tevoted.github.io
-
 <h1>TEVOTED</h1>
 Online Time Management Tool
 
